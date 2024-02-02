@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap");
+li:hover,
+i:hover,
+h1:hover {
+  color: red;
+  transition: ease 0.2s all;
+  cursor: pointer;
+}
+select {
+  outline: none;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+font-family: 'Roboto', sans-serif;
+font-family: 'Ubuntu', sans-serif;
+}
