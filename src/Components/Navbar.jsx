@@ -37,7 +37,7 @@ export default function Navbar() {
       <hr />
 
       {/* Sticky Navbar */}
-      <div className="w-full sticky z-50 top-0 bg-white items-center flex gap-2 px-4 md:px-20  justify-between py-2 md:py-8">
+      <div className="w-full sticky z-50 top-0 bg-white items-center flex gap-2 px-4 md:px-20  justify-between py-2">
         <div className="md:text-4xl">
           <h1 className="text-gray-600">Lumburr</h1>{" "}
         </div>
@@ -67,8 +67,8 @@ export default function Navbar() {
       </div>
 
       {/* Bottom navbar */}
-      <div className="px-2 sticky top-14 md:top-24 z-50 bg-white md:px-20">
-        <div className="w-full text-[12px] text-gray-500 items-center flex gap-2  justify-between py-3 md:py-4 border-gray-200 border-solid border-y-[1px]">
+      <div className="px-2 sticky top-14 md:top-14 z-50 bg-white md:px-20">
+        <div className="w-full text-[12px] text-gray-500 items-center flex gap-2  justify-between py-1 md:py-2 border-gary-200 border-solid border-y-[1px]">
           <div>
             <ul className="flex items-center gap-2 md:gap-6">
               <li>

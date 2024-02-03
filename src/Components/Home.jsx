@@ -1,11 +1,7 @@
 import React from "react";
 import BasicCard from "./Home components/BasicCard";
-// import Box from "@mui/joy/Box";
 import ProductsContainer from "./Home components/ProductsContainer";
-// import { Slider } from "@mui/joy";
 import SliderCarousel from "./Home components/Carousel";
-import Loader from "./Loader";
-// import Button from "@mui/joy/Button";
 
 export default function Home() {
   return (
