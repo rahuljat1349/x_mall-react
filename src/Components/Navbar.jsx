@@ -46,7 +46,7 @@ export default function Navbar() {
             <option value="All">All</option>
           </select>
           <input
-            className="outline-none w-[80%] p-3 text-xs"
+            className="outline-none text-gray-600  w-[80%] p-3 text-xs"
             placeholder="Search for anything"
             type="text"
           />
