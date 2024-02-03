@@ -2,10 +2,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 li:hover,
 i:hover,
 h1:hover {
-  color: red;
+  color: rgb(255, 107, 107);
   transition: ease 0.2s all;
   cursor: pointer;
 }

@@ -57,10 +57,10 @@ export default function Home() {
       </div>
 
       {/* BestDellers */}
-      <div className="bg-slate-100 px-4 py-16 items-center gap-2 flex w-full h-[40vh] sm:h-[60vh]">
-        <div className=" gap-2  flex flex-col">
+      <div className="bg-slate-100 px-4 justify-around py-16 items-center gap-2 flex w-full h-[40vh] sm:h-[60vh]">
+        <div className=" gap-2 flex  w-[30vw] flex-col">
           <h1 className="md:text-2xl text-gray-700">#BestSellers</h1>
-          <p className="hidden text-xs md:text-sm sm:block">
+          <p className="hidden text-xs text-gray-500 text-wrap md:text-sm sm:block">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum aliquid
             porro quo nihil rem laboriosam dolorem, assumenda ipsam vitae
             delectus.
@@ -87,10 +87,10 @@ export default function Home() {
       </div>
       {/*  */}
 
-        <ProductsContainer />
+      <ProductsContainer />
       {/*  */}
       <div className="flex mt-[1rem] mb-[1rem] w-full text-center justify-center ">
-        <button className="border-[1px] border-solid border-red-300 rounded-md p-2 hover:bg-red-300 duration-200">
+        <button className="border-[1px] text-gray-700 border-solid border-red-300 rounded-md p-2 hover:text-white font-semibold hover:bg-red-300 duration-200">
           View more products
         </button>
       </div>
@@ -98,7 +98,9 @@ export default function Home() {
       <div className="px-4 py-6 w-full ">
         <div className=" flex flex-col gap-8 border-gray-500 w-full p-12 border-solid border-2">
           <div>
-            <h1 className="text-3xl">Hot Deal This Week</h1>
+            <h1 className="text-3xl font-semibold text-gray-600">
+              Hot Deal This Week
+            </h1>
             <p className="text-gray-400">Remains untill the end of offer</p>
           </div>
           <div className="flex justify-between">
