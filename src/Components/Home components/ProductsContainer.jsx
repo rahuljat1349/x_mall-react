@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import BasicCard from "./BasicCard";
 
+import Loader from "../Loader";
+
 export default function ProductsContainer() {
   const [newData, setNewData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getData = async () => {
     try {
@@ -12,6 +15,8 @@ export default function ProductsContainer() {
       setNewData(slicedData);
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -20,15 +25,21 @@ export default function ProductsContainer() {
 
   return (
     <>
-      {newData && newData.map((product, i) => (
-        <BasicCard
-          key={product.id}
-          title={product.title.slice(0, 20) + "..."}
-          price={"$" + product.price}
-          description={product.description.slice(0, 50) + "..."}
-          image={product.image}
-        />
-      ))}
+      {newData && loading ? (
+        <Loader />
+      ) : (
+        <div className="grid grid-cols-2 justify-center items-center sm:grid-cols-3 lg:grid-cols-4 px-2 ">
+          {newData.map((product, i) => (
+            <BasicCard
+              key={product.id}
+              title={product.title.slice(0, 20) + "..."}
+              price={"$" + product.price}
+              description={product.description.slice(0, 50) + "..."}
+              image={product.image}
+            />
+          ))}
+        </div>
+      )}
     </>
   );
 }

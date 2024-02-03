@@ -2,7 +2,7 @@ import React from "react";
 export default function BasicCard({ title, description, price, image }) {
   return (
     <>
-      <div className=" w-[30%] mb-4 hover:text-red-300  cursor-pointer">
+      <div className=" p-2 mb-4 hover:text-red-300  cursor-pointer">
         <div
           className={`h-[15vh] sm:h-[25vh] md:h-[30vh] lg:h-[40vh] rounded-t-xl border-red-200 border-solid border-[1px] border-b-white`}
         >

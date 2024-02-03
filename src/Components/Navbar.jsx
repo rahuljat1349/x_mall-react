@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function Navbar() {
   return (
     <>
-      <nav className="w-full text-[12px] text-gray-500 md:px-20 px-4 py-3 flex justify-between">
+      <nav className="w-full hidden sm:flex text-[12px] text-gray-500 md:px-20 px-4 py-3  justify-between">
         <div>
           <ul className="flex gap-8">
             <li>
@@ -41,22 +41,25 @@ export default function Navbar() {
         <div className="md:text-4xl">
           <h1 className="text-gray-600">Lumburr</h1>{" "}
         </div>
-        <div className="py-2 hover:border-red-200 gap-3 flex  items-center px-3 md:w-72 lg:w-96 border-solid border-[0.5px] rounded-sm border-gray-300">
+        <div className=" hover:border-red-200 gap-3 justify-between flex items-center px-3 sm:w-72 lg:w-96 xl:w-[40vw] border-solid border-[0.5px] rounded-sm border-gray-300">
           <select className="text-gray-500 text-xs" name="" id="">
             <option value="All">All</option>
           </select>
           <input
-            className="outline-none w-24 md:w-96 text-xs"
+            className="outline-none w-[80%] p-3 text-xs"
             placeholder="Search for anything"
             type="text"
           />
-          <div className="w-full">
+          <div className=" w-4 relative right-0">
             <i className="bi float-right bi-search"></i>
           </div>
         </div>
+
         <div className="flex lg:gap-8 lg:text-xl md:text-xs gap-2">
           <i className="bi bi-heart"></i>
-          <i className="bi bi-person-circle"></i>
+          <Link to={"/profile"}>
+            <i className="bi bi-person-circle"></i>
+          </Link>
           <Link to={"/cart"}>
             <i className="bi bi-cart3"></i>
           </Link>

@@ -4,6 +4,7 @@ import BasicCard from "./Home components/BasicCard";
 import ProductsContainer from "./Home components/ProductsContainer";
 // import { Slider } from "@mui/joy";
 import SliderCarousel from "./Home components/Carousel";
+import Loader from "./Loader";
 // import Button from "@mui/joy/Button";
 
 export default function Home() {
@@ -60,9 +61,9 @@ export default function Home() {
       </div>
 
       {/* BestDellers */}
-      <div className="bg-slate-100 px-4 py-24 items-center gap-2 flex w-full h-[40vh] sm:h-[60vh]">
-        <div className="px-6 gap-2  md:w-96 flex flex-col">
-          <h1 className="md:text-3xl text-gray-700">#BestSellers</h1>
+      <div className="bg-slate-100 px-4 py-16 items-center gap-2 flex w-full h-[40vh] sm:h-[60vh]">
+        <div className=" gap-2  flex flex-col">
+          <h1 className="md:text-2xl text-gray-700">#BestSellers</h1>
           <p className="hidden text-xs md:text-sm sm:block">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum aliquid
             porro quo nihil rem laboriosam dolorem, assumenda ipsam vitae
@@ -90,9 +91,7 @@ export default function Home() {
       </div>
       {/*  */}
 
-      <div className="flex flex-wrap justify-between items-center px-2  md:px-20">
         <ProductsContainer />
-      </div>
       {/*  */}
       <div className="flex mt-[1rem] mb-[1rem] w-full text-center justify-center ">
         <button className="border-[1px] border-solid border-red-300 rounded-md p-2 hover:bg-red-300 duration-200">

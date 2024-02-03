@@ -3,7 +3,7 @@ import React from "react";
 export default function Footer() {
   return (
     <>
-      <div className="bg-red-100 border-red-200 border-solid border-t-[2px] px-4 md:px-20 grid grid-cols-4 content-center pb-12 pt-6 text-red-600 font-semibold text-xs md:text-sm ">
+      <div className="bg-gradient-to-r from-red-400 to-red-100 shadow-red-300 border-red-200 border-solid border-t-[2px] px-4  w-full md:px-20 grid grid-cols-2 sm:grid-cols-4 text-left gap-4 pb-12 p-6 text-red-600 font-semibold text-xs md:text-sm ">
         <div>
           <ul>
             <li className="text-gray-700 mb-2 text-sm font-bold m:text-lg">
@@ -45,6 +45,7 @@ export default function Footer() {
             <li>Facebook</li>
             <li>Twitter</li>
             <li>Youtube</li>
+            <li>Instagram</li>
           </ul>
         </div>
       </div>
