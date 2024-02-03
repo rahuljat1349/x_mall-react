@@ -23,7 +23,6 @@ const Cart = () => {
   return (
     <>
       <h2 className="text-center text-3xl my-3">Your Cart</h2>
-      <div className="w-full px-4 md:px-20 py-4 items-center justify-between">
         {/* {cartItems.length === 0 ? (
           <p>Your cart is empty.</p>
         ) : (
@@ -40,7 +39,6 @@ const Cart = () => {
         {/* Static */}
 
         <ProductsContainer />
-      </div>
       <div className="w-full mb-2 h-24 flex justify-around px-4 md:px-20 items-center font-bold text-red-500 bg-red-200">
         <p>Total: ${calculateTotal()}</p>
         <button className="border-red-600 border-solid border-[1px] hover:bg-red-300 duration-200 p-2 rounded-xl">

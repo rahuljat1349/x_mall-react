@@ -28,7 +28,7 @@ export default function ProductsContainer() {
       {newData && loading ? (
         <Loader />
       ) : (
-        <div className="grid grid-cols-2 justify-center items-center sm:grid-cols-3 lg:grid-cols-4 px-2 ">
+        <div className="grid grid-cols-2 justify-center md:px-10 items-center sm:grid-cols-3 lg:grid-cols-4 px-2 ">
           {newData.map((product, i) => (
             <BasicCard
               key={product.id}
