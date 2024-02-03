@@ -23,7 +23,7 @@ const Cart = () => {
   return (
     <>
       <h2 className="text-center text-3xl my-3">Your Cart</h2>
-      <div className="w-full px-4 md:px-20 py-4 justify-between gap-2 flex flex-wrap">
+      <div className="w-full px-4 md:px-20 py-4 items-center justify-between">
         {/* {cartItems.length === 0 ? (
           <p>Your cart is empty.</p>
         ) : (

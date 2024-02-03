@@ -39,7 +39,7 @@ export default function Navbar() {
       {/* Sticky Navbar */}
       <div className="w-full sticky z-50 top-0 bg-white items-center flex gap-2 px-4 md:px-20  justify-between py-2">
         <div className="md:text-4xl">
-          <h1 className="text-gray-600">Lumburr</h1>{" "}
+          <h1 className="text-red-400 sigle-day-regular">pink mall</h1>{" "}
         </div>
         <div className=" hover:border-red-200 gap-3 justify-between flex items-center px-3 sm:w-72 lg:w-96 xl:w-[40vw] border-solid border-[0.5px] rounded-sm border-gray-300">
           <select className="text-gray-500 text-xs" name="" id="">
