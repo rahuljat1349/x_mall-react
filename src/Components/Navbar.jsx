@@ -1,9 +1,26 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+
 export default function Navbar() {
+  const [pageColor, setPageColor] = useState("text-gray-500"); // Default color
+  const Products = () => {
+    const location = useLocation();
+
+    useEffect(() => {
+      console.log(location.pathname);
+      // Check if the user is on the Products page
+      if (location.pathname !== "/home") {
+        setPageColor("text-red-500"); // Set your desired color
+      } else {
+        setPageColor("text-gray-500"); // Reset color for other pages
+      }
+    }, [location.pathname]);
+  };
+
   return (
     <>
-      <nav className="w-full hidden sm:flex text-[12px] text-gray-500 md:px-20 px-4 py-3  justify-between">
+      <nav className="w-full hidden sm:flex text-[12px] text-gray-500 md:px-20 px-4 py-2  justify-between">
         <div>
           <ul className="flex gap-8">
             <li>
@@ -39,7 +56,10 @@ export default function Navbar() {
       {/* Sticky Navbar */}
       <div className="w-full sticky z-50 top-0 bg-white items-center flex gap-2 px-4 md:px-20  justify-between py-2">
         <div className="md:text-4xl">
-          <h1 className="text-red-400 sigle-day-regular">pink mall</h1>{" "}
+          <Link to={"/"}>
+            {" "}
+            <h1 className="text-red-400 sigle-day-regular">pinkMall</h1>{" "}
+          </Link>
         </div>
         <div className=" hover:border-red-200 gap-3 justify-between flex items-center px-3 sm:w-72 lg:w-96 xl:w-[40vw] border-solid border-[0.5px] rounded-sm border-gray-300">
           <select className="text-gray-500 text-xs" name="" id="">
@@ -68,34 +88,25 @@ export default function Navbar() {
 
       {/* Bottom navbar */}
       <div className="px-2 sticky top-14 md:top-14 z-50 bg-white md:px-20">
-        <div className="w-full text-[12px] text-gray-500 items-center flex gap-2  justify-between py-1 md:py-2 border-gary-200 border-solid border-y-[1px]">
+        <div
+          className={`w-full text-[12px] ${pageColor} items-center flex gap-2  justify-between py-1 md:py-2 border-gary-200 border-solid border-y-[1px]`}
+        >
           <div>
             <ul className="flex items-center gap-2 md:gap-6">
-              <li>
-                <select name="" id="">
-                  <option value="DEMOS">DEMOS</option>
-                </select>
-              </li>
-              <li>
-                <select name="" id="">
-                  <option value="PAGES">PAGES</option>
-                </select>
-              </li>
-              <li>
-                <select name="" id="">
-                  <option value="SHOP">SHOP</option>
-                </select>
-              </li>
-              <li>
-                <select name="" id="">
-                  <option value="COLLECTIONS">COLLECTIONS</option>
-                </select>
-              </li>
-              <li>
-                <select name="" id="">
-                  <option value="BLOG">BLOG</option>
-                </select>
-              </li>
+              <Link to={"/"}>
+                {" "}
+                <li>Home</li>
+              </Link>
+              <Link to={"/products"}>
+                {" "}
+                <li>Products</li>
+              </Link>
+              <Link to={"/about"}>
+                <li>About Us</li>
+              </Link>
+              <Link to={"/contact"}>
+                <li>Contact Us</li>
+              </Link>
             </ul>
           </div>
           <div className="hidden md:block">

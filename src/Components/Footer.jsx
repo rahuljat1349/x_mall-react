@@ -29,7 +29,7 @@ export default function Footer() {
         <div>
           <ul>
             <li className="text-gray-700 mb-2 text-sm font-bold m:text-lg">
-              Policy
+              POLICY
             </li>
             <li>Cancellation</li>
             <li>Terms Of Use</li>
@@ -40,7 +40,7 @@ export default function Footer() {
         <div>
           <ul>
             <li className="text-gray-700 mb-2 text-sm font-bold m:text-lg">
-              Social
+              SOCIAL
             </li>
             <li>Facebook</li>
             <li>Twitter</li>

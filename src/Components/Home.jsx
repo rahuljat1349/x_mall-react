@@ -2,6 +2,7 @@ import React from "react";
 import BasicCard from "./Home components/BasicCard";
 import ProductsContainer from "./Home components/ProductsContainer";
 import SliderCarousel from "./Home components/Carousel";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
@@ -87,12 +88,14 @@ export default function Home() {
       </div>
       {/*  */}
 
-      <ProductsContainer />
+      <ProductsContainer productsLength={8} />
       {/*  */}
       <div className="flex mt-[1rem] mb-[1rem] w-full text-center justify-center ">
-        <button className="border-[1px] text-gray-700 border-solid border-red-300 rounded-md p-2 hover:text-white font-semibold hover:bg-red-300 duration-200">
-          View more products
-        </button>
+        <Link to={"/products"}>
+          <button className="border-[1px] text-gray-700 border-solid border-red-300 rounded-md p-2 hover:text-white font-semibold hover:bg-red-300 duration-200">
+            View more products
+          </button>
+        </Link>
       </div>
       {/*  */}
       <div className="px-4 py-6 w-full ">
