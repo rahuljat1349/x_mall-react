@@ -106,9 +106,9 @@ export default function Home() {
             <h1 className="text-3xl font-semibold text-gray-600">
               Hot Deal This Week
             </h1>
-            <p className="text-gray-400">Remains untill the end of offer</p>
+            <p className="text-gray-400">Remains untill the end of offer.</p>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-around ">
             <BasicCard />
             <BasicCard />
             <BasicCard />

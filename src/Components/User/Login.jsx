@@ -62,7 +62,7 @@ export default function () {
               <Link to={""}>forgot password?</Link>
             </div>
 
-            <button className="w-[80%] p-2  border-solid hover:bg-red-400 hover:text-white duration-300 border-red-400 border-2 outline-none rounded-md">
+            <button className="w-[80%] p-2 bg-red-400 text-white hover:bg-red-500 duration-300 outline-none rounded-md">
               LogIn
             </button>
             <h2 className="text-xs      ">

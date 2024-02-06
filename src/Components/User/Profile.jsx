@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import SimpleModal from "./Modal";
 
 export default function Profile() {
   return (
@@ -8,10 +9,13 @@ export default function Profile() {
         <div className="sm:w-[70%] sm:p-8  mt-12 justify-between flex flex-col h-[45vh] w-[60%] md:h-[70vh] sm:h-[50vh] lg:w-[60%] shadow-2xl rounded-3xl">
           <div className="sm:-mb-14 -mb-6 gap-4 w-full p-2 flex justify-between ">
             <div>
-              <button className="flex text-[7px] sm:text-[10px] md:text-[12px] gap-1 border-2 border-solid border-red-400 sm:p-2 p-1 rounded-lg text-red-400 items-center hover:bg-red-400 hover:text-white duration-200">
+              <Link
+                to={"/wishlist"}
+                className="flex text-[7px] sm:text-[10px] md:text-[12px] gap-1 border-2 border-solid border-red-400 sm:p-2 p-1 rounded-lg text-red-400 items-center hover:bg-red-400 hover:text-white duration-200"
+              >
                 <i className="bi hover:text-white text-sm sm:text-xl bi-suit-heart"></i>
                 <span>My Wishlist</span>
-              </button>
+              </Link>
             </div>
             <div className=" shadow-lg shadow-gray-400 overflow-hidden relative sm:-top-20 -top-12 rounded-full">
               <img
@@ -22,7 +26,7 @@ export default function Profile() {
             </div>
             <div>
               <button className="flex text-[7px] sm:text-[10px] md:text-[12px] gap-1 border-2 border-solid border-red-400 sm:p-2 p-1 rounded-lg text-red-400 items-center hover:bg-red-400 hover:text-white duration-200">
-                <span>Edit Profile</span>
+                <SimpleModal />
                 <i className="bi hover:text-white text-sm sm:text-xl bi-pencil-square"></i>
               </button>
             </div>

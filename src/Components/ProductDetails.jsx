@@ -3,6 +3,8 @@ import { red } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "./Loader";
+import Button from "@mui/joy/Button";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -58,9 +60,9 @@ export default function ProductDetails() {
                 <span className="text-red-400">${newData.price}</span>
               </div>
               <div className="flex w-full  mt-10 justify-center">
-                <button className="p-3 shadow-3xl text-xs sm:text-sm duration-200 hover:bg-red-500 bg-red-400 rounded-xl text-white w-[60%]">
-                  Checkout
-                </button>
+                <Button endDecorator={<KeyboardArrowRight />} color="danger">
+                  Go to checkout
+                </Button>
               </div>
             </div>
           </div>

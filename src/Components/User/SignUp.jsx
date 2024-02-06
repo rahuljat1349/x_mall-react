@@ -64,7 +64,7 @@ export default function () {
               <label htmlFor="check">Remember Me</label>
             </div>
 
-            <button className="w-[80%] p-2  border-solid hover:bg-red-400 hover:text-white duration-300 border-red-400 border-2 outline-none rounded-md">
+            <button className="w-[80%] p-2 bg-red-400 hover:bg-red-500 text-white duration-300 outline-none rounded-md">
               SignUp
             </button>
             <h2 className="text-xs      ">

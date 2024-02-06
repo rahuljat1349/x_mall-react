@@ -23,7 +23,7 @@ const ContactUs = () => {
             type="text"
             id="name"
             name="name"
-            className="mt-1 outline-none  p-2 w-full duration-200 border-2 border-red-300 focus:border-red-500 focus:border-2 rounded-md"
+            className="mt-1 outline-none p-2 w-full duration-200 border-[1px] border-red-300 focus:border-red-500 focus:border-[1px] rounded-md"
             placeholder="John Doe"
             required
           />
@@ -40,7 +40,7 @@ const ContactUs = () => {
             type="email"
             id="email"
             name="email"
-            className="mt-1 outline-none  p-2 w-full duration-200  border-2 border-red-300 focus:border-red-500 focus:border-2 rounded-md"
+            className="mt-1 outline-none p-2 w-full duration-200  border-[1px] border-red-300 focus:border-red-500 focus:border-[1px] rounded-md"
             placeholder="john@example.com"
             required
           />
@@ -57,7 +57,7 @@ const ContactUs = () => {
             id="message"
             name="message"
             rows="4"
-            className="mt-1 outline-none  p-2 w-full duration-200 border-2 border-red-300 focus:border-red-500 focus:border-2 rounded-md"
+            className="mt-1 outline-none  p-2 w-full duration-200 border-[1px] border-red-300 focus:border-red-500 focus:border-[1px] rounded-md"
             placeholder="Write your message here..."
             required
           ></textarea>
@@ -66,7 +66,7 @@ const ContactUs = () => {
         <div>
           <button
             type="submit"
-            className="inline-flex items-center px-4 py-2 border-2 border-transparent text-base font-medium rounded-md text-white bg-red-500 duration-200 hover:bg-red-600 outline-none active:bg-red-700"
+            className="inline-flex items-center px-4 py-2 border-[1px] border-transparent text-base font-medium rounded-md text-white bg-red-500 duration-200 hover:bg-red-600 outline-none active:bg-red-700"
           >
             Submit
           </button>
