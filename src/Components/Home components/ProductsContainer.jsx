@@ -10,7 +10,7 @@ export default function ProductsContainer({ productsLength }) {
 
   const getData = async () => {
     try {
-      const data = await fetch("https://fakestoreapi.com/products");
+      const data = await fetch("https://fakestoreapi.com/products?limit=30");
       const fetchedData = await data.json();
       const filteredData =
         (await length) > 0 ? fetchedData.slice(0, length) : fetchedData;
@@ -35,7 +35,8 @@ export default function ProductsContainer({ productsLength }) {
           {newData.map((product, i) => (
             <BasicCard
               key={i}
-              productId ={product.id}
+              rating={product.rating}
+              productId={product.id}
               title={product.title.slice(0, 20) + "..."}
               price={"$" + product.price}
               description={product.description.slice(0, 50) + "..."}

@@ -11,7 +11,6 @@ import SignUp from "./Components/User/SignUp";
 import ContactUs from "./Components/ContactUs";
 import AboutUs from "./Components/AboutUs";
 import ProductDetails from "./Components/ProductDetails";
-import Wishlist from "./Components/User/wishlist";
 
 function App() {
   return (
@@ -21,14 +20,14 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route exact path="/cart" element={<Cart />} />
-          <Route exact path="/wishlist" element={<Wishlist/>} />
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/products" element={<Products />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<SignUp />} />
           <Route exact path="/about" element={<AboutUs />} />
           <Route exact path="/contact" element={<ContactUs />} />
-          <Route exact path="/product/:id" element={<ProductDetails />} />
+          {/* <Route exact path="/product/:id" element={<ProductDetails />} /> */}
+          <Route exact path="/product" element={<ProductDetails />} />
         </Routes>
         <Footer />
       </Router>

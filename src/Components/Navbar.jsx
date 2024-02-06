@@ -62,16 +62,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        <div className="flex lg:gap-8 lg:text-xl md:text-xs gap-2">
-          <Link to={"/wishlist"}>
-            <i
-              className={`bi bi-heart ${
-                location.pathname === "/wishlist"
-                  ? "text-red-500"
-                  : "text-gray-900"
-              }`}
-            ></i>
-          </Link>
+        <div className="flex lg:gap-8 lg:text-xl md:text-xs gap-2">         
           <Link to={"/profile"}>
             <i
               className={`bi bi-person-circle ${

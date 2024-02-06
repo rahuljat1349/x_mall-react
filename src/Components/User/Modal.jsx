@@ -27,7 +27,7 @@ export default function SimpleModal() {
   const [open, setOpen] = React.useState(false);
   return (
     <React.Fragment>
-      <span onClick={() => setOpen(true)}>New project</span>
+      <span onClick={() => setOpen(true)}>Edit Profile</span>
       <Modal open={open} onClose={() => setOpen(false)}>
         <ModalDialog>
           <DialogTitle>Edit profile</DialogTitle>
