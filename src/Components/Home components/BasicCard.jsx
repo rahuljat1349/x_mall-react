@@ -20,7 +20,7 @@ export default function BasicCard({
       <div className=" p-2 mb-4 hover:text-red-300  cursor-pointer">
         <Link to={`/product/${productId}`}>
           <div
-            className={`h-[17vh] sm:h-[30vh] md:h-[35vh] lg:h-[40vh] rounded-t-xl border-red-200 border-solid border-[1px] border-b-white`}
+            className={`h-[15vh] sm:h-[25vh] md:h-[30vh] lg:h-[40vh] rounded-t-xl border-red-200 border-solid border-[1px] border-b-white`}
           >
             <div className="w-full h-[100%] hover:scale-110 duration-300 flex justify-center items-center">
               <img

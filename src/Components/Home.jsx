@@ -58,9 +58,9 @@ export default function Home() {
       </div>
 
       {/* BestDellers */}
-      <div className="bg-slate-100 px-4 justify-around py-16 items-center gap-2 flex w-full h-[40vh] sm:h-[60vh]">
-        <div className=" gap-2 flex  w-[30vw] flex-col">
-          <h1 className="md:text-2xl text-gray-700">#BestSellers</h1>
+      <div className="bg-slate-100 px-4 justify-around flex-col sm:flex-row py-10 items-center gap-2 flex w-full h-[40vh] sm:h-[60vh]">
+        <div className=" gap-2 flex  w-[20vw] flex-col">
+          <h1 className="sm:text-2xl text-gray-700">#BestSellers</h1>
           <p className="hidden text-xs text-gray-500 text-wrap md:text-sm sm:block">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum aliquid
             porro quo nihil rem laboriosam dolorem, assumenda ipsam vitae
@@ -68,11 +68,13 @@ export default function Home() {
           </p>
         </div>
 
-        <BasicCard />
+        <div className="flex">
+          <BasicCard />
 
-        <BasicCard />
+          <BasicCard />
 
-        <BasicCard />
+          <BasicCard />
+        </div>
       </div>
       {/*  */}
       <div className="w-full md:text-4xl  gap-1 items-center text-gray-700 px-6 py-16 flex justify-evenly">
@@ -98,9 +100,9 @@ export default function Home() {
         </Link>
       </div>
       {/*  */}
-      <div className="px-4 py-6 w-full ">
-        <div className=" flex flex-col gap-8 border-gray-500 w-full p-12 border-solid border-2">
-          <div>
+      <div className="px-4 py-2 w-full ">
+        <div className=" flex flex-col gap-8 border-gray-500 py-4  sm:p-8 border-solid border-2">
+          <div className="px-1">
             <h1 className="text-3xl font-semibold text-gray-600">
               Hot Deal This Week
             </h1>

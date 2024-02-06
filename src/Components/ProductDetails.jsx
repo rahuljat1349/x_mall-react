@@ -35,7 +35,7 @@ export default function ProductDetails() {
             <div className="w-[50%]  flex justify-center items-center ">
               <img className="w-[50%]" src={newData.image} alt="" />
             </div>
-            <div className="w-[50%]  flex p-2 flex-col  justify-center gap-2 sm:gap-8  ">
+            <div className="sm:w-[50%]  flex p-2 flex-col  justify-center gap-2 sm:gap-8  ">
               <div>
                 <h1 className="text-lg">{newData.title}</h1>
                 <p className="text-xs text-wrap">{newData.description}</p>

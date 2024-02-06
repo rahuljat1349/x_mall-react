@@ -3,20 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export default function Navbar() {
-  const [pageColor, setPageColor] = useState("text-gray-500"); // Default color
-  const Products = () => {
-    const location = useLocation();
-
-    useEffect(() => {
-      console.log(location.pathname);
-      // Check if the user is on the Products page
-      if (location.pathname !== "/home") {
-        setPageColor("text-red-500"); // Set your desired color
-      } else {
-        setPageColor("text-gray-500"); // Reset color for other pages
-      }
-    }, [location.pathname]);
-  };
+  const location = useLocation();
 
   return (
     <>
@@ -61,12 +48,12 @@ export default function Navbar() {
             <h1 className="text-red-400 sigle-day-regular">pinkMall</h1>{" "}
           </Link>
         </div>
-        <div className=" hover:border-red-200 gap-3 justify-between flex items-center px-3 sm:w-72 lg:w-96 xl:w-[40vw] border-solid border-[0.5px] rounded-sm border-gray-300">
+        <div className=" hover:border-red-200 gap-2 justify-between flex items-center px-3 sm:w-72 lg:w-96 xl:w-[40vw] border-solid border-[0.5px] rounded-sm border-gray-300">
           <select className="text-gray-500 text-xs" name="" id="">
             <option value="All">All</option>
           </select>
           <input
-            className="outline-none text-gray-600  w-[80%] p-3 text-xs"
+            className="outline-none text-gray-600  w-[90%] p-3 text-xs"
             placeholder="Search for anything"
             type="text"
           />
@@ -76,12 +63,28 @@ export default function Navbar() {
         </div>
 
         <div className="flex lg:gap-8 lg:text-xl md:text-xs gap-2">
-          <i className="bi bi-heart"></i>
+          <i
+            className={`bi bi-heart ${
+              location.pathname === "/wishlist"
+                ? "text-red-500"
+                : "text-gray-900"
+            }`}
+          ></i>
           <Link to={"/profile"}>
-            <i className="bi bi-person-circle"></i>
+            <i
+              className={`bi bi-person-circle ${
+                location.pathname === "/profile"
+                  ? "text-red-500"
+                  : "text-gray-900"
+              }`}
+            ></i>
           </Link>
           <Link to={"/cart"}>
-            <i className="bi bi-cart3"></i>
+            <i
+              className={`bi bi-cart3 ${
+                location.pathname === "/cart" ? "text-red-500" : "text-gray-900"
+              }`}
+            ></i>
           </Link>
         </div>
       </div>
@@ -89,23 +92,53 @@ export default function Navbar() {
       {/* Bottom navbar */}
       <div className="px-2 sticky top-14 md:top-14 z-50 bg-white md:px-20">
         <div
-          className={`w-full text-[12px] ${pageColor} items-center flex gap-2  justify-between py-1 md:py-2 border-gary-200 border-solid border-y-[1px]`}
+          className={`w-full text-[12px] items-center flex gap-2  justify-between py-1 md:py-2 border-gary-200 border-solid border-y-[1px]`}
         >
           <div>
             <ul className="flex items-center gap-2 md:gap-6">
               <Link to={"/"}>
                 {" "}
-                <li>Home</li>
+                <li
+                  className={`${
+                    location.pathname === "/" ? "text-red-500" : "text-gray-500"
+                  }`}
+                >
+                  Home
+                </li>
               </Link>
               <Link to={"/products"}>
                 {" "}
-                <li>Products</li>
+                <li
+                  className={`${
+                    location.pathname === "/products"
+                      ? "text-red-500"
+                      : "text-gray-500"
+                  }`}
+                >
+                  Products
+                </li>
               </Link>
               <Link to={"/about"}>
-                <li>About Us</li>
+                <li
+                  className={`${
+                    location.pathname === "/about"
+                      ? "text-red-500"
+                      : "text-gray-500"
+                  }`}
+                >
+                  About Us
+                </li>
               </Link>
               <Link to={"/contact"}>
-                <li>Contact Us</li>
+                <li
+                  className={`${
+                    location.pathname === "/contact"
+                      ? "text-red-500"
+                      : "text-gray-500"
+                  }`}
+                >
+                  Contact Us
+                </li>
               </Link>
             </ul>
           </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   return (
@@ -47,9 +48,12 @@ export default function Profile() {
               </div>
             </div>
             <div>
-              <button className="hover:bg-red-500 duration-200 bg-red-400  shadow-lg px-3 sm:px-6 py-4 text-white text-sm rounded-[50px]">
+              <Link
+                to={"/products"}
+                className="hover:bg-red-500 duration-200 bg-red-400  shadow-lg px-3 sm:px-6 py-4 text-white text-sm rounded-[50px]"
+              >
                 Explore More Products
-              </button>
+              </Link>
             </div>
           </div>
         </div>
