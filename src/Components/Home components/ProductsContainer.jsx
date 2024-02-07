@@ -37,9 +37,9 @@ export default function ProductsContainer({ productsLength }) {
               key={i}
               rating={product.rating}
               productId={product.id}
-              title={product.title.slice(0, 20) + "..."}
+              title={product.title}
               price={"$" + product.price}
-              description={product.description.slice(0, 50) + "..."}
+              description={product.description}
               image={product.image}
             />
           ))}

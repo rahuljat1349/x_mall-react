@@ -1,10 +1,9 @@
-import React,{useState} from "react";
-import Checkbox from "@mui/material/Checkbox";
+import React, { useState } from "react";
 import { red } from "@mui/material/colors";
-import { Link } from "react-router-dom";
 
-import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
-import Favorite from "@mui/icons-material/Favorite";
+import { Link } from "react-router-dom";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import IconButton from "@mui/material/IconButton";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -16,7 +15,13 @@ export default function BasicCard({
   price,
   image,
 }) {
-  const  [productData, setproductData] = useState({title,description,price,image,rating})
+  const [productData, setproductData] = useState({
+    title,
+    description,
+    price,
+    image,
+    rating,
+  });
   return (
     <>
       <div className=" p-2 mb-4 hover:text-red-300  cursor-pointer">
@@ -43,27 +48,27 @@ export default function BasicCard({
         >
           <div>
             <h1 className=" text-xs md:text-lg text-gray-700 ">
-              {title ? title : "title"}
+              {title ? title.slice(0, 20) + "..." : "title"}
             </h1>
             <p className="text-xs hidden md:block text-gray-500">
-              {description ? description : "This is description"}
+              {description
+                ? description.slice(0, 50) + "..."
+                : "This is description"}
             </p>
             <span className="text-xs text-red-400">
               {price ? price : "29.00"}
             </span>
           </div>
           <div>
-            <Checkbox
-              {...label}
-              icon={<FavoriteBorder />}
+            <IconButton
               sx={{
                 color: red[400],
-                "&.Mui-checked": {
-                  color: red[400],
-                },
               }}
-              checkedIcon={<Favorite />}
-            />
+              // color="warning"
+              aria-label="add to shopping cart"
+            >
+              <AddShoppingCartIcon />
+            </IconButton>
           </div>
         </div>
       </div>
