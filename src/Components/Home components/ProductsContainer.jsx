@@ -10,12 +10,11 @@ export default function ProductsContainer({ productsLength }) {
 
   const getData = async () => {
     try {
-      const data = await fetch("https://fakestoreapi.com/products?limit=30");
+      const data = await fetch("https://fakestoreapi.com/products");
       const fetchedData = await data.json();
       const filteredData =
         (await length) > 0 ? fetchedData.slice(0, length) : fetchedData;
       setNewData(filteredData);
-      console.log(filteredData.id);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {

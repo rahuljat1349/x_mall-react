@@ -11,6 +11,7 @@ import SignUp from "./Components/User/SignUp";
 import ContactUs from "./Components/ContactUs";
 import AboutUs from "./Components/AboutUs";
 import ProductDetails from "./Components/ProductDetails";
+import CheckoutPage from "./Components/Checkout";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route exact path="/contact" element={<ContactUs />} />
           {/* <Route exact path="/product/:id" element={<ProductDetails />} /> */}
           <Route exact path="/product" element={<ProductDetails />} />
+          <Route exact path="/checkout" element={<CheckoutPage/>} />
         </Routes>
         <Footer />
       </Router>
