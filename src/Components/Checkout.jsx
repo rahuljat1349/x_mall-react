@@ -1,21 +1,9 @@
 import React, { useState } from "react";
-
-const Stepper = ({ steps, currentStep }) => {
-  return (
-    <div className="flex mb-4">
-      {steps.map((step, index) => (
-        <div
-          key={index}
-          className={`flex-1 text-center ${
-            index === currentStep ? "text-red-500 font-bold" : "text-gray-500"
-          }`}
-        >
-          {step}
-        </div>
-      ))}
-    </div>
-  );
-};
+import Box from "@mui/material/Box";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import StepIcon from "@mui/material/StepIcon";
 
 const CheckoutPage = () => {
   const [quantity, setQuantity] = useState(1);
@@ -60,7 +48,23 @@ const CheckoutPage = () => {
 
   return (
     <div className="max-w-md mx-auto p-6 my-6 shadow-2xl rounded-md">
-      <Stepper steps={steps} currentStep={currentStep} />
+      {/* Include the MUI Stepper directly with custom color */}
+      <Box sx={{ width: "100%" }}>
+        <Stepper activeStep={currentStep} alternativeLabel>
+          {steps.map((label, index) => (
+            <Step key={index}>
+              <StepLabel
+                StepIconComponent={(props) => (
+                  <CustomStepIcon {...props} isActive={index === currentStep} />
+                )}
+              >
+                {label}
+              </StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+      </Box>
+
       <form>
         {currentStep === 0 && (
           <>
@@ -185,12 +189,24 @@ const CheckoutPage = () => {
             onClick={handleContinue}
             className="bg-red-500 text-white px-4 py-2 rounded-md ml-auto"
           >
-            {currentStep === steps.length - 1 ? "Checkout" : "Continue"}
+            {currentStep === steps.length - 1 ? "Proceed" : "Continue"}
           </button>
         </div>
       </form>
     </div>
   );
+};
+
+const CustomStepIcon = ({ active, completed, ...props }) => {
+  let color = "#BDBDBD"; // Default color
+
+  if (active) {
+    color = "#FF5350"; // Color when step is active
+  } else if (completed) {
+    color = "#FF5350"; // Color when step is completed
+  }
+
+  return <StepIcon {...props} sx={{ color }} />;
 };
 
 export default CheckoutPage;
