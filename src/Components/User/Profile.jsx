@@ -19,7 +19,7 @@ export default function Profile() {
             </div>
             <div className=" shadow-lg shadow-gray-400 overflow-hidden relative sm:-top-20 -top-12 rounded-full">
               <img
-                className="sm:w-36 sm:h-36 md:w-44 md:h-44 h-16 w-16 rounded-full "
+                className="sm:w-36 sm:h-36 md:w-44 md:h-44 h-14 w-14 rounded-full "
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-ihS3fAvKqH5iJ5R3j5KR7VXd5aoYVlbk5cmTyy-y0vU90nCYkWvsRXdQfAy02AgoZ8k&usqp=CAU"
                 alt=""
               />
@@ -32,7 +32,7 @@ export default function Profile() {
             </div>
           </div>
           {/*  */}
-          <div className=" h-full text-center py-4 px-8 items-center justify-between flex-col flex">
+          <div className=" h-full text-center py-6 px-8 items-center justify-between flex-col flex">
             <div className="flex flex-col gap-2">
               <h1 className="md:text-3xl sm:text-2xl font-bold text-lg">
                 Samantha Jones
@@ -54,9 +54,9 @@ export default function Profile() {
             <div>
               <Link
                 to={"/products"}
-                className="hover:bg-red-500 duration-200 bg-red-400  shadow-lg px-3 sm:px-6 py-4 text-white text-sm rounded-[50px]"
+                className="hover:bg-red-500 duration-200 bg-red-400  shadow-lg px-3 sm:px-6 py-4 text-white text-xs rounded-[50px]"
               >
-                Explore More Products
+                Explore More
               </Link>
             </div>
           </div>
