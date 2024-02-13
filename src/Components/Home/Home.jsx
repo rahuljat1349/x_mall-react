@@ -30,11 +30,10 @@ export default function Home() {
             className="bg-white px-6 py-2 border-white border-[1px] rounded-sm border-solid duration-200 text-black hover:bg-transparent hover:text-white"
           >
             <span> Scroll </span>
-            <i class="bi bi-mouse"></i>
+            <i className="bi bi-mouse"></i>
           </button>
         </a>
       </div>
-      {/* <div className="triangle absolute top-0 left-0 w-full h-screen bg-white"></div> */}
       <div className=" flex justify-center">
         <div>
           <h1

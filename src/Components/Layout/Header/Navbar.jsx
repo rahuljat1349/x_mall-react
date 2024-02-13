@@ -72,7 +72,9 @@ export default function Navbar() {
         <div className="text-lg items-center md:text-2xl">
           <Link to={"/"}>
             {" "}
-            <h1 className="text-gray-300 text-red-400 sigle-day-regular">xMall</h1>{" "}
+            <h1 className="text-gray-300 text-red-400 sigle-day-regular">
+              xMall
+            </h1>{" "}
           </Link>
         </div>
         <div className="sm:block  hidden">
