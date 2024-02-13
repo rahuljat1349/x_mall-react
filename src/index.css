@@ -6,7 +6,7 @@
 li:hover,
 i:hover,
 h1:hover {
-  color: rgb(255, 107, 107);
+  color: white;
   transition: ease 0.2s all;
   cursor: pointer;
 }
@@ -14,8 +14,12 @@ select {
   outline: none;
   background-color: transparent;
 }
+h1 {
+  font-weight: 800;
+}
 body {
-  font-family: "Rubik", sans-serif;
+  background-color: #212121;
+  font-family: "roboto", "Rubik", sans-serif;
 }
 .sigle-day-regular {
   font-family: "Single Day", cursive;

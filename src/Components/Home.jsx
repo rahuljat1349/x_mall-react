@@ -9,22 +9,22 @@ export default function Home() {
     <>
       <div className="w-full text-[12px] text-gray-500 md:px-20 px-4 py-3 flex ">
         <ul className="flex w-full py-4 justify-around">
-          <li className="rounded-full shadow-md hover:bg-red-400 duration-200 bg-red-300 w-10 h-10 md:w-16 md:h-16 border-solid border-2 border-gray-400">
+          <li className="rounded-full shadow-md hover:bg-gray-500 duration-200 w-10 h-10 md:w-16 md:h-16 border-solid border-2 border-gray-400">
             <img src="" alt="" />
           </li>
-          <li className="rounded-full shadow-md hover:bg-red-400 duration-200 bg-red-300 w-10 h-10 md:w-16 md:h-16 border-solid border-2 border-gray-400">
+          <li className="rounded-full shadow-md hover:bg-gray-500 duration-200 w-10 h-10 md:w-16 md:h-16 border-solid border-2 border-gray-400">
             <img src="" alt="" />
           </li>
-          <li className="rounded-full shadow-md hover:bg-red-400 duration-200 bg-red-300 w-10 h-10 md:w-16 md:h-16 border-solid border-2 border-gray-400">
+          <li className="rounded-full shadow-md hover:bg-gray-500 duration-200 w-10 h-10 md:w-16 md:h-16 border-solid border-2 border-gray-400">
             <img src="" alt="" />
           </li>
-          <li className="rounded-full shadow-md hover:bg-red-400 duration-200 bg-red-300 w-10 h-10 md:w-16 md:h-16 border-solid border-2 border-gray-400">
+          <li className="rounded-full shadow-md hover:bg-gray-500 duration-200 w-10 h-10 md:w-16 md:h-16 border-solid border-2 border-gray-400">
             <img src="" alt="" />
           </li>
-          <li className="rounded-full shadow-md hover:bg-red-400 duration-200 bg-red-300 w-10 h-10 md:w-16 md:h-16 border-solid border-2 border-gray-400">
+          <li className="rounded-full shadow-md hover:bg-gray-500 duration-200 w-10 h-10 md:w-16 md:h-16 border-solid border-2 border-gray-400">
             <img src="" alt="" />
           </li>
-          <li className="rounded-full shadow-md hover:bg-red-400 duration-200 bg-red-300 w-10 h-10 md:w-16 md:h-16 border-solid border-2 border-gray-400">
+          <li className="rounded-full shadow-md hover:bg-gray-500 duration-200 w-10 h-10 md:w-16 md:h-16 border-solid border-2 border-gray-400">
             <img src="" alt="" />
           </li>
         </ul>
@@ -58,7 +58,7 @@ export default function Home() {
       </div>
 
       {/* BestDellers */}
-      <div className="bg-slate-100 px-4 justify-around flex-col sm:flex-row py-10 items-center gap-2 flex w-full h-[40vh] sm:h-[60vh]">
+      <div className=" px-4 justify-around flex-col sm:flex-row py-10 items-center gap-2 flex w-full h-[40vh] sm:h-[60vh]">
         <div className=" gap-2 flex  w-[20vw] flex-col">
           <h1 className="sm:text-2xl text-gray-700">#BestSellers</h1>
           <p className="hidden text-xs text-gray-500 text-wrap md:text-sm sm:block">

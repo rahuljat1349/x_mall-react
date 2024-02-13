@@ -15,19 +15,18 @@ export default function BasicCard({
   price,
   image,
 }) {
- 
   return (
     <>
-      <div className=" p-2 mb-4 hover:text-red-300  cursor-pointer">
+      <div className=" p-2 mb-4   cursor-pointer">
         <Link
           // to={`/product/${productId}`}
           to={"/product"}
           state={{ productId: productId }}
         >
           <div
-            className={`h-[15vh] sm:h-[25vh] md:h-[30vh] lg:h-[40vh] rounded-t-xl border-red-200 border-solid border-[1px] border-b-white`}
+            className={`h-[15vh] sm:h-[25vh] bg-white md:h-[30vh] lg:h-[40vh] rounded-t-xl border-gray-200 border-solid border-[1px] border-b-white`}
           >
-            <div className="w-full h-[100%] hover:scale-110 duration-300 flex justify-center items-center">
+            <div className="w-full h-[100%] hover:scale-110  duration-300 flex justify-center items-center">
               <img
                 className="sm:w-28 md:w-32 lg:w-28 w-16"
                 src={image}
@@ -38,7 +37,7 @@ export default function BasicCard({
           </div>
         </Link>
         <div
-          className={`md:h-[14vh] flex p-2 justify-between items-center h-[8vh] bg-white border-t-white  border-red-200 border-[1px]`}
+          className={`md:h-[14vh] rounded-b-xl flex p-2 justify-between items-center h-[8vh] bg-gray-200 border-t-white  border-gray-200 border-[1px]`}
         >
           <div>
             <h1 className=" text-xs md:text-lg text-gray-700 ">
