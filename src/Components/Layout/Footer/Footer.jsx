@@ -3,10 +3,12 @@ import React from "react";
 export default function Footer() {
   return (
     <>
-      <div className="bg-gray-900 p-4 flex justify-around w-full md:px-10 text-white font-semibold md:text-sm ">
-        <div className="width-[30%] p-2 flex flex-col gap-2 justify-start items-center">
-          <h1 className="sm:text-lg text-sm">DOWNLOAD OUR APP</h1>
-          <p className="text-xs mb-4">
+      <div className="bg-gray-900 items-start p-4 flex justify-around w-full md:px-10 text-white font-semibold md:text-sm ">
+        <div className="w-full p-2 flex flex-col gap-2 justify-start items-center">
+          <h1 className="sm:text-sm md:text-lg text-[10px]">
+            DOWNLOAD OUR APP
+          </h1>
+          <p className="text-[8px] md:text-xs mb-4">
             Download App for Android and IOS mobile phone.
           </p>
           <div className="flex justify-center items-center">
@@ -16,19 +18,26 @@ export default function Footer() {
               alt="Apple Store"
             />
             <img
-              className="w-16  cursor-pointer sm:w-32"
+              className="w-16 cursor-pointer sm:w-32"
               src="http://www.pngmart.com/files/10/Get-It-On-Google-Play-PNG-Clipart.png"
               alt="Google Play"
             />
           </div>
         </div>
-        <div className="width-[30%] p-2 flex flex-col gap-2 justify-start items-center">
-          <h1 className="sigle-day-regular sm:text-3xl text-lg">xMall</h1>
-          <p className="text-xs">Honesty is Our first Policy.</p>
+        <div className="w-full p-2 flex flex-col gap-2 justify-start items-center">
+          <h1 className="sigle-day-regular text-red-400 sm:text-lg md:text-xl text-[10px]">
+            xMall
+          </h1>
+          <p className="text-[8px] md:text-xs">Honesty is Our first Policy.</p>
+          <p className="text-[8px] md:text-xs font-serif font-thin">
+            Copyrights 2024 &#169; msInfotech.
+          </p>
         </div>
-        <div className="width-[30%] p-2 cursor-pointer flex flex-col gap-2 justify-start items-center">
-          <h1 className="sm:text-lg text-sm underline ">Follow Us</h1>
-          <div className="text-xs flex flex-col">
+        <div className="w-full p-2 cursor-pointer flex flex-col gap-2 justify-start items-center">
+          <h1 className="sm:text-sm md:text-lg text-[10px] underline ">
+            Follow Us
+          </h1>
+          <div className="text-[8px] md:text-xs flex gap-2 flex-col">
             <a>Twitter</a>
             <a>Instagram</a>
             <a>Facebook</a>

@@ -1,6 +1,6 @@
 import "./App.css";
 import Footer from "./Components/Layout/Footer/Footer";
-import Home from "./Components/Home";
+import Home from "./Components/Home/Home";
 import Navbar from "./Components/Layout/Header/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Cart from "./Components/User/Cart";
@@ -19,7 +19,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/" element={<Home />} />
           {/* <Route exact path="/cart" element={<Cart />} /> */}
           {/* <Route exact path="/profile" element={<Profile />} /> */}
           {/* <Route exact path="/products" element={<Products />} /> */}

@@ -3,22 +3,14 @@
 @tailwind components;
 @tailwind utilities;
 
-li:hover,
-i:hover,
-h1:hover {
-  color: white;
-  transition: ease 0.2s all;
-  cursor: pointer;
-}
 select {
   outline: none;
   background-color: transparent;
 }
-h1 {
-  font-weight: 800;
+* {
+  scroll-behavior: smooth;
 }
 body {
-  background-color: #212121;
   font-family: "roboto", "Rubik", sans-serif;
 }
 .sigle-day-regular {
@@ -26,3 +18,11 @@ body {
   font-weight: 400;
   font-style: normal;
 }
+.home-scroll:after {
+  content: "";
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: white;
+clip-path: polygon(100% 0, 0% 100%, 100% 100%);}
