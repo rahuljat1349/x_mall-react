@@ -5,6 +5,10 @@ import SliderCarousel from "../Home components/Carousel";
 import { Link } from "react-router-dom";
 import Product from "./Product";
 
+// import { UseDispatch } from "react-redux";
+// import { UseSelector } from "react-redux";
+
+
 const product = {
   name: "Blue T-shirt for Men",
   images: [
@@ -20,9 +24,9 @@ export default function Home() {
   return (
     <>
       <div className="flex home-scroll flex-col pt-24 h-screen gap-20 w-full justify-center items-center bg-gray-900 text-white">
-        <h3 className="font-semibold">Welcome to xMall.</h3>
+        <h3 className="font-semibold text-xl">Welcome to xMall</h3>
         <h1 className="text-3xl text-center font-semibold">
-          Find Amazing products Below.
+          Find Amazing products Below
         </h1>
         <a href="#featured-products">
           <button
@@ -38,7 +42,7 @@ export default function Home() {
         <div>
           <h1
             id="featured-products"
-            className=" md:text-xl p-2 md:w-[20vw] text-gray-700 font-medium mb-4 text-center border-gray-500 border-solid border-b-[1px]"
+            className=" md:text-xl p-2 md:w-[20vw]  text-gray-800 font-medium mb-4 text-center border-gray-500 border-solid border-b-[1px]"
           >
             Featured Products
           </h1>

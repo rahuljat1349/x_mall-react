@@ -10,7 +10,7 @@ import Login from "./Components/User/Login";
 import SignUp from "./Components/User/SignUp";
 import ContactUs from "./Components/ContactUs";
 import AboutUs from "./Components/AboutUs";
-import ProductDetails from "./Components/ProductDetails";
+import ProductDetails from "./Components/Product/ProductDetails";
 import CheckoutPage from "./Components/Checkout";
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
           {/* <Route exact path="/signup" element={<SignUp />} /> */}
           {/* <Route exact path="/about" element={<AboutUs />} /> */}
           {/* <Route exact path="/contact" element={<ContactUs />} /> */}
-          {/* <Route exact path="/product/:id" element={<ProductDetails />} /> */}
+          <Route exact path="/product/:id" element={<ProductDetails />} />
           {/* <Route exact path="/product" element={<ProductDetails />} /> */}
           {/* <Route exact path="/checkout" element={<CheckoutPage />} /> */}
         </Routes>

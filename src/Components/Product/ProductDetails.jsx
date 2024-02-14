@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate,Link } from "react-router-dom";
 import Button from "@mui/joy/Button";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import Loader from "./Loader";
+import Loader from "../Loader";
 
 export default function ProductDetails() {
   let { state } = useLocation();

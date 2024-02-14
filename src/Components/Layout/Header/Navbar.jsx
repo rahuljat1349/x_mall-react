@@ -59,7 +59,6 @@ export default function Navbar() {
       <div className="w-full sticky z-50 top-0 items-center bg-gray-900  flex gap-2 px-4 md:px-10  justify-between py-1">
         <div
           onClick={() => {
-            console.log(menu);
             setMenu((state) => {
               return !state;
             });
@@ -72,12 +71,12 @@ export default function Navbar() {
         <div className="text-lg items-center md:text-2xl">
           <Link to={"/"}>
             {" "}
-            <h1 className="text-gray-300 text-red-400 sigle-day-regular">
+            <h1 className="text-3xl text-red-400 sigle-day-regular">
               xMall
             </h1>{" "}
           </Link>
         </div>
-        <div className="sm:block  hidden">
+        <div className="sm:block hidden">
           <ul className="flex items-center gap-2 md:gap-6">
             <Link to={"/"}>
               {" "}
@@ -125,13 +124,18 @@ export default function Navbar() {
             </Link>
           </ul>
         </div>
-        <div className="flex lg:gap-8 items-center lg:text-xl md:text-xs py-2 gap-2">
-          <div className="sm:hidden">
-            <SearchIcon
-              sx={{
-                color: grey[700],
-              }}
-            />
+        <div className="flex lg:gap-4 items-center lg:text-xl md:text-lg py-2 gap-2">
+          <div
+            onClick={() => {
+              setSearch((state) => {
+                return !state;
+              });
+            }}
+            className="sm:hidden cursor-pointer"
+          >
+            <i
+              className={`bi text-gray-500 bi-${search ? "x-lg" : "search"}`}
+            ></i>
           </div>
           <div className="hidden sm:block">
             <Search
@@ -174,7 +178,7 @@ export default function Navbar() {
       <div
         className={`items-center ${
           menu ? "block" : "hidden"
-        } sticky pb-2 duration-500 px-4 md:px-10 top-12 z-50 bg-gray-800 scroll-smooth  md:gap-6`}
+        } sticky pb-2 duration-500 px-4 md:px-10 top-12 z-50 bg-gray-800  md:gap-6`}
       >
         <ul className=" ">
           <Link to={"/"}>
@@ -220,6 +224,29 @@ export default function Navbar() {
             </li>
           </Link>
         </ul>
+      </div>
+      <div
+        className={`items-center ${
+          search ? "block" : "hidden"
+        } sticky pb-2 duration-500 px-4 md:px-10 flex justify-center items-center p-2 top-12 z-50 bg-gray-800  md:gap-6`}
+      >
+        <Search
+          sx={{
+            color: grey[400],
+          }}
+        >
+          <SearchIconWrapper>
+            <SearchIcon
+              sx={{
+                color: grey[700],
+              }}
+            />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search…"
+            inputProps={{ "aria-label": "search" }}
+          />
+        </Search>
       </div>
     </>
   );
