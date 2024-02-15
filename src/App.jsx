@@ -16,7 +16,7 @@ import CheckoutPage from "./Components/Checkout";
 function App() {
   return (
     <>
-      <Router >
+      <Router>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
