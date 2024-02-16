@@ -12,6 +12,7 @@ const Home = () => {
   const { list: products, loading } = useSelector((state) => state.products);
 
   useEffect(() => {
+    console.log(products._id);
     // Fetch products when the component mounts
     dispatch(fetchProducts());
   }, [dispatch]);
@@ -52,7 +53,7 @@ const Home = () => {
               <Link
                 className="flex hover:shadow-lg w-36 justify-center text-xs sm:text-sm sm:w-60 items-center rounded duration-200 hover:-translate-y-2 flex-col gap-4 p-2"
                 to={`product/${product._id}`}
-                state={{ product: product }}
+                
                 key={product._id}
               >
                 <div className="w-12 sm:w-28 lg:w-36">
