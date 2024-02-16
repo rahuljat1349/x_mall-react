@@ -5,6 +5,7 @@ const initialState = {
   list: [],
   loading: false,
   error: null,
+  selectedProduct: {},
 };
 
 export const fetchProducts = createAsyncThunk(
@@ -23,6 +24,23 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
+export const fetchSingleProduct = createAsyncThunk(
+  "products/fetchSingleProduct",
+  async (productId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/v1/product/${productId}`
+      );
+      if (!response.ok) {
+        throw new Error(`Failed to fetch product with ID: ${productId}`);
+      }
+      const data = await response.json();
+      return data.product;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 const productsSlice = createSlice({
   name: "products",
@@ -44,8 +62,21 @@ const productsSlice = createSlice({
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(fetchSingleProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchSingleProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.selectedProduct = action.payload;
+      })
+      .addCase(fetchSingleProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
-},{});
+});
 
 export default productsSlice.reducer;

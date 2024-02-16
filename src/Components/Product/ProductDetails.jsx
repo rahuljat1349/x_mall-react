@@ -4,7 +4,7 @@ import { grey } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProducts } from "../../Features/Products/productSlice";
+import { fetchSingleProduct } from "../../Features/Products/productSlice";
 import Button from "@mui/joy/Button";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import Add from "@mui/icons-material/Add";
@@ -13,13 +13,15 @@ import Loader from "../Loader";
 export default function ProductDetails({}) {
   const id = useParams().id;
   const dispatch = useDispatch();
-  const { list: products, loading } = useSelector((state) => state.products);
-const singleProduct = products.find((item) => item._id === id);
-  useEffect(() => {
-    // console.log(singleProduct);
 
-    dispatch(fetchProducts());
-  }, [dispatch]);
+  const { selectedProduct: product, loading } = useSelector(
+    (state) => state.products
+  );
+
+  useEffect(() => {
+    // console.log(product);
+    dispatch(fetchSingleProduct(id));
+  }, [dispatch, id]);
 
   return (
     <>
@@ -37,9 +39,9 @@ const singleProduct = products.find((item) => item._id === id);
             </div>
             <div className="sm:w-[50%]  flex p-2 flex-col  justify-center gap-2 sm:gap-8  ">
               <div>
-                <h1 className="text-lg text-gray-700">{singleProduct.name}</h1>
+                <h1 className="text-lg text-gray-700">{product.name}</h1>
                 <p className="text-xs text-gray-700 text-wrap">
-                  {singleProduct.description}
+                  {product.description}
                 </p>
               </div>
               <div className="flex items-center">
@@ -51,17 +53,16 @@ const singleProduct = products.find((item) => item._id === id);
                       color: red[600],
                     },
                   }}
-                  defaultValue={singleProduct.rating}
+                  v
+                  defaultValue={product.rating}
                   readOnly
                 />
                 <span className="text-red-400">
-                  ({singleProduct.numOfReviews} Reviews)
+                  ({product.numOfReviews} Reviews)
                 </span>
               </div>
               <div className="flex items-center">
-                <span className="text-red-400">
-                  &#8377;{singleProduct.price}
-                </span>
+                <span className="text-red-400">&#8377;{product.price}</span>
               </div>
               <div className="flex w-full justify-center gap-12 mt-10 ">
                 <button className="text-white text-[11px] sm:text-xs p-1 shadow-lg bg-red-500 md:p-2 rounded flex items-center justify-center hover:bg-white hover:text-red-500 border-red-500 border-solid border-2 duration-200">
