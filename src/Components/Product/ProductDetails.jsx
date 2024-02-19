@@ -43,7 +43,7 @@ export default function ProductDetails({}) {
   );
 
   useEffect(() => {
-    console.log(product.reviews.length);
+    console.log(product.rating);
     dispatch(fetchSingleProduct(id));
   }, [dispatch, id]);
 
@@ -104,7 +104,7 @@ export default function ProductDetails({}) {
                     },
                   }}
                   precision={0.5}
-                  defaultValue={product.ratings}
+                  value={product.ratings}
                   readOnly
                 />
                 <span className="text-gray-400">
@@ -194,7 +194,7 @@ export default function ProductDetails({}) {
       </div>
       <div className="w-full font-semibold items-center overflow-auto p-4 flex flex-col justify-center ">
         <div className="p-4 w-full flex-wrap flex gap-4">
-          {product.reviews.length > 0 ? (
+          {product.reviews && product.reviews.length > 0 ? (
             product.reviews.map((review, index) => (
               <Card
                 sx={{
