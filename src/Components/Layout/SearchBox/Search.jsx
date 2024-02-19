@@ -19,7 +19,7 @@ export default function Search() {
         Search Products
       </h1>
 
-      <div className="w-full bg-gray-700 h-[90vh] flex justify-center ">
+      <div className="w-full shadow-xl shadow-black bg-gray-700 h-[90vh] flex justify-center ">
         <div className="mt-36 rounded bg-violet-200 h-10 overflow-hidden">
           <input
             placeholder="Search for a product.."
@@ -31,7 +31,7 @@ export default function Search() {
           />
           <button
             onClick={handleSearchSubmit}
-            className="p-2 hover:bg-red-400 duration-200 active:bg-red-500 bg-red-300 text-white"
+            className="p-2 hover:bg-red-500 duration-200 active:bg-red-600 bg-red-400 text-white"
           >
             Search
           </button>
