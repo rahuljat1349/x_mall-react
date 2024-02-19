@@ -10,9 +10,13 @@ const initialState = {
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async () => {
+  async (keyword) => {
     try {
-      const response = await fetch("http://localhost:4000/api/v1/products");
+      const response = await fetch(
+        `http://localhost:4000/api/v1/products/${
+          keyword ? `search?key=${keyword}` : ""
+        }`  
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch products");
       }
@@ -41,6 +45,23 @@ export const fetchSingleProduct = createAsyncThunk(
     }
   }
 );
+// export const searchProducts = createAsyncThunk(
+//   "products/searchProducts",
+//   async (keyword) => {
+//     try {
+//       const response = await fetch(
+//         `http://localhost:4000/api/v1/product/${productId}`
+//       );
+//       if (!response.ok) {
+//         throw new Error(`Failed to fetch product with ID: ${productId}`);
+//       }
+//       const data = await response.json();
+//       return data.product;
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
+// );
 
 const productsSlice = createSlice({
   name: "products",
@@ -76,6 +97,19 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       });
+    // .addCase(searchProducts.pending, (state) => {
+    //   state.loading = true;
+    //   state.error = null;
+    // })
+    // .addCase(searchProducts.fulfilled, (state, action) => {
+    //   state.loading = false;
+    //   state.error = null;
+    //   state.selectedProduct = action.payload;
+    // })
+    // .addCase(searchProducts.rejected, (state, action) => {
+    //   state.loading = false;
+    //   state.error = action.error.message;
+    // });
   },
 });
 

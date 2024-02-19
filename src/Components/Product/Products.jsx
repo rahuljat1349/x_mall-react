@@ -1,46 +1,32 @@
-// Home.jsx
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProducts } from "../../Features/Products/productSlice";
+// import { searchProducts } from "../../Features/Products/productSlice";
 import Rating from "@mui/material/Rating";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { red } from "@mui/material/colors";
-import Loader from "../../Components/Loader";
+import Loader from "../Loader";
 
-const Home = () => {
+export default function Products() {
   const dispatch = useDispatch();
   const { list: products, loading } = useSelector((state) => state.products);
 
-  useEffect(() => {
-    console.log(products._id);
-    // Fetch products when the component mounts
-    dispatch(fetchProducts());
-  }, [dispatch]);
+  const keyword = useParams().keyword;
 
+  useEffect(() => {
+    console.log(products);
+    // Fetch products when the component mounts
+    dispatch(fetchProducts(keyword));
+  }, [dispatch, keyword]);
   return (
     <>
-      <div className="flex home-scroll flex-col pt-24 h-screen gap-20 w-full justify-center items-center bg-gray-900 text-white">
-        <h3 className="font-semibold text-xl">Welcome to xMall</h3>
-        <h1 className="text-3xl text-center font-semibold">
-          Find Amazing products Below
-        </h1>
-        <a href="#featured-products">
-          <button
-            href="#featured-products"
-            className="bg-white px-6 py-2 border-white border-[1px] rounded-sm border-solid duration-200 text-black hover:bg-transparent hover:text-white"
-          >
-            <span> Scroll </span>
-            <i className="bi bi-mouse"></i>
-          </button>
-        </a>
-      </div>
       <div className="flex justify-center">
         <div>
           <h1
             id="featured-products"
             className="md:text-xl p-2 md:w-[20vw] text-gray-800 font-medium mb-4 text-center border-gray-500 border-solid border-b-[1px]"
           >
-            Featured Products
+            Products
           </h1>
         </div>
       </div>
@@ -91,6 +77,4 @@ const Home = () => {
       </div>
     </>
   );
-};
-
-export default Home;
+}

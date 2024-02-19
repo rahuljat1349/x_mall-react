@@ -2,9 +2,17 @@ import Rating from "@mui/material/Rating";
 import { red } from "@mui/material/colors";
 import { grey } from "@mui/material/colors";
 import Avatar from "@mui/joy/Avatar";
+import Button from "@mui/joy/Button";
+import FormControl from "@mui/joy/FormControl";
+import FormLabel from "@mui/joy/FormLabel";
+import Input from "@mui/joy/Input";
+import Modal from "@mui/joy/Modal";
+import ModalDialog from "@mui/joy/ModalDialog";
+import DialogTitle from "@mui/joy/DialogTitle";
+import DialogContent from "@mui/joy/DialogContent";
+import Stack from "@mui/joy/Stack";
 import Chip from "@mui/joy/Chip";
 import Box from "@mui/joy/Box";
-import Button from "@mui/joy/Button";
 import ButtonGroup from "@mui/joy/ButtonGroup";
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
@@ -33,6 +41,7 @@ import Add from "@mui/icons-material/Add";
 import Loader from "../Loader";
 
 export default function ProductDetails({}) {
+  const [open, setOpen] = React.useState(false);
   const [cartValue, setCartValue] = useState(1);
   const [imagenavigation, setImagenavigation] = useState(false);
   const id = useParams().id;
@@ -99,9 +108,6 @@ export default function ProductDetails({}) {
                   name="half-rating"
                   sx={{
                     color: red[400],
-                    "&.Mui-checked": {
-                      color: red[600],
-                    },
                   }}
                   precision={0.5}
                   value={product.ratings}
@@ -179,9 +185,49 @@ export default function ProductDetails({}) {
               <div className=" flex flex-col gap-2">
                 <span className="text-gray-700">Description :</span>
                 <p className="text-gray-500 text-sm">{product.description}</p>
-                <button className="text-white w-32 text-[11px] sm:text-xs p-2 bg-red-500 rounded-full flex items-center justify-center hover:bg-white hover:text-red-500 border-red-500 border-solid border-2 duration-200">
-                  Submit Review
+                <button
+                  onClick={() => setOpen(true)}
+                  className="text-white w-32 text-[11px] sm:text-xs p-2 bg-red-500 rounded-full flex items-center justify-center hover:bg-white hover:text-red-500 border-red-500 border-solid border-2 duration-200"
+                >
+                  Submit review
                 </button>
+                <Modal open={open} onClose={() => setOpen(false)}>
+                  <ModalDialog>
+                    <DialogTitle>Submit a Review </DialogTitle>
+                    <DialogContent>
+                      How would you like to Rate this product?!
+                    </DialogContent>
+                    <form
+                      onSubmit={(event) => {
+                        event.preventDefault();
+                        setOpen(false);
+                      }}
+                    >
+                      <Stack spacing={2}>
+                        <FormControl>
+                          <Rating
+                            name="half-rating"
+                            defaultValue={2.5}
+                            precision={0.5}
+                            sx={{
+                              color: red[400]
+                            }}
+                          />
+                        </FormControl>
+                        <FormControl>
+                          <FormLabel>Description</FormLabel>
+                          <textarea
+                            className="outline-none focus:border-red-400 border-solid border-2 duration-200 rounded p-2"
+                            type="text"
+                          />
+                        </FormControl>
+                        <button className="bg-red-400 text-white p-2 rounded hover:bg-red-500 duration-200">
+                          Submit
+                        </button>
+                      </Stack>
+                    </form>
+                  </ModalDialog>
+                </Modal>
               </div>
             </div>
           </div>

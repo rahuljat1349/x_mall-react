@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { grey } from "@mui/material/colors";
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigation } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 
 import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
+// import SearchIcon from "@mui/icons-material/Search";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -49,9 +49,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 export default function Navbar() {
+  // const navigate = useNavigation();
+  const [keyword, setKeyword] = useState("");
   const location = useLocation();
   const [search, setSearch] = useState(false);
   const [menu, setMenu] = useState(false);
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (keyword.trim()) {
+      navigate(`/products/${keyword}`);
+    }
+  };
 
   return (
     <>
@@ -125,38 +134,13 @@ export default function Navbar() {
           </ul>
         </div>
         <div className="flex lg:gap-4 items-center lg:text-xl md:text-lg py-2 gap-2">
-          <div
-            onClick={() => {
-              setSearch((state) => {
-                return !state;
-              });
-            }}
-            className="sm:hidden cursor-pointer"
-          >
+          <Link to={"/search"}>
             <i
-              className={`bi text-gray-500 bi-${search ? "x-lg" : "search"}`}
+              className={`bi bi-search ${
+                location.pathname === "/search" ? "text-white" : "text-gray-500"
+              }`}
             ></i>
-          </div>
-          <div className="hidden sm:block">
-            <Search
-              sx={{
-                color: grey[400],
-              }}
-            >
-              <SearchIconWrapper>
-                <SearchIcon
-                  sx={{
-                    color: grey[700],
-                  }}
-                />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
-          </div>
-
+          </Link>
           <Link to={"/cart"}>
             <i
               className={`bi bi-cart3 ${
@@ -224,29 +208,6 @@ export default function Navbar() {
             </li>
           </Link>
         </ul>
-      </div>
-      <div
-        className={`items-center ${
-          search ? "block" : "hidden"
-        } sticky pb-2 duration-500 px-4 md:px-10 flex justify-center items-center p-2 top-12 z-50 bg-gray-800  md:gap-6`}
-      >
-        <Search
-          sx={{
-            color: grey[400],
-          }}
-        >
-          <SearchIconWrapper>
-            <SearchIcon
-              sx={{
-                color: grey[700],
-              }}
-            />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search…"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search>
       </div>
     </>
   );
