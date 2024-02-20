@@ -25,7 +25,8 @@ body {
   top: 0;
   left: 0;
   background-color: white;
-clip-path: polygon(100% 0, 0% 100%, 100% 100%);}
+  clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+}
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -34,6 +35,6 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }

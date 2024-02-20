@@ -26,9 +26,9 @@ export default function Products() {
   const handlePriceChange = (e, newValue) => {
     setPrice(newValue);
   };
-  const handleCategoryChange =  (category) => {
-     setCategory(category);
-     setSelectedCategory(category);
+  const handleCategoryChange = (category) => {
+    setCategory(category);
+    setSelectedCategory(category);
   };
   const keyword = useParams().keyword;
 
@@ -44,16 +44,16 @@ export default function Products() {
     <>
       <div className="flex justify-center">
         <div>
-          <h1 className="md:text-2xl py-6 md:w-[20vw] text-gray-500 font-mono mb-4 text-center border-gray-400 border-solid border-b-[1px]">
+          <h1 className="md:text-2xl py-6 md:w-[20vw] text-gray-500  mb-4 text-center border-gray-400 border-solid border-b-[1px]">
             Products
           </h1>
         </div>
       </div>
-      <div className="flex sm:flex-row relative flex-col px-6 items-center sm:items-start justify-end">
-        <div className="px-4 bg-gray-200 p-6 rounded-r-md sm:absolute top-10 left-0">
+      <div className="flex sm:flex-row relative flex-col -6 items-center sm:items-start justify-end">
+        <div className="px-4 sm:w-44 p-6 rounded-r-md left-0 sm:absolute">
           <div>
             <h1 className=" font-semibold text-sm text-gray-700">
-              price (in thousands)
+              Price (in k)
             </h1>
             <Slider
               sx={{
@@ -72,7 +72,7 @@ export default function Products() {
                 <li
                   className={`text-sm hover:text-red-500 ${
                     category === selectedCategory ? "text-red-500" : ""
-                  } cursor-pointer font-sans text-gray-500`}
+                  } cursor-pointer text-gray-500`}
                   onClick={() => handleCategoryChange(category)}
                   key={i}
                 >

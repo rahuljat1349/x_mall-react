@@ -1,33 +1,79 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { red } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import Checkbox from "@mui/material/Checkbox";
+import { loginUser } from "../../Features/User/userSlice";
+import { useSelector, useDispatch } from "react-redux";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export default function () {
   const [passwordType, setPasswordType] = useState("password");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const dispatch = useDispatch();
+  const { user, error, loading } = useSelector((state) => state.user || {});
+
+  useEffect(() => {
+    console.log(formData);
+    console.log("Error:", error);
+    console.log("Loading:", loading);
+  }, [user, error, loading, formData]);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+        // console.log("User:", user.authToken);
+
+    // if (user) {
+    // localStorage.setItem()
+    // }
+    // Dispatch the action to register the user
+    dispatch(loginUser(formData));
+  };
 
   return (
     <>
-      <div className="w-full flex justify-center items-center text-red-500  py-4 px-8 sm:px-10">
-        <div className="flex justify-center sm:w-[80%] md:w-[60%] lg:w-[40%] w-full">
+      <div className="w-full flex justify-center items-center text-gray-500  py-4 px-8 sm:px-10">
+        <div className="flex justify-center items-center sm:w-[80%] md:w-[60%] lg:w-[40%] w-full">
           <form
             action=""
-            className="shadow-2xl w-full rounded-xl p-4 gap-6 flex flex-col justify-center items-center "
+            className="shadow-lg  w-full rounded-xl p-4 gap-10 my-4 flex flex-col justify-center items-center "
           >
             <h2 className="text-2xl ">
-              Login to <span className="sigle-day-regular">pinkMall</span>
+              Login to <span className="sigle-day-regular">xMall</span>
             </h2>
-            <input
-              className="w-[80%]  border-solid duration-300 focus:border-red-500 border-red-200 border-2 text-red-500 p-2 outline-none rounded-md"
-              placeholder="john@example.com"
-              type="email"
-              required
-            />
-            <div className="w-[80%] items-center flex">
+
+            <div className="relative w-full items-center justify-center flex">
+              <i
+                className={`bi sm:text-lg cursor-pointer bi-envelope-fill z-10 absolute left-[13%] md:text-2xl`}
+              ></i>
               <input
-                className="w-full border-solid  duration-300 focus:border-red-500 border-red-200 border-2 text-red-500 p-2 outline-none rounded-md"
-                placeholder="Enter Your Password"
+                name="email"
+                onChange={handleChange}
+                className="w-[80%]  border-solid duration-300 px-12 focus:border-gray-400 border-gray-200 border-2 text-gray-500 p-2 outline-none rounded-md"
+                placeholder="Email"
+                type="email"
+                required
+              />
+            </div>
+            <div className="w-[80%] relative items-center flex">
+              <i
+                className={`bi sm:text-lg cursor-pointer bi-key-fill z-10 absolute left-[4%] md:text-2xl`}
+              ></i>
+              <input
+                name="password"
+                onChange={handleChange}
+                className="w-full border-solid px-12 duration-300 focus:border-gray-400 border-gray-200 border-2 text-gray-500 p-2 outline-none rounded-md"
+                placeholder="Password"
                 type={passwordType}
                 required
               />
@@ -37,7 +83,7 @@ export default function () {
                     type === "text" ? "password" : "text"
                   );
                 }}
-                className={`bi sm:text-lg -ml-8 md:text-2xl ${
+                className={`bi sm:text-lg cursor-pointer -ml-8 md:text-2xl ${
                   passwordType === "password"
                     ? "bi-eye-fill"
                     : "bi-eye-slash-fill"
@@ -46,28 +92,20 @@ export default function () {
             </div>
             <div className="w-[80%] text-[10px] sm:text-sm items-center flex justify-between">
               <div className="flex  items-center">
-                <Checkbox
-                  id="check"
-                  {...label}
-                  defaultChecked
-                  sx={{
-                    color: red[900],
-                    "&.Mui-checked": {
-                      color: red[600],
-                    },
-                  }}
-                />{" "}
                 <label htmlFor="check">Remember Me</label>
               </div>
-              <Link to={""}>forgot password?</Link>
+              <Link to={""}>Forgot password?</Link>
             </div>
 
-            <button className="w-[80%] p-2 bg-red-400 text-white hover:bg-red-500 duration-300 outline-none rounded-md">
+            <button
+              onClick={handleSignUp}
+              className="w-[80%] p-2 bg-red-400 text-white hover:bg-red-500 duration-300 outline-none rounded-md"
+            >
               LogIn
             </button>
             <h2 className="text-xs      ">
               Don't have an Account?{" "}
-              <Link className="text-red-700" to={"/signup"}>
+              <Link className="text-red-400" to={"/signup"}>
                 SignUp here
               </Link>
               .

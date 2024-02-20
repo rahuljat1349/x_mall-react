@@ -22,12 +22,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route exact path="/cart" element={<Cart />} /> */}
-          {/* <Route exact path="/profile" element={<Profile />} /> */}
+          <Route exact path="/profile" element={<Profile />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:keyword" element={<Products />} />
           <Route exact path="/search" element={<Search />} />
-          {/* <Route exact path="/login" element={<Login />} /> */}
-          {/* <Route exact path="/signup" element={<SignUp />} /> */}
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/signup" element={<SignUp />} />
           {/* <Route exact path="/about" element={<AboutUs />} /> */}
           {/* <Route exact path="/contact" element={<ContactUs />} /> */}
           <Route path="product/:id" element={<ProductDetails />} />

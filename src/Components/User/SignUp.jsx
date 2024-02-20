@@ -1,38 +1,86 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { red } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import Checkbox from "@mui/material/Checkbox";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
+import { registerUser } from "../../Features/User/userSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function () {
   const [passwordType, setPasswordType] = useState("password");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const dispatch = useDispatch();
+  const { user, error, loading } = useSelector((state) => state.user || {});
+
+ useEffect(() => {
+   console.log("User:", user);
+   console.log("Error:", error);
+   console.log("Loading:", loading);
+ }, [user, error, loading, formData]);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSignUp = (e) => {
+    console.log(user);
+    e.preventDefault();
+    // Dispatch the action to register the user
+    dispatch(registerUser(formData));
+  };
   return (
     <>
-      <div className="w-full flex justify-center items-center  text-red-500  py-4 px-8 sm:px-10">
+      <div className="w-full flex justify-center items-center  text-gray-500  py-4 px-8 sm:px-10">
         <div className="flex justify-center sm:w-[80%] md:w-[60%] lg:w-[40%] w-full">
           <form
             action=""
-            className="shadow-2xl w-full rounded-xl p-4 gap-6 flex flex-col justify-center items-center "
+            className="shadow-lg w-full my-4 rounded-xl p-4 gap-8 flex flex-col justify-center items-center "
           >
             <h2 className="text-2xl ">
-              SignUp to <span className="sigle-day-regular">pinkMall</span>
+              SignUp to <span className="sigle-day-regular">xMall</span>
             </h2>
-            <input
-              className="w-[80%]  border-solid duration-300 focus:border-red-500 border-red-200 border-2 text-red-500 p-2 outline-none rounded-md"
-              placeholder="John Doe"
-              type="text"
-              required
-            />
-            <input
-              className="w-[80%]  border-solid duration-300 focus:border-red-500 border-red-200 border-2 text-red-500 p-2 outline-none rounded-md"
-              placeholder="john@example.com"
-              type="email"
-              required
-            />
-            <div className="w-[80%] items-center flex">
+            <div className="relative w-full items-center justify-center flex">
+              <i
+                className={`bi sm:text-lg cursor-pointer bi-person-fill z-10 absolute left-[13%] md:text-2xl`}
+              ></i>
               <input
-                className="w-full border-solid  duration-300 focus:border-red-500 border-red-200 border-2 text-red-500 p-2 outline-none rounded-md"
-                placeholder="Create a Password"
+                name="name"
+                onChange={handleChange}
+                className="w-[80%]  border-solid duration-300 px-12 focus:border-gray-400 border-gray-200 border-2 text-gray-500 p-2 outline-none rounded-md"
+                placeholder="Name"
+                type="text"
+                required
+              />
+            </div>
+            <div className="relative w-full items-center justify-center flex">
+              <i
+                className={`bi sm:text-lg cursor-pointer bi-envelope-fill z-10 absolute left-[13%] md:text-2xl`}
+              ></i>
+              <input
+                name="email"
+                onChange={handleChange}
+                className="w-[80%]  border-solid duration-300 px-12 focus:border-gray-400 border-gray-200 border-2 text-gray-500 p-2 outline-none rounded-md"
+                placeholder="Email"
+                type="email"
+                required
+              />
+            </div>
+            <div className="w-[80%] relative items-center flex">
+              <i
+                className={`bi sm:text-lg cursor-pointer bi-key-fill z-10 absolute left-[4%] md:text-2xl`}
+              ></i>
+              <input
+                name="password"
+                onChange={handleChange}
+                className="w-full border-solid px-12 duration-300 focus:border-gray-400 border-gray-200 border-2 text-gray-500 p-2 outline-none rounded-md"
+                placeholder="Password"
                 type={passwordType}
                 required
               />
@@ -42,7 +90,7 @@ export default function () {
                     type === "text" ? "password" : "text"
                   );
                 }}
-                className={`bi sm:text-lg -ml-8 md:text-2xl ${
+                className={`bi sm:text-lg cursor-pointer -ml-8 md:text-2xl ${
                   passwordType === "password"
                     ? "bi-eye-fill"
                     : "bi-eye-slash-fill"
@@ -55,21 +103,24 @@ export default function () {
                 {...label}
                 defaultChecked
                 sx={{
-                  color: red[900],
+                  color: grey[700],
                   "&.Mui-checked": {
-                    color: red[600],
+                    color: grey[600],
                   },
                 }}
               />{" "}
               <label htmlFor="check">Remember Me</label>
             </div>
 
-            <button className="w-[80%] p-2 bg-red-400 hover:bg-red-500 text-white duration-300 outline-none rounded-md">
+            <button
+              onClick={handleSignUp}
+              className="w-[80%] p-2 bg-red-400 hover:bg-red-500 text-white duration-300 outline-none rounded-md"
+            >
               SignUp
             </button>
             <h2 className="text-xs      ">
               Already have an Account?{" "}
-              <Link className="text-red-700" to={"/login"}>
+              <Link className="text-red-400" to={"/login"}>
                 Login here
               </Link>
               .

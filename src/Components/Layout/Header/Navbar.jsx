@@ -2,10 +2,11 @@ import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { grey } from "@mui/material/colors";
 
-import { useLocation, useNavigation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 
 import InputBase from "@mui/material/InputBase";
+import SpeedDialTool from "./SpeedDial";
 // import SearchIcon from "@mui/icons-material/Search";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -49,11 +50,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 export default function Navbar() {
-  // const navigate = useNavigation();
+
   const [keyword, setKeyword] = useState("");
   const location = useLocation();
   const [search, setSearch] = useState(false);
   const [menu, setMenu] = useState(false);
+
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -61,6 +63,7 @@ export default function Navbar() {
       navigate(`/products/${keyword}`);
     }
   };
+
 
   return (
     <>
@@ -133,7 +136,7 @@ export default function Navbar() {
             </Link>
           </ul>
         </div>
-        <div className="flex lg:gap-4 items-center lg:text-xl md:text-lg py-2 gap-2">
+        <div className="flex lg:gap-4 relative items-center lg:text-xl md:text-lg py-2 gap-2">
           <Link to={"/search"}>
             <i
               className={`bi bi-search ${
@@ -148,15 +151,8 @@ export default function Navbar() {
               }`}
             ></i>
           </Link>
-          <Link to={"/profile"}>
-            <i
-              className={`bi bi-person-circle ${
-                location.pathname === "/profile"
-                  ? "text-white"
-                  : "text-gray-500"
-              }`}
-            ></i>
-          </Link>
+<SpeedDialTool/>
+          
         </div>
       </div>
       <div
