@@ -16,29 +16,38 @@ const initialState = {
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async ({ keyword, price, category }) => {
-    console.log("Keyword:", keyword);
-    console.log("Price:", price);
-    console.log("Category:", category);
+  async ({ keyword, price = [0, 25], category, page }) => {
+    // console.log("Keyword:", keyword);
+    // console.log("Price:", price);
+    // console.log("Category:", category);
+    console.log("page:", page);
     try {
       const url = new URL("http://localhost:4000/api/v1/products");
       if (keyword) {
         url.searchParams.append("key", keyword);
       }
-      if (category) {
+      if (category && category !== "ALL") {
         url.searchParams.append("category", category);
       }
-      if (!keyword && !category) {
+      if (price[0] !== 0 || price[1] !== 25) {
+        // Assuming 0 and 25 are default values; adjust as needed
         url.searchParams.append("minPrice", price[0] * 1000);
         url.searchParams.append("maxPrice", price[1] * 1000);
       }
+      url.searchParams.append("page", page);
       const response = await fetch(url);
       console.log(url.href);
       if (!response.ok) {
         throw new Error("Failed to fetch products");
       }
       const data = await response.json();
-      return data.products;
+      return {
+        products: data.products,
+        page: data.page,
+        pageSize: data.pageSize,
+        totalPages: data.totalPages,
+        totalProducts: data.totalProducts,
+      };
     } catch (error) {
       throw error;
     }
@@ -62,23 +71,6 @@ export const fetchSingleProduct = createAsyncThunk(
     }
   }
 );
-// export const searchProducts = createAsyncThunk(
-//   "products/searchProducts",
-//   async (keyword) => {
-//     try {
-//       const response = await fetch(
-//         `http://localhost:4000/api/v1/product/${productId}`
-//       );
-//       if (!response.ok) {
-//         throw new Error(`Failed to fetch product with ID: ${productId}`);
-//       }
-//       const data = await response.json();
-//       return data.product;
-//     } catch (error) {
-//       throw error;
-//     }
-//   }
-// );
 
 const productsSlice = createSlice({
   name: "products",
@@ -95,13 +87,13 @@ const productsSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.list = action.payload;
-        // state.page = {
-        //   currentPage: action.payload.page,
-        //   pageSize: action.payload.pageSize,
-        //   totalPages: action.payload.totalPages,
-        //   totalProducts: action.payload.totalProducts,
-        // };
+        state.list = action.payload.products;
+        state.page = {
+          currentPage: action.payload.page,
+          pageSize: action.payload.pageSize,
+          totalPages: action.payload.totalPages,
+          totalProducts: action.payload.totalProducts,
+        };
       })
 
       .addCase(fetchProducts.rejected, (state, action) => {

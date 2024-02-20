@@ -9,13 +9,22 @@ import Loader from "../../Components/Loader";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { list: products, loading } = useSelector((state) => state.products);
+  const {
+    list: products,
+    error,
+    loading,
+  } = useSelector((state) => state.products || {});
 
   useEffect(() => {
-    console.log(products._id);
-    // Fetch products when the component mounts
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    if (error) {
+      console.error("Error fetching products:", error);
+      // Handle the error as needed
+    } else {
+      console.log(products);
+      // Fetch products when the component mounts
+      dispatch(fetchProducts({}));
+    }
+  }, []);
 
   return (
     <>
@@ -38,7 +47,7 @@ const Home = () => {
         <div>
           <h1
             id="featured-products"
-            className="md:text-xl p-2 md:w-[20vw] text-gray-800 font-medium mb-4 text-center border-gray-500 border-solid border-b-[1px]"
+            className="md:text-xl py-6 md:w-[20vw] text-gray-800 font-medium mb-4 text-center border-gray-400 border-solid border-b-[1px]"
           >
             Featured Products
           </h1>
@@ -51,12 +60,13 @@ const Home = () => {
           ) : (
             products.map((product) => (
               <Link
-                className="flex hover:shadow-lg w-40 justify-center text-xs sm:text-sm sm:w-60 items-center rounded duration-200 hover:-translate-y-2 flex-col gap-4 p-2"
+                className="flex hover:shadow-lg w-40 justify-center text-xs sm:text-sm sm:w-60 items-center rounded duration-200 hover:-translate-y-2 flex-col gap-4 py-2"
                 to={`product/${product._id}`}
                 key={product._id}
               >
-                <div className="w-12 sm:w-28 lg:w-36">
+                <div className="w-24 h-28 items-center flex sm:w-28 lg:w-36">
                   <img
+                    className="w-full"
                     src={
                       product.images[0].url
                         ? product.images[0].url
@@ -65,7 +75,7 @@ const Home = () => {
                     alt="image"
                   />
                 </div>
-                <div className="flex ml-4 gap-2 flex-col">
+                <div className="flex gap-4 font-semibold text-gray-500 flex-col">
                   <p>{product.name}</p>
                   <div className="flex items-center text-gray-600">
                     {" "}
@@ -88,6 +98,14 @@ const Home = () => {
             ))
           )}
         </div>
+      </div>
+      <div className="flex justify-center p-8">
+        <Link
+          to={"/products"}
+          className="p-2 rounded bg-gray-700 hover:bg-gray-800 duration-200 text-white"
+        >
+          Explore More
+        </Link>
       </div>
     </>
   );

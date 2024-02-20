@@ -8,7 +8,7 @@ import Pagination from "@mui/material/Pagination";
 import { Link, useParams } from "react-router-dom";
 import { red } from "@mui/material/colors";
 import Loader from "../Loader";
-let categories = ["Electronics", "Fashion", "mobiles", "watches"];
+let categories = ["ALL", "Electronics", "Fashion", "mobiles", "watches"];
 export default function Products() {
   const dispatch = useDispatch();
 
@@ -20,7 +20,6 @@ export default function Products() {
     list: products,
     page,
     loading,
-    totalPages,
   } = useSelector((state) => state.products);
 
   const handlePriceChange = (e, newValue) => {
@@ -31,26 +30,26 @@ export default function Products() {
   // };
   const keyword = useParams().keyword;
 
-
   useEffect(() => {
-    // console.log("Keyword:", keyword);
-    // console.log("Price:", price);
-    // console.log("Category:", category);
-    dispatch(fetchProducts(keyword, price, category));
-  }, [dispatch, keyword, price, category]);
+    dispatch(fetchProducts({ keyword, price, category, page: currentPage }));
+  }, [dispatch, keyword, price, category, currentPage]);
+
+  const handlePageChange = (event, newPage) => {
+    setCurrentPage(newPage);
+  };
   return (
     <>
       <div className="flex justify-center">
         <div>
-          <h1 className="md:text-xl p-2 md:w-[20vw] text-gray-800 font-medium mb-4 text-center border-gray-500 border-solid border-b-[1px]">
+          <h1 className="md:text-xl py-6 md:w-[20vw] text-gray-800 font-medium mb-4 text-center border-gray-400 border-solid border-b-[1px]">
             Products
           </h1>
         </div>
       </div>
-      <div className="flex sm:flex-row relative flex-col items-center sm:items-start justify-center">
-        <div className="p-2 sm:absolute top-10 left-0">
+      <div className="flex sm:flex-row relative flex-col px-6 items-center sm:items-start justify-center">
+        <div className="px-4  sm:absolute top-10 left-0">
           <div>
-            <h1 className=" font-semibold text-gray-700">
+            <h1 className=" font-semibold text-sm text-gray-700">
               price (in thousands)
             </h1>
             <Slider
@@ -63,7 +62,7 @@ export default function Products() {
               size="small"
             />
             <h1 className=" font-semibold text-gray-700">Categories</h1>
-            <ul>
+            <ul className="px-4 flex flex-row sm:flex-col gap-2">
               {categories.map((category, i) => (
                 <li
                   className="text-sm hover:text-red-300 cursor-pointer font-sans text-gray-500"
@@ -83,12 +82,13 @@ export default function Products() {
             products &&
             products.map((product) => (
               <Link
-                className="flex hover:shadow-lg w-40 justify-center text-xs sm:text-sm sm:w-60 items-center rounded duration-200 hover:-translate-y-2 flex-col gap-4 p-2"
+                className="flex hover:shadow-lg w-40 justify-center text-xs sm:text-sm sm:w-60 items-center rounded duration-200 hover:-translate-y-2 flex-col gap-4 py-2"
                 to={`product/${product._id}`}
                 key={product._id}
               >
-                <div className="w-12 sm:w-28 lg:w-36">
+                <div className="w-24 h-28 items-center flex sm:w-28 lg:w-36">
                   <img
+                    className="w-full"
                     src={
                       product.images[0].url
                         ? product.images[0].url
@@ -97,7 +97,7 @@ export default function Products() {
                     alt="image"
                   />
                 </div>
-                <div className="flex ml-4 gap-2 flex-col">
+                <div className="flex gap-4 font-semibold text-gray-500 flex-col">
                   <p>{product.name}</p>
                   <div className="flex items-center text-gray-600">
                     {" "}
@@ -121,9 +121,13 @@ export default function Products() {
           )}
         </div>
       </div>
-      {/* <div className="w-full flex justify-center my-4">
-        <Pagination count={10} />
-      </div> */}
+      <div className="w-full mb-28 mt-16 flex justify-center ">
+        <Pagination
+          count={page.totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
+        />
+      </div>
     </>
   );
 }
