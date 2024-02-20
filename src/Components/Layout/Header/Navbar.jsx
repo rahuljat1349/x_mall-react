@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { grey } from "@mui/material/colors";
-
+import { getUserInfo } from "../../../Features/User/userSlice";
+import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 
@@ -49,13 +50,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-export default function Navbar() {
-
+export default function Navbar({}) {
+  const dispatch = useDispatch();
   const [keyword, setKeyword] = useState("");
   const location = useLocation();
   const [search, setSearch] = useState(false);
   const [menu, setMenu] = useState(false);
-
+  const { user, loading, error } = useSelector((state) => state.user || {});
+  const [settings, setSettings] = useState(["Orders", "Profile", "Logout"]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -63,7 +65,14 @@ export default function Navbar() {
       navigate(`/products/${keyword}`);
     }
   };
-
+  useEffect(() => {
+    if (user && user.role === "admin" && settings[0] !== "Dashboard") {
+      setSettings(["Dashboard", ...settings]);
+    }
+  }, [user, settings]);
+  useEffect(() => {
+    dispatch(getUserInfo());
+  }, []);
 
   return (
     <>
@@ -151,8 +160,7 @@ export default function Navbar() {
               }`}
             ></i>
           </Link>
-<SpeedDialTool/>
-          
+          <SpeedDialTool settings={settings} />
         </div>
       </div>
       <div

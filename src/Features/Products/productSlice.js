@@ -20,7 +20,6 @@ export const fetchProducts = createAsyncThunk(
     // console.log("Keyword:", keyword);
     // console.log("Price:", price);
     // console.log("Category:", category);
-    console.log("page:", page);
     try {
       const url = new URL("http://localhost:4000/api/v1/products");
       if (keyword) {
@@ -36,7 +35,6 @@ export const fetchProducts = createAsyncThunk(
       }
       url.searchParams.append("page", page);
       const response = await fetch(url);
-      console.log(url.href);
       if (!response.ok) {
         throw new Error("Failed to fetch products");
       }

@@ -14,13 +14,12 @@ export default function () {
     password: "",
   });
   const dispatch = useDispatch();
-  const { user, error, loading } = useSelector((state) => state.user || {});
+  const { token, error, loading } = useSelector((state) => state.user || {});
 
  useEffect(() => {
-   console.log("User:", user);
    console.log("Error:", error);
    console.log("Loading:", loading);
- }, [user, error, loading, formData]);
+ }, [token, error, loading, formData]);
 
   const handleChange = (e) => {
     setFormData({
@@ -30,7 +29,7 @@ export default function () {
   };
 
   const handleSignUp = (e) => {
-    console.log(user);
+    console.log(token);
     e.preventDefault();
     // Dispatch the action to register the user
     dispatch(registerUser(formData));

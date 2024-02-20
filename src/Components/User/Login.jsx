@@ -14,13 +14,13 @@ export default function () {
     password: "",
   });
   const dispatch = useDispatch();
-  const { user, error, loading } = useSelector((state) => state.user || {});
+  const { token, error, loading } = useSelector((state) => state.user || {});
 
   useEffect(() => {
-    console.log(formData);
+    console.log(token);
     console.log("Error:", error);
     console.log("Loading:", loading);
-  }, [user, error, loading, formData]);
+  }, [token, error, loading, formData]);
 
   const handleChange = (e) => {
     setFormData({

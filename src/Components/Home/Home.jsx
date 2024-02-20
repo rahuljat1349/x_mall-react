@@ -11,8 +11,8 @@ const Home = () => {
   const dispatch = useDispatch();
   const {
     list: products,
-    error,
     loading,
+    error,
   } = useSelector((state) => state.products || {});
 
   useEffect(() => {
@@ -22,6 +22,7 @@ const Home = () => {
     } else {
       // Fetch products when the component mounts
       dispatch(fetchProducts({}));
+      // Dispatch action to get user information
     }
   }, []);
 

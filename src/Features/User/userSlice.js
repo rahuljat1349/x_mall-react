@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: null,
+  user:null,
+  token: "",
   loading: false,
   error: null,
 };
@@ -11,7 +12,6 @@ export const registerUser = createAsyncThunk(
   async (formData) => {
     console.log(formData);
     try {
-      // Make your API request for user registration here
       const response = await fetch("http://localhost:4000/api/v1/register", {
         method: "POST",
         headers: {
@@ -26,7 +26,7 @@ export const registerUser = createAsyncThunk(
 
       const data = await response.json();
       localStorage.setItem("token", data.authToken);
-      return data; // Assuming your API returns some data after successful registration
+      return data;
     } catch (error) {
       throw error;
     }
@@ -38,7 +38,6 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (formData) => {
     try {
-      // Make your API request for user login here
       const response = await fetch("http://localhost:4000/api/v1/login", {
         method: "POST",
         headers: {
@@ -52,15 +51,44 @@ export const loginUser = createAsyncThunk(
       }
 
       const data = await response.json();
-    //   console.log(data.authToken);
+      //   console.log(data.authToken);
       localStorage.setItem("token", data.authToken);
 
-      return data; // Assuming your API returns some data after successful login
+      return data;
     } catch (error) {
       throw error;
     }
   }
 );
+// Create an async thunk for user info
+export const getUserInfo = createAsyncThunk("auth/getUserInfo", async (_, thunkAPI) => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    // Handle the case when the token is not available
+    throw new Error("No token available");
+  }
+
+  try {
+    const response = await fetch("http://localhost:4000/api/v1/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": token,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to Load user info");
+    }
+
+    const data = await response.json();
+
+    return data; // Assuming your API returns some data after successful login
+  } catch (error) {
+    throw error;
+  }
+});
 
 const authSlice = createSlice({
   name: "auth",
@@ -76,7 +104,7 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.token = action.payload.authToken;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
@@ -88,9 +116,21 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload; // Assuming your API returns user data after login
+        state.token = action.payload.authToken;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getUserInfo.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUserInfo.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+      })
+      .addCase(getUserInfo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

@@ -66,7 +66,7 @@ export default function SimpleModal() {
           </div>
 
           <form
-            onSubmit={() => {
+            onSubmit={(event) => {
               event.preventDefault();
               setOpen(false);
             }}

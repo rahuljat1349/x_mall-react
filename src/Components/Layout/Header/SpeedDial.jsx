@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -8,16 +9,14 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate, Link } from "react-router-dom";
 
-const settings = ["Dashboard", "Orders", "Profile", "Logout"];
-
-function SpeedDialTool() {
+function SpeedDialTool({ settings }) {
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
     if (!localStorage.getItem("token")) {
-      console.log("okk");
-    return  navigate("/login");
+      console.log("User not logged in");
+      return navigate("/login");
     }
     setAnchorElUser(event.currentTarget);
   };
@@ -26,11 +25,13 @@ function SpeedDialTool() {
     setAnchorElUser(null);
   };
 
+
+
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+          <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
         </IconButton>
       </Tooltip>
       <Menu
@@ -60,4 +61,5 @@ function SpeedDialTool() {
     </Box>
   );
 }
+
 export default SpeedDialTool;
