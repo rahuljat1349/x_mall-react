@@ -47,7 +47,7 @@ const Home = () => {
         <div>
           <h1
             id="featured-products"
-            className="md:text-xl py-6 md:w-[20vw] text-gray-800 font-medium mb-4 text-center border-gray-400 border-solid border-b-[1px]"
+            className="md:text-2xl py-6  text-gray-500  md:w-[20vw] font-mono font-medium mb-4 text-center border-gray-400 border-solid border-b-[1px]"
           >
             Featured Products
           </h1>

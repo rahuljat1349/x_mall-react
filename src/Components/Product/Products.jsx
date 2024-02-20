@@ -15,6 +15,7 @@ export default function Products() {
   const [price, setPrice] = useState([0, 25]);
   const [category, setCategory] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const {
     list: products,
@@ -25,12 +26,14 @@ export default function Products() {
   const handlePriceChange = (e, newValue) => {
     setPrice(newValue);
   };
-  // const handleCategoryChange =  (selectedCategory) => {
-  //    setCategory(selectedCategory);
-  // };
+  const handleCategoryChange =  (category) => {
+     setCategory(category);
+     setSelectedCategory(category);
+  };
   const keyword = useParams().keyword;
 
   useEffect(() => {
+    console.log(category);
     dispatch(fetchProducts({ keyword, price, category, page: currentPage }));
   }, [dispatch, keyword, price, category, currentPage]);
 
@@ -41,32 +44,36 @@ export default function Products() {
     <>
       <div className="flex justify-center">
         <div>
-          <h1 className="md:text-xl py-6 md:w-[20vw] text-gray-800 font-medium mb-4 text-center border-gray-400 border-solid border-b-[1px]">
+          <h1 className="md:text-2xl py-6 md:w-[20vw] text-gray-500 font-mono mb-4 text-center border-gray-400 border-solid border-b-[1px]">
             Products
           </h1>
         </div>
       </div>
-      <div className="flex sm:flex-row relative flex-col px-6 items-center sm:items-start justify-center">
-        <div className="px-4  sm:absolute top-10 left-0">
+      <div className="flex sm:flex-row relative flex-col px-6 items-center sm:items-start justify-end">
+        <div className="px-4 bg-gray-200 p-6 rounded-r-md sm:absolute top-10 left-0">
           <div>
             <h1 className=" font-semibold text-sm text-gray-700">
               price (in thousands)
             </h1>
             <Slider
               sx={{
-                color: red[400],
+                color: red[600],
               }}
               value={price}
               onChange={handlePriceChange}
               valueLabelDisplay="auto"
               size="small"
             />
-            <h1 className=" font-semibold text-gray-700">Categories</h1>
+            <h1 className=" font-semibold py-1 px-2 text-gray-600">
+              Categories
+            </h1>
             <ul className="px-4 flex flex-row sm:flex-col gap-2">
               {categories.map((category, i) => (
                 <li
-                  className="text-sm hover:text-red-300 cursor-pointer font-sans text-gray-500"
-                  onClick={() => setCategory(category)}
+                  className={`text-sm hover:text-red-500 ${
+                    category === selectedCategory ? "text-red-500" : ""
+                  } cursor-pointer font-sans text-gray-500`}
+                  onClick={() => handleCategoryChange(category)}
                   key={i}
                 >
                   {category}
