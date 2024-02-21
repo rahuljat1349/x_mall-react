@@ -49,7 +49,7 @@ export default function Products() {
           </h1>
         </div>
       </div>
-      <div className="flex sm:flex-row relative flex-col -6 items-center sm:items-start justify-end">
+      <div className="flex sm:flex-row relative flex-col -6 items-center sm:items-start justify-center">
         <div className="px-4 sm:w-44 p-6 rounded-r-md left-0 sm:absolute">
           <div>
             <h1 className=" font-semibold text-sm text-gray-700">
@@ -85,8 +85,9 @@ export default function Products() {
         <div className="flex w-[100vw] md:w-[90vw] justify-center flex-wrap p-4 gap-4">
           {loading ? (
             <Loader /> // Display loader while loading
+          ) : products && products.length < 1 ? (
+            <div className="text-gray-600 font-medium">No products found.</div>
           ) : (
-            products &&
             products.map((product) => (
               <Link
                 className="flex hover:shadow-lg w-40 justify-center text-xs sm:text-sm sm:w-60 items-center rounded duration-200 hover:-translate-y-2 flex-col gap-4 py-2"

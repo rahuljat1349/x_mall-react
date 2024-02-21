@@ -22,7 +22,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route exact path="/cart" element={<Cart />} /> */}
+          <Route exact path="/cart" element={<Cart />} />
           <Route exact path="/profile" element={<Profile />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:keyword" element={<Products />} />

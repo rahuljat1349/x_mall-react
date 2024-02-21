@@ -1,34 +1,23 @@
 import Rating from "@mui/material/Rating";
 import { red } from "@mui/material/colors";
-import { grey } from "@mui/material/colors";
 import Avatar from "@mui/joy/Avatar";
-import Button from "@mui/joy/Button";
 import FormControl from "@mui/joy/FormControl";
 import FormLabel from "@mui/joy/FormLabel";
-import Input from "@mui/joy/Input";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import DialogTitle from "@mui/joy/DialogTitle";
 import DialogContent from "@mui/joy/DialogContent";
 import Stack from "@mui/joy/Stack";
-import Chip from "@mui/joy/Chip";
-import Box from "@mui/joy/Box";
-import ButtonGroup from "@mui/joy/ButtonGroup";
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
-import CardOverflow from "@mui/joy/CardOverflow";
-import CardActions from "@mui/joy/CardActions";
-import IconButton from "@mui/joy/IconButton";
 import Typography from "@mui/joy/Typography";
-import SvgIcon from "@mui/joy/SvgIcon";
-
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchSingleProduct } from "../../Features/Products/productSlice";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import { addToCart } from "../../Features/Cart/cartSlice";
 
 // Import Swiper styles
 import "swiper/css";
@@ -36,7 +25,6 @@ import "swiper/css/autoplay";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import Add from "@mui/icons-material/Add";
 import Loader from "../Layout/Loader/Loader";
 
@@ -50,9 +38,12 @@ export default function ProductDetails({}) {
   const { selectedProduct: product, loading } = useSelector(
     (state) => state.products
   );
+ const handleAddToCart = () => {
+   dispatch(addToCart({ id, quantity: cartValue }));
+ };
+
 
   useEffect(() => {
-    console.log(product.rating);
     dispatch(fetchSingleProduct(id));
   }, [dispatch, id]);
 
@@ -129,7 +120,7 @@ export default function ProductDetails({}) {
                     onClick={() => {
                       if (cartValue > 1) {
                         setCartValue((state) => {
-                          state--;
+                          --state;
                           return state;
                         });
                       }
@@ -139,9 +130,9 @@ export default function ProductDetails({}) {
                     -
                   </button>
                   <input
+                    readOnly
                     className="w-10 outline-none py-1 px-2 text-gray-600 text-xl  bg-gray-200 "
-                    defaultValue={cartValue}
-                    Value={cartValue}
+                    value={cartValue}
                     contentEditable={false}
                     type="number"
                     name="cartValue"
@@ -151,7 +142,7 @@ export default function ProductDetails({}) {
                     onClick={() => {
                       if (cartValue < product.stock) {
                         setCartValue((state) => {
-                          state++;
+                          ++state;
                           return state;
                         });
                       }
@@ -162,6 +153,7 @@ export default function ProductDetails({}) {
                   </button>
                 </div>
                 <button
+                  onClick={handleAddToCart}
                   disabled={product.stock < 1}
                   className="text-white text-[11px] sm:text-xs py-1 disabled:bg-red-300 disabled:border-0 disabled:text-white px-2 bg-red-500 rounded-full flex items-center justify-center hover:bg-white hover:text-red-500 border-red-500 border-solid border-2 duration-200"
                 >
@@ -243,6 +235,7 @@ export default function ProductDetails({}) {
           {product.reviews && product.reviews.length > 0 ? (
             product.reviews.map((review, index) => (
               <Card
+                key={index}
                 sx={{
                   minWidth: 280,
                   maxWidth: "100%",
