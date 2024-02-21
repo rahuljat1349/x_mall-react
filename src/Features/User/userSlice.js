@@ -85,7 +85,7 @@ export const updateProfile = createAsyncThunk(
       }
 
       const data = await response.json();
-      alert("Profile updated successfully.");
+      alert("Profile updated successfully, Changes will appear soon..");
 
       return data;
     } catch (error) {
