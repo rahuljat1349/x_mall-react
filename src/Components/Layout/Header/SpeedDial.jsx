@@ -9,7 +9,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate, Link } from "react-router-dom";
 
-function SpeedDialTool({ settings,user }) {
+function SpeedDialTool({ settings, user }) {
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -25,13 +25,14 @@ function SpeedDialTool({ settings,user }) {
     setAnchorElUser(null);
   };
 
-
-
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt={user&&user.name} src="/static/images/avatar/2.jpg" />
+          <div className="w-6 h-6 flex justify-center items-center rounded-full overflow-hidden">
+            {" "}
+            <Avatar alt={user && user.name} src="/static/images/avatar/2.jpg" />
+          </div>{" "}
         </IconButton>
       </Tooltip>
       <Menu
