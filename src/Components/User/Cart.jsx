@@ -70,9 +70,9 @@ const Cart = () => {
           ))}
         </ul>
       )}
-      <div className="w-full mb-2 h-24 flex justify-around px-4 md:px-20 items-center font-bold text-red-500 bg-red-200">
+      <div className="w-full mb-2 h-24 flex justify-around px-4 md:px-20 items-center font-semibold  bg-gray-200">
         <p>Total: ₹{calculateTotal()}</p>
-        <button className="border-red-600 border-solid border-[1px] hover:bg-red-300 duration-200 p-2 rounded-xl">
+        <button className=" bg-gray-600 hover:bg-gray-700 text-white duration-200 p-2 rounded">
           Order Now
         </button>
       </div>
