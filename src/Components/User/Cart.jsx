@@ -4,8 +4,16 @@ const Cart = () => {
   const cart = localStorage.getItem("cart");
   const [cartItems, setCartItems] = useState(cart ? JSON.parse(cart) : []);
 
-  const addToCart = (product) => {
-    setCartItems([...cartItems, product]);
+  const handleCartQuantityhange = (itemId, sign) => {
+    const updatedCart = cartItems.map((item) => {
+      if (item.id === itemId) {
+        item.quantity += sign === "+" ? 1 : item.quantity > 1 && -1;
+      }
+      return item;
+    });
+
+    setCartItems(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
   const removeFromCart = (productId) => {
@@ -15,7 +23,9 @@ const Cart = () => {
   };
 
   const calculateTotal = () => {
-    return cartItems.reduce((total, item) => total + item.price, 0).toFixed(2);
+    return cartItems
+      .reduce((total, item) => total + item.price * item.quantity, 0)
+      .toFixed(2);
   };
 
   useEffect(() => {
@@ -24,8 +34,8 @@ const Cart = () => {
 
   return (
     <>
-      <div className="bg-red-500 sm:text-sm text-xs text-white font-semibold rounded mx-4 my-2 flex sm:justify-between py-4">
-        <div className="flex px-2 w-full justify-between ">
+      <div className="bg-red-500 sm:text-sm text-xs text-white font-semibold flex sm:justify-between py-4">
+        <div className="flex px-6 w-full justify-between ">
           <h1>Product</h1>
           <div className="flex justify-start gap-[18%]  mr-[20%] w-[30%]">
             <h1>Quantity</h1>
@@ -37,7 +47,7 @@ const Cart = () => {
       {cartItems.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
-        <ul className="pb-4 py-1 mx-4 text-xs sm:text-sm gap-2 flex flex-col">
+        <ul className="py-2 mx-2 text-xs sm:text-sm gap-2 flex flex-col">
           {cartItems.map((item) => (
             <li
               className="w-full flex relative text-gray-600 font-semibold px-2 py-3 bg-gray-100 rounded-lg"
@@ -52,16 +62,23 @@ const Cart = () => {
                 </div>
                 <div className="flex w-[50%] ">
                   <div className="rounded overflow-hidden w-16 flex justify-center">
-                    <button className="px-2 flex justify-center items-center bg-gray-700 text-white text-md">
+                    <button
+                      onClick={() => handleCartQuantityhange(item.id, "-")}
+                      className="px-2 flex justify-center items-center bg-gray-700 text-white text-md"
+                    >
                       -
                     </button>
                     <input
-                      className="bg-white w-[60%] p-1 outline-none text-gray-700"
-                      // value={item.quantity}
+                      className="bg-white w-[60%] py-1 outline-none text-gray-700"
+                      value={item.quantity}
                       type="text"
-                      // readOnly
+                      readOnly
+                      name="cartQuantity"
                     />
-                    <button className="px-2 flex justify-center items-center bg-gray-700 text-white text-md">
+                    <button
+                      onClick={() => handleCartQuantityhange(item.id, "+")}
+                      className="px-2 flex justify-center items-center bg-gray-700 text-white text-md"
+                    >
                       +
                     </button>
                   </div>
