@@ -12,7 +12,7 @@ import { updatePassword } from "../../Features/User/userSlice";
 import { getUserInfo } from "../../Features/User/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import Loader from "../Loader";
+import Loader from "../Layout/Loader/Loader";
 export default function Profile() {
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
@@ -52,7 +52,7 @@ export default function Profile() {
   };
   useEffect(() => {
     setUserInfo(user);
-  }, [user, handleUpdateProfile]);
+  }, [user, loading]);
   useEffect(() => {
     dispatch(getUserInfo());
   }, [dispatch]);

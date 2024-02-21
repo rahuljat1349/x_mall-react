@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import BasicCard from "./BasicCard";
 
-import Loader from "../Loader";
 
 export default function ProductsContainer({ productsLength }) {
   const [newData, setNewData] = useState([]);

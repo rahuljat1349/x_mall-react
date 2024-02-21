@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 import { registerUser } from "../../Features/User/userSlice";
 import { useSelector, useDispatch } from "react-redux";
-import Loader from "../Loader";
+import Loader from "../Layout/Loader/Loader";
 
 export default function () {
   const navigate = useNavigate()

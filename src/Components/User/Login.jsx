@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../Features/User/userSlice";
 import { useSelector, useDispatch } from "react-redux";
-import Loader from "../Loader";
+import Loader from "../Layout/Loader/Loader";
 
 export default function () {
   const navigate = useNavigate()

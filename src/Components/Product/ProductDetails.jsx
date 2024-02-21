@@ -38,7 +38,7 @@ import "swiper/css/navigation";
 
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import Add from "@mui/icons-material/Add";
-import Loader from "../Loader";
+import Loader from "../Layout/Loader/Loader";
 
 export default function ProductDetails({}) {
   const [open, setOpen] = React.useState(false);
@@ -210,7 +210,7 @@ export default function ProductDetails({}) {
                             defaultValue={2.5}
                             precision={0.5}
                             sx={{
-                              color: red[400]
+                              color: red[400],
                             }}
                           />
                         </FormControl>

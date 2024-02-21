@@ -7,7 +7,7 @@ import Slider from "@mui/material/Slider";
 import Pagination from "@mui/material/Pagination";
 import { Link, useParams } from "react-router-dom";
 import { red } from "@mui/material/colors";
-import Loader from "../Loader";
+import Loader from "../Layout/Loader/Loader";
 let categories = ["ALL", "Electronics", "Fashion", "mobiles", "watches"];
 export default function Products() {
   const dispatch = useDispatch();

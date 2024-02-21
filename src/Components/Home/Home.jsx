@@ -5,7 +5,7 @@ import { fetchProducts } from "../../Features/Products/productSlice";
 import Rating from "@mui/material/Rating";
 import { Link } from "react-router-dom";
 import { red } from "@mui/material/colors";
-import Loader from "../../Components/Loader";
+import Loader from "../Layout/Loader/Loader";
 
 const Home = () => {
   const dispatch = useDispatch();
