@@ -35,9 +35,9 @@ const Cart = () => {
   return (
     <>
       <div className="bg-red-500 sm:text-sm text-xs text-white font-semibold flex sm:justify-between py-4">
-        <div className="flex px-6 w-full justify-between ">
-          <h1>Product</h1>
-          <div className="flex justify-start gap-[18%]  mr-[20%] w-[30%]">
+        <div className="flex w-full justify-between ">
+          <h1 className="pl-4">Product</h1>
+          <div className="flex justify-around w-[50%]">
             <h1>Quantity</h1>
             <h1>Subtotal</h1>
           </div>
@@ -50,61 +50,65 @@ const Cart = () => {
         <ul className="py-2 mx-2 text-xs sm:text-sm gap-2 flex flex-col">
           {cartItems.map((item) => (
             <li
-              className="w-full flex relative text-gray-600 font-semibold px-2 py-3 bg-gray-100 rounded-lg"
+              className="w-full flex text-gray-600 font-semibold px-2 py-2 rounded-lg"
               key={item.id}
             >
-              <div className="flex w-full items-center">
-                <div className="sm:w-[50%] w-[47%] flex gap-1 items-center">
-                  <div className="w-10 rounded overflow-hidden">
-                    <img src={item.imageUrl} alt="product" />
-                  </div>
-                  <h1 className="w-[50%] ">{item.name}</h1>
+              <div className="flex w-[50%] gap-[5%] items-center">
+                <div className="sm:w-24 w-16">
+                  <img src={item.imageUrl} alt="product" />
                 </div>
-                <div className="flex w-[50%] ">
-                  <div className="rounded overflow-hidden w-16 flex justify-center">
-                    <button
-                      onClick={() => handleCartQuantityhange(item.id, "-")}
-                      className="px-2 flex justify-center items-center bg-gray-700 text-white text-md"
-                    >
-                      -
-                    </button>
-                    <input
-                      className="bg-white w-[60%] py-1 outline-none text-gray-700"
-                      value={item.quantity}
-                      type="text"
-                      readOnly
-                      name="cartQuantity"
-                    />
-                    <button
-                      onClick={() => handleCartQuantityhange(item.id, "+")}
-                      className="px-2 flex justify-center items-center bg-gray-700 text-white text-md"
-                    >
-                      +
-                    </button>
-                  </div>
-                  <h1 className="pl-[8%] sm:pl-[10%]">
-                    ₹{item.price * item.quantity}
-                  </h1>
+
+                <div className="flex flex-col gap-1 items-start">
+                  <h1 className=" ">{item.name}</h1>
+                  <h1 className=" ">Price : {item.price}</h1>
+                  <button
+                    className="hover:text-red-400 duration-200 text-red-300"
+                    onClick={() => removeFromCart(item.id)}
+                  >
+                    Remove
+                  </button>
                 </div>
               </div>
-              <div className="absolute top-0 h-full right-[3%] flex justify-center">
-                {" "}
-                <button
-                  className=" text-white"
-                  onClick={() => removeFromCart(item.id)}
-                >
-                  <i className="bi text-gray-500 hover:text-red-400 duration-200 sm:text-xl text-lg bi-trash-fill"></i>
-                </button>
+              <div className="flex w-[50%] items-center justify-around">
+                <div className="rounded overflow-hidden bg-red-200 w-16 sm:w-28 flex">
+                  <button
+                    onClick={() => handleCartQuantityhange(item.id, "-")}
+                    className="sm:px-4 px-2 flex justify-center items-center bg-gray-500 hover:bg-gray-600 text-white"
+                  >
+                    -
+                  </button>
+                  <input
+                    className="bg-white w-full py-1 sm:py-2 outline-none text-gray-700"
+                    value={item.quantity}
+                    type="text"
+                    readOnly
+                    name="cartQuantity"
+                  />
+                  <button
+                    onClick={() => handleCartQuantityhange(item.id, "+")}
+                    className="sm:px-4 px-2 flex justify-center items-center bg-gray-500 hover:bg-gray-600 text-white"
+                  >
+                    +
+                  </button>
+                </div>
+                <div>
+                  <h1 className="">₹{item.price * item.quantity}</h1>
+                </div>
               </div>
             </li>
           ))}
         </ul>
       )}
-      <div className="w-full mb-2 h-24 text-white  flex justify-around px-4 md:px-20 items-center font-bold  bg-slate-500">
-        <p>Total: ₹{calculateTotal()}</p>
-        <button className=" bg-gray-700 hover:bg-gray-800 duration-200 p-2 rounded">
-          Order Now
-        </button>
+      <div className="flex sm:items-end flex-col p-4">
+        <div className="sm:w-[50%] w-full mb-2 h-24 flex justify-between sm:justify-around items-center border-solid border-red-400  border-t-2 my-2">
+          <p className="sm:text-lg text-gray-700 font-bold">Gross Total:</p>
+          <span>₹{calculateTotal()}</span>
+        </div>
+        <div className="flex sm:w-[50%]  justify-center">
+          <button className=" bg-red-500 w-full sm:w-[70%] text-white hover:bg-gray-800 duration-200 p-2 rounded-full">
+            Checkout
+          </button>
+        </div>
       </div>
     </>
   );
