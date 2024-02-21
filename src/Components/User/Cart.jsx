@@ -7,7 +7,7 @@ const Cart = () => {
   const handleCartQuantityhange = (itemId, sign) => {
     const updatedCart = cartItems.map((item) => {
       if (item.id === itemId) {
-        item.quantity += sign === "+" ? 1 : item.quantity > 1 && -1;
+        item.quantity += sign === "+" ? (item.stock > item.quantity && 1) : item.quantity > 1 && -1;
       }
       return item;
     });
@@ -78,7 +78,7 @@ const Cart = () => {
                     -
                   </button>
                   <input
-                    className="bg-white w-full py-1 sm:py-2 outline-none text-gray-700"
+                    className="bg-gray-100 w-full py-1 sm:py-2 outline-none text-gray-700"
                     value={item.quantity}
                     type="text"
                     readOnly
@@ -92,7 +92,7 @@ const Cart = () => {
                   </button>
                 </div>
                 <div>
-                  <h1 className="">₹{item.price * item.quantity}</h1>
+                  <h1 className="">₹{(item.price * item.quantity).toFixed(2)}</h1>
                 </div>
               </div>
             </li>
