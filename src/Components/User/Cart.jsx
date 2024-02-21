@@ -27,7 +27,7 @@ const Cart = () => {
       <div className="bg-red-500 sm:text-sm text-xs text-white font-semibold rounded mx-4 my-2 flex sm:justify-between py-4">
         <div className="flex px-2 w-full justify-between ">
           <h1>Product</h1>
-          <div className="flex justify-start gap-[10%]  mr-[20%] w-[30%]">
+          <div className="flex justify-start gap-[18%]  mr-[20%] w-[30%]">
             <h1>Quantity</h1>
             <h1>Subtotal</h1>
           </div>
@@ -40,19 +40,34 @@ const Cart = () => {
         <ul className="pb-4 py-1 mx-4 text-xs sm:text-sm gap-2 flex flex-col">
           {cartItems.map((item) => (
             <li
-              className="w-full flex relative text-gray-600 font-semibold justify-start px-2 py-3 bg-gray-100 rounded-lg"
+              className="w-full flex relative text-gray-600 font-semibold px-2 py-3 bg-gray-100 rounded-lg"
               key={item.id}
             >
-              <div className="flex w-full gap-1 items-center justify-between ">
-                <div className="w-[50%] flex gap-2 items-center">
-                  <div className="w-14 rounded overflow-hidden">
+              <div className="flex w-full items-center">
+                <div className="sm:w-[50%] w-[47%] flex gap-1 items-center">
+                  <div className="w-10 rounded overflow-hidden">
                     <img src={item.imageUrl} alt="product" />
                   </div>
                   <h1 className="w-[50%] ">{item.name}</h1>
                 </div>
-                <div className="flex gap-[10%] px-6 justify-start mr-[20%] w-[30%]">
-                  <h1>{item.quantity}</h1>
-                  <h1 className="pl-6">{item.price * item.quantity}</h1>
+                <div className="flex w-[50%] ">
+                  <div className="rounded overflow-hidden w-16 flex justify-center">
+                    <button className="px-2 flex justify-center items-center bg-gray-700 text-white text-md">
+                      -
+                    </button>
+                    <input
+                      className="bg-white w-[60%] p-1 outline-none text-gray-700"
+                      // value={item.quantity}
+                      type="text"
+                      // readOnly
+                    />
+                    <button className="px-2 flex justify-center items-center bg-gray-700 text-white text-md">
+                      +
+                    </button>
+                  </div>
+                  <h1 className="pl-[8%] sm:pl-[10%]">
+                    ₹{item.price * item.quantity}
+                  </h1>
                 </div>
               </div>
               <div className="absolute top-0 h-full right-[3%] flex justify-center">
@@ -61,18 +76,16 @@ const Cart = () => {
                   className=" text-white"
                   onClick={() => removeFromCart(item.id)}
                 >
-                  <span className="bg-gray-700 text-[9px] sm:p-2 sm:text-xs px-1 py-2 rounded">
-                    Remove
-                  </span>
+                  <i className="bi text-gray-500 hover:text-red-400 duration-200 sm:text-xl text-lg bi-trash-fill"></i>
                 </button>
               </div>
             </li>
           ))}
         </ul>
       )}
-      <div className="w-full mb-2 h-24 flex justify-around px-4 md:px-20 items-center font-semibold  bg-gray-200">
+      <div className="w-full mb-2 h-24 text-white  flex justify-around px-4 md:px-20 items-center font-bold  bg-slate-500">
         <p>Total: ₹{calculateTotal()}</p>
-        <button className=" bg-gray-600 hover:bg-gray-700 text-white duration-200 p-2 rounded">
+        <button className=" bg-gray-700 hover:bg-gray-800 duration-200 p-2 rounded">
           Order Now
         </button>
       </div>
