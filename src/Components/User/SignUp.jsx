@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { grey } from "@mui/material/colors";
 import Checkbox from "@mui/material/Checkbox";
+import { useNavigate } from "react-router-dom";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 import { registerUser } from "../../Features/User/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function () {
+  const navigate = useNavigate()
   const [passwordType, setPasswordType] = useState("password");
   const [formData, setFormData] = useState({
     name: "",
@@ -17,9 +19,12 @@ export default function () {
   const { token, error, loading } = useSelector((state) => state.user || {});
 
  useEffect(() => {
-   console.log("Error:", error);
-   console.log("Loading:", loading);
- }, [token, error, loading, formData]);
+   if (token) {
+     if (localStorage.getItem("token")) {
+       navigate("/profile");
+     }
+   }
+ }, [token]);
 
   const handleChange = (e) => {
     setFormData({

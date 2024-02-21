@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { red } from "@mui/material/colors";
-import { grey } from "@mui/material/colors";
-import Checkbox from "@mui/material/Checkbox";
+import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../Features/User/userSlice";
 import { useSelector, useDispatch } from "react-redux";
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export default function () {
+  const navigate = useNavigate()
   const [passwordType, setPasswordType] = useState("password");
   const [formData, setFormData] = useState({
     email: "",
@@ -17,10 +15,12 @@ export default function () {
   const { token, error, loading } = useSelector((state) => state.user || {});
 
   useEffect(() => {
-    console.log(token);
-    console.log("Error:", error);
-    console.log("Loading:", loading);
-  }, [token, error, loading, formData]);
+    if (token) {
+      if (localStorage.getItem("token")) {
+        navigate("/profile");
+      }
+    }
+  }, [token]);
 
   const handleChange = (e) => {
     setFormData({
@@ -31,7 +31,7 @@ export default function () {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-        // console.log("User:", user.authToken);
+    // console.log("User:", user.authToken);
 
     // if (user) {
     // localStorage.setItem()
@@ -92,7 +92,7 @@ export default function () {
             </div>
             <div className="w-[80%] text-[10px] sm:text-sm items-center flex justify-between">
               <div className="flex  items-center">
-                <label htmlFor="check">Remember Me</label>
+                {/* <label htmlFor="check">Remember Me</label> */}
               </div>
               <Link to={""}>Forgot password?</Link>
             </div>

@@ -13,6 +13,7 @@ import AboutUs from "./Components/AboutUs";
 import ProductDetails from "./Components/Product/ProductDetails";
 import CheckoutPage from "./Components/Checkout";
 import Search from "./Components/Layout/SearchBox/Search";
+import Logout from "./Components/User/Logout";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route exact path="/search" element={<Search />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<SignUp />} />
+          <Route exact path="/logout" element={<Logout />} />
           {/* <Route exact path="/about" element={<AboutUs />} /> */}
           {/* <Route exact path="/contact" element={<ContactUs />} /> */}
           <Route path="product/:id" element={<ProductDetails />} />

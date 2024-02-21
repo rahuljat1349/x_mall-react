@@ -160,7 +160,7 @@ export default function Navbar({}) {
               }`}
             ></i>
           </Link>
-          <SpeedDialTool settings={settings} />
+          <SpeedDialTool user={user} settings={settings} />
         </div>
       </div>
       <div

@@ -1,36 +1,64 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import SimpleModal from "./Modal";
 import Button from "@mui/joy/Button";
 import FormControl from "@mui/joy/FormControl";
 import FormLabel from "@mui/joy/FormLabel";
-import Input from "@mui/joy/Input";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import DialogTitle from "@mui/joy/DialogTitle";
-import DialogContent from "@mui/joy/DialogContent";
 import Stack from "@mui/joy/Stack";
-import Add from "@mui/icons-material/Add";
+import { updateProfile } from "../../Features/User/userSlice";
+import { updatePassword } from "../../Features/User/userSlice";
 import { getUserInfo } from "../../Features/User/userSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 export default function Profile() {
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const [userInfo, setUserInfo] = useState({});
+  const [updateProfileData, setUpdateProfileData] = useState({
+    name: "",
+    email: "",
+  });
+  const [updatePasswordData, setUpdatePasswordData] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
   const dispatch = useDispatch();
   const { user, loading, error } = useSelector((state) => state.user || {});
+
+  const handleUpdatePassword = () => {
+    dispatch(updatePassword(updatePasswordData));
+  };
+  const handleUpdateProfile = () => {
+    dispatch(updateProfile(updateProfileData));
+  };
+  const handleProfileInputChange = (e) => {
+    setUpdateProfileData({
+      ...updateProfileData,
+      [e.target.name]: e.target.value,
+    });
+    // console.log(updateProfileData);
+  };
+  const handlePasswordInputChange = (e) => {
+    setUpdatePasswordData({
+      ...updatePasswordData,
+      [e.target.name]: e.target.value,
+    });
+    // console.log(updatePasswordData);
+  };
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
+
     setUserInfo(user);
-  }, [user]);
+  }, [user, handleUpdateProfile]);
   useEffect(() => {
     dispatch(getUserInfo());
   }, [dispatch]);
   return (
     <>
       <div className="w-[100vw] py-8 flex justify-center">
-        <div className="sm:w-[70%] p-2 sm:p-8 justify-start gap-8 flex flex-col h-[55vh] w-[60%] md:h-[70vh] sm:h-[60vh] lg:w-[60%] shadow-xl rounded-3xl">
+        <div className="sm:w-[70%] p-2 sm:p-8 justify-start gap-8 flex flex-col h-[60vh] w-[60%] md:h-[80vh] sm:h-[70vh] lg:w-[60%] shadow-xl rounded-3xl">
           <div className="flex flex-col items-center justify-center">
             <h1 className="text-gray-700 text-lg font-semibold">Name</h1>
             <h1 className="text-gray-400 font-semibold">{user && user.name}</h1>
@@ -62,6 +90,7 @@ export default function Profile() {
                 <form
                   onSubmit={(event) => {
                     event.preventDefault();
+                    handleUpdateProfile();
                     setOpen(false);
                   }}
                 >
@@ -69,6 +98,8 @@ export default function Profile() {
                     <FormControl>
                       <FormLabel>Name</FormLabel>
                       <input
+                        name="name"
+                        onChange={handleProfileInputChange}
                         className="p-2 rounded border-2 border-solid border-gray-200 focus:border-gray-400 outline-none"
                         type="text"
                       />
@@ -76,6 +107,8 @@ export default function Profile() {
                     <FormControl>
                       <FormLabel>Email</FormLabel>
                       <input
+                        name="email"
+                        onChange={handleProfileInputChange}
                         className="p-2 rounded border-2 border-solid border-gray-200 focus:border-gray-400 outline-none"
                         type="email"
                       />
@@ -102,6 +135,7 @@ export default function Profile() {
 
                 <form
                   onSubmit={(event) => {
+                    handleUpdatePassword();
                     event.preventDefault();
                     setOpen2(false);
                   }}
@@ -110,6 +144,8 @@ export default function Profile() {
                     <FormControl>
                       <FormLabel>Old Password</FormLabel>
                       <input
+                        name="oldPassword"
+                        onChange={handlePasswordInputChange}
                         className="p-2 rounded border-2 border-solid border-gray-200 focus:border-gray-400 outline-none"
                         type="password"
                       />
@@ -117,6 +153,17 @@ export default function Profile() {
                     <FormControl>
                       <FormLabel>New Password</FormLabel>
                       <input
+                        name="newPassword"
+                        onChange={handlePasswordInputChange}
+                        className="p-2 rounded border-2 border-solid border-gray-200 focus:border-gray-400 outline-none"
+                        type="password"
+                      />
+                    </FormControl>
+                    <FormControl>
+                      <FormLabel>Confirm New Password</FormLabel>
+                      <input
+                        name="confirmPassword"
+                        onChange={handlePasswordInputChange}
                         className="p-2 rounded border-2 border-solid border-gray-200 focus:border-gray-400 outline-none"
                         type="password"
                       />
@@ -129,6 +176,12 @@ export default function Profile() {
               </ModalDialog>
             </Modal>
           </div>
+          <Link
+            to={"/orders"}
+            className="bg-red-500 text-center hover:bg-red-600 duration-200 p-2 rounded text-white"
+          >
+            My Orders
+          </Link>
         </div>
       </div>
     </>
