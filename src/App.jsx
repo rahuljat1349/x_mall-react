@@ -3,7 +3,7 @@ import Footer from "./Components/Layout/Footer/Footer";
 import Home from "./Components/Home/Home";
 import Navbar from "./Components/Layout/Header/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Cart from "./Components/User/Cart";
+import Cart from "./Components/Cart/Cart";
 import Profile from "./Components/User/Profile";
 import Products from "./Components//Product/Products";
 import Login from "./Components/User/Login";
@@ -11,9 +11,9 @@ import SignUp from "./Components/User/SignUp";
 import ContactUs from "./Components/ContactUs";
 import AboutUs from "./Components/AboutUs";
 import ProductDetails from "./Components/Product/ProductDetails";
-import CheckoutPage from "./Components/Checkout";
 import Search from "./Components/Layout/SearchBox/Search";
 import Logout from "./Components/User/Logout";
+import Shipping from "./Components/Cart/Shipping";
 
 function App() {
   return (
@@ -39,7 +39,7 @@ function App() {
             element={<ProductDetails />}
           />
           {/* <Route exact path="/product" element={<ProductDetails />} /> */}
-          {/* <Route exact path="/checkout" element={<CheckoutPage />} /> */}
+          <Route exact path="/shipping" element={<Shipping />} />
         </Routes>
         <Footer />
       </Router>

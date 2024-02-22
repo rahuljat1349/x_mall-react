@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  const navigate = useNavigate()
   const cart = localStorage.getItem("cart");
   const [cartItems, setCartItems] = useState(cart ? JSON.parse(cart) : []);
 
@@ -31,6 +32,13 @@ const Cart = () => {
       .reduce((total, item) => total + item.price * item.quantity, 0)
       .toFixed(2);
   };
+  const ckeckoutHandler = async() => {
+    if ( await localStorage.getItem("token")) {
+      navigate("/shipping")
+    }else{
+      navigate("/login");
+    }
+  };
 
   useEffect(() => {
     // console.log(cartItems);
@@ -41,7 +49,7 @@ const Cart = () => {
       {cartItems.length < 1 ? (
         <div className="h-screen flex justify-center items-center">
           <div className="flex flex-col gap-1 items-center">
-            <i className="bi text-[50px] text-red-400 bi-cart-x"></i>
+            <i className="bi text-[50px] text-red-400 bi-cart-x-fill"></i>
             <h1 className="text-gray-700 font-semibold text-xl">
               No products in your cart
             </h1>
@@ -125,7 +133,10 @@ const Cart = () => {
               <span>₹{calculateTotal()}</span>
             </div>
             <div className="flex sm:w-[50%]  justify-center">
-              <button className=" bg-red-500 w-full sm:w-[70%] text-white hover:bg-gray-800 duration-200 p-2 rounded-full">
+              <button
+                onClick={ckeckoutHandler}
+                className=" bg-red-500 w-full sm:w-[70%] text-white hover:bg-gray-800 duration-200 p-2 rounded-full"
+              >
                 Checkout
               </button>
             </div>
