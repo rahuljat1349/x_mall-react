@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Country, State } from "country-state-city";
+import CheckoutStepper from "./Stepper";
+import { useNavigate } from "react-router-dom";
 
 export default function Shipping() {
+  const navigate = useNavigate();
   const [orderDetails, setOrderDetails] = useState({
     address: "",
     city: "",
@@ -11,9 +14,7 @@ export default function Shipping() {
     state: "",
   });
 
-  useEffect(() => {
-    // You can perform any side effects or initialization here
-  }, []);
+  useEffect(() => {}, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,27 +26,47 @@ export default function Shipping() {
 
   const handleContinue = (e) => {
     e.preventDefault();
-    // Implement logic for handling the "Continue" button click
+    // Save shipping details to local storage
+    localStorage.setItem("shippingDetails", JSON.stringify(orderDetails));
     console.log("Order Details:", orderDetails);
-    // Add further logic such as form submission, validation, etc.
+    if (localStorage.getItem("token")) {
+      navigate("/confirm");
+    } else {
+      navigate("/login");
+    }
+    // Add further logic such as navigating to the next step or submitting the form
   };
 
+  useEffect(() => {
+    // Check if shipping details exist in local storage
+    const storedShippingDetails = JSON.parse(
+      localStorage.getItem("shippingDetails")
+    );
+
+    // If details exist, set them in the state
+    if (storedShippingDetails) {
+      setOrderDetails(storedShippingDetails);
+    }
+  }, []);
   return (
     <>
-      <div className="w-full flex justify-center items-center text-gray-500  py-4 px-8 sm:px-10">
+      <div className="py-4">        
+      <CheckoutStepper currentStep={0} />
+      </div>
+      <div className="w-full flex justify-center items-center text-gray-500 px-8 sm:px-10">
         <div className="flex justify-center items-center sm:w-[80%] md:w-[60%] lg:w-[40%] w-full">
           <form
             action=""
-            className="shadow-lg  w-full rounded-xl p-4 gap-4 my-4 flex flex-col justify-center items-center "
+            className="  w-full rounded-xl p-4 gap-4 my-4 flex flex-col justify-center items-center "
           >
-            <h2 className="text-2xl border-solid border-gray-400 border-b-[1px] w-[60%] text-center p-4">
+            <h2 className="text-2xl border-solid border-gray-300 border-b-[1px] w-[60%] text-center pb-4">
               Shipping Details
             </h2>
 
             {/* Address Input */}
             <div className="relative w-full items-center justify-center flex">
               <i
-                className={`bi sm:text-lg cursor-pointer bi-house-fill z-10 absolute left-[13%] md:text-2xl`}
+                className={`bi sm:text-lg bi-house-fill z-10 absolute left-[13%] md:text-2xl`}
               ></i>
               <input
                 name="address"
@@ -61,7 +82,7 @@ export default function Shipping() {
             {/* City Input */}
             <div className="w-[80%] relative items-center flex">
               <i
-                className={`bi sm:text-lg cursor-pointer bi-building-fill z-10 absolute left-[4%] md:text-2xl`}
+                className={`bi sm:text-lg bi-building-fill z-10 absolute left-[4%] md:text-2xl`}
               ></i>
               <input
                 name="city"
@@ -77,7 +98,7 @@ export default function Shipping() {
             {/* Pin Code Input */}
             <div className="w-[80%] relative items-center flex">
               <i
-                className={`bi sm:text-lg cursor-pointer bi-geo-alt-fill z-10 absolute left-[4%] md:text-2xl`}
+                className={`bi sm:text-lg bi-geo-alt-fill z-10 absolute left-[4%] md:text-2xl`}
               ></i>
               <input
                 name="pinCode"
@@ -93,9 +114,10 @@ export default function Shipping() {
             {/* Phone Input */}
             <div className="w-[80%] relative items-center flex">
               <i
-                className={`bi sm:text-lg cursor-pointer bi-telephone-fill z-10 absolute left-[4%] md:text-2xl`}
+                className={`bi sm:text-lg bi-telephone-fill z-10 absolute left-[4%] md:text-2xl`}
               ></i>
               <input
+                minLength={10}
                 name="phone"
                 onChange={handleChange}
                 value={orderDetails.phone}
@@ -109,7 +131,7 @@ export default function Shipping() {
             {/* Country Dropdown */}
             <div className="w-[80%] relative items-center flex">
               <i
-                className={`bi sm:text-lg cursor-pointer bi-globe-central-south-asia z-10 absolute left-[4%] md:text-2xl`}
+                className={`bi sm:text-lg bi-globe-central-south-asia z-10 absolute left-[4%] md:text-2xl`}
               ></i>
               <select
                 name="country"
@@ -131,7 +153,7 @@ export default function Shipping() {
             {/* State Dropdown */}
             <div className="w-[80%] relative items-center flex">
               <i
-                className={`bi sm:text-lg cursor-pointer bi-map-fill z-10 absolute left-[4%] md:text-2xl`}
+                className={`bi sm:text-lg bi-map-fill z-10 absolute left-[4%] md:text-2xl`}
               ></i>
               <select
                 disabled={!orderDetails.country}
