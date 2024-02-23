@@ -70,6 +70,35 @@ export const fetchSingleProduct = createAsyncThunk(
   }
 );
 
+export const productReview = createAsyncThunk(
+  "auth/productReview",
+  async ({formData}) => {
+    console.log("product review function trigger");
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch("http://localhost:4000/api/v1/review", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        alert("Please Enter valid details");
+        throw new Error("Failed to update user");
+      }
+
+      const data = await response.json();
+      alert("Review added successfully.");
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 const productsSlice = createSlice({
   name: "products",
   initialState,
@@ -110,20 +139,20 @@ const productsSlice = createSlice({
       .addCase(fetchSingleProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(productReview.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(productReview.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        console.log(action.payload);
+      })
+      .addCase(productReview.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
-    // .addCase(searchProducts.pending, (state) => {
-    //   state.loading = true;
-    //   state.error = null;
-    // })
-    // .addCase(searchProducts.fulfilled, (state, action) => {
-    //   state.loading = false;
-    //   state.error = null;
-    //   state.selectedProduct = action.payload;
-    // })
-    // .addCase(searchProducts.rejected, (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.error.message;
-    // });
   },
 });
 

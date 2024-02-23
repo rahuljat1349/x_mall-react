@@ -34,6 +34,7 @@ export default function Confirm() {
         navigate("/payment")
       }else{
         navigate("/login")
+        alert("Please login to confirm your order.")
       }
     })();
     const data = { subTotal, shippingCharges, tax, totalPrice };

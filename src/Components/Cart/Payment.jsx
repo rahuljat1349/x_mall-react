@@ -37,6 +37,7 @@ const Payment = ({ stripeApiKey }) => {
         headers: {
           "Content-Type": "application/json",
           "auth-token": localStorage.getItem("token"),
+          Authorization: `Bearer ${stripeApiKey}`,
         },
         body: JSON.stringify(paymentData),
       });
@@ -118,7 +119,7 @@ const Payment = ({ stripeApiKey }) => {
           >
             {loading
               ? "Processing..."
-              : `Pay -${orderInfo && orderInfo.totalPrice}`}
+              : `Pay -₹${orderInfo && orderInfo.totalPrice}`}
           </button>
         </form>
       </div>

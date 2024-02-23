@@ -18,28 +18,31 @@ import Logout from "./Components/User/Logout";
 import Shipping from "./Components/Cart/Shipping";
 import Confirm from "./Components/Cart/Confirm";
 
-import Payment from "./Components/Cart/Payment";
-
 import { useEffect, useState } from "react";
-
+import Payment from "./Components/Cart/payment";
+import MyOrders from "./Components/Order/MyOrders";
+import OrderDetails from "./Components/Order/OrderDetails";
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
+
   const getStripeApiKey = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/api/v1/stripeapikey`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-        },
-      });
+      const response = await fetch(
+        `http://localhost:4000/api/v1/stripeapikey`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch api key");
       }
 
       const data = await response.json();
-      console.log(data);
       setStripeApiKey(data.stripeApiKey);
     } catch (error) {
       throw error;
@@ -47,7 +50,6 @@ function App() {
   };
 
   useEffect(() => {
-    
     getStripeApiKey();
   }, []);
 
@@ -60,13 +62,15 @@ function App() {
             <Route
               path="/payment"
               element={
-                <Elements stripe={loadStripe(stripeApiKey)}>
+                <Elements stripe={loadStripe(stripeApiKey && stripeApiKey)}>
                   <Payment stripeApiKey={stripeApiKey} />
                 </Elements>
               }
             />
           )}
           <Route path="/" element={<Home />} />
+          <Route path="/orders" element={<MyOrders />} />
+          <Route path="/orders/order/:id" element={<OrderDetails />} />
           <Route exact path="/cart" element={<Cart />} />
           <Route exact path="/cart" element={<Cart />} />
           <Route exact path="/confirm" element={<Confirm />} />

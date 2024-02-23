@@ -15,6 +15,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchSingleProduct } from "../../Features/Products/productSlice";
+import { productReview } from "../../Features/Products/productSlice";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 import { addToCart } from "../../Features/Cart/cartSlice";
@@ -29,19 +30,29 @@ import Add from "@mui/icons-material/Add";
 import Loader from "../Layout/Loader/Loader";
 
 export default function ProductDetails({}) {
-  const [open, setOpen] = React.useState(false);
-  const [cartValue, setCartValue] = useState(1);
-  const [imagenavigation, setImagenavigation] = useState(false);
   const id = useParams().id;
-  const dispatch = useDispatch();
-
   const { selectedProduct: product, loading } = useSelector(
     (state) => state.products
   );
- const handleAddToCart = () => {
-   dispatch(addToCart({ id, quantity: cartValue }));
- };
+  const [open, setOpen] = React.useState(false);
+  const [productReviews, setProductReviews] = useState({
+    productId: id,
+    comment: "",
+    rating: "",
+  });
+  const [cartValue, setCartValue] = useState(1);
+  const dispatch = useDispatch();
 
+  const handleAddToCart = () => {
+    dispatch(addToCart({ id, quantity: cartValue }));
+  };
+  const handleReviewChange = (e) => {
+    setProductReviews({ ...productReviews, [e.target.name]: e.target.value });
+  };
+  const handleProductReviewSubmit = () => {
+    console.log("submit review trigger");
+    productReview({productReviews});
+  };
 
   useEffect(() => {
     dispatch(fetchSingleProduct(id));
@@ -198,8 +209,9 @@ export default function ProductDetails({}) {
                       <Stack spacing={2}>
                         <FormControl>
                           <Rating
-                            name="half-rating"
-                            defaultValue={2.5}
+                            value={Number.parseInt(productReviews.rating)}
+                            onChange={handleReviewChange}
+                            name="rating"
                             precision={0.5}
                             sx={{
                               color: red[400],
@@ -209,11 +221,21 @@ export default function ProductDetails({}) {
                         <FormControl>
                           <FormLabel>Description</FormLabel>
                           <textarea
+                            value={productReviews.comment}
+                            name="comment"
+                            onChange={handleReviewChange}
                             className="outline-none focus:border-red-400 border-solid border-2 duration-200 rounded p-2"
                             type="text"
                           />
                         </FormControl>
-                        <button className="bg-red-400 text-white p-2 rounded hover:bg-red-500 duration-200">
+                        <button
+                          onClick={handleProductReviewSubmit}
+                          disabled={
+                            productReviews.rating < 1 &&
+                            productReviews.comment.length < 3
+                          }
+                          className="bg-red-400 text-white p-2 rounded disabled:bg-red-300 hover:bg-red-500 duration-200"
+                        >
                           Submit
                         </button>
                       </Stack>

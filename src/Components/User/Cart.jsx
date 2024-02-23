@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const cart = localStorage.getItem("cart");
   const [cartItems, setCartItems] = useState(cart ? JSON.parse(cart) : []);
 
@@ -32,10 +32,10 @@ const Cart = () => {
       .reduce((total, item) => total + item.price * item.quantity, 0)
       .toFixed(2);
   };
-  const ckeckoutHandler = async() => {
-    if ( await localStorage.getItem("token")) {
-      navigate("/shipping")
-    }else{
+  const ckeckoutHandler = async () => {
+    if (await localStorage.getItem("token")) {
+      navigate("/shipping");
+    } else {
       navigate("/login");
     }
   };
@@ -96,7 +96,7 @@ const Cart = () => {
                   </div>
                 </div>
                 <div className="flex w-[50%] items-center justify-around">
-                  <div className="rounded overflow-hidden bg-red-200 w-16 sm:w-28 flex">
+                  <div className="rounded overflow-hidden  w-16 sm:w-28 flex">
                     <button
                       onClick={() => handleCartQuantityhange(item.id, "-")}
                       className="sm:px-4 px-2 flex justify-center items-center bg-gray-500 hover:bg-gray-600 text-white"

@@ -14,6 +14,7 @@ export default function Shipping() {
     state: "",
   });
 
+
   useEffect(() => {}, []);
 
   const handleChange = (e) => {
@@ -24,6 +25,7 @@ export default function Shipping() {
     }));
   };
 
+
   const handleContinue = (e) => {
     e.preventDefault();
     // Save shipping details to local storage
@@ -33,8 +35,8 @@ export default function Shipping() {
       navigate("/confirm");
     } else {
       navigate("/login");
+      alert("Please login to place an order.")
     }
-    // Add further logic such as navigating to the next step or submitting the form
   };
 
   useEffect(() => {
@@ -50,8 +52,8 @@ export default function Shipping() {
   }, []);
   return (
     <>
-      <div className="py-4">        
-      <CheckoutStepper currentStep={0} />
+      <div className="py-4">
+        <CheckoutStepper currentStep={0} />
       </div>
       <div className="w-full flex justify-center items-center text-gray-500 px-8 sm:px-10">
         <div className="flex justify-center items-center sm:w-[80%] md:w-[60%] lg:w-[40%] w-full">
