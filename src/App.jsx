@@ -10,8 +10,8 @@ import Profile from "./Components/User/Profile";
 import Products from "./Components//Product/Products";
 import Login from "./Components/User/Login";
 import SignUp from "./Components/User/SignUp";
-import ContactUs from "./Components/ContactUs";
-import AboutUs from "./Components/AboutUs";
+import ContactUs from "./Components/Layout/Extra/ContactUs";
+import AboutUs from "./Components/Layout/Extra/AboutUs";
 import ProductDetails from "./Components/Product/ProductDetails";
 import Search from "./Components/Layout/SearchBox/Search";
 import Logout from "./Components/User/Logout";
@@ -22,6 +22,10 @@ import { useEffect, useState } from "react";
 import Payment from "./Components/Cart/payment";
 import MyOrders from "./Components/Order/MyOrders";
 import OrderDetails from "./Components/Order/OrderDetails";
+import Dashboard from "./Components/Admin/Dashboard";
+import ProductList from "./Components/Admin/ProductList";
+import OrdersList from "./Components/Admin/OrdersList";
+import AddProduct from "./Components/Admin/AddProduct";
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
 
@@ -69,6 +73,10 @@ function App() {
             />
           )}
           <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/admin/productslist" element={<ProductList />} />
+          <Route path="/admin/orders" element={<OrdersList />} />
+          <Route path="/admin/add" element={<AddProduct />} />
           <Route path="/orders" element={<MyOrders />} />
           <Route path="/orders/order/:id" element={<OrderDetails />} />
           <Route exact path="/cart" element={<Cart />} />

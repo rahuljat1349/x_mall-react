@@ -8,7 +8,7 @@ import Pagination from "@mui/material/Pagination";
 import { Link, useParams } from "react-router-dom";
 import { red } from "@mui/material/colors";
 import Loader from "../Layout/Loader/Loader";
-let categories = ["ALL", "Electronics", "Fashion", "mobiles", "watches"];
+let categories = ["ALL", "Electronics", "Fashion", "Mobiles", "Watches"];
 export default function Products() {
   const dispatch = useDispatch();
 

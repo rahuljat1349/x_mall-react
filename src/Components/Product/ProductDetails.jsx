@@ -51,7 +51,9 @@ export default function ProductDetails({}) {
   };
   const handleProductReviewSubmit = () => {
     console.log("submit review trigger");
-    productReview({productReviews});
+    dispatch(productReview(productReviews));
+    setOpen(false);
+    dispatch(fetchSingleProduct(id));
   };
 
   useEffect(() => {
@@ -116,14 +118,13 @@ export default function ProductDetails({}) {
                   readOnly
                 />
                 <span className="text-gray-400">
-                  ({product.numOfReviews} Reviews)
+                  ({product.numOfReviews}{" "}
+                  {product.numOfReviews < 2 ? "Review" : "Reviews"})
                 </span>
               </div>
               <hr />
               <div className="flex items-center">
-                <span className="text-gray-800 text-xl">
-                  &#8377;{product.price}
-                </span>
+                <span className="text-gray-800 text-xl">₹{product.price}</span>
               </div>
               <div className="flex items-center gap-4">
                 <div>
@@ -189,8 +190,9 @@ export default function ProductDetails({}) {
                 <span className="text-gray-700">Description :</span>
                 <p className="text-gray-500 text-sm">{product.description}</p>
                 <button
+                  // disabled={product&&product.stock}
                   onClick={() => setOpen(true)}
-                  className="text-white w-32 text-[11px] sm:text-xs p-2 bg-red-500 rounded-full flex items-center justify-center hover:bg-white hover:text-red-500 border-red-500 border-solid border-2 duration-200"
+                  className="text-white w-32 text-[11px] sm:text-xs p-2 bg-red-500 rounded-full flex items-center justify-center hover:bg-white hover:scale-105 hover:text-red-500 border-red-500 border-solid border-2 duration-200"
                 >
                   Submit review
                 </button>

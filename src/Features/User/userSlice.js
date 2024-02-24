@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const initialState = {
   user: null,
   token: "",
+  allUsers: [],
   loading: false,
   error: null,
 };
@@ -26,7 +27,7 @@ export const registerUser = createAsyncThunk(
 
       const data = await response.json();
       localStorage.setItem("token", data.authToken);
-          alert("Registered Successfully.");
+      alert("Registered Successfully.");
 
       return data;
     } catch (error) {
@@ -156,6 +157,37 @@ export const getUserInfo = createAsyncThunk(
     }
   }
 );
+export const getAdminUsers = createAsyncThunk(
+  "auth/getAdminUsers",
+  async (_, thunkAPI) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      // Handle the case when the token is not available
+      throw new Error("No token available");
+    }
+
+    try {
+      const response = await fetch("http://localhost:4000/api/v1/admin/users", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to Load user info");
+      }
+
+      const data = await response.json();
+
+      return data; // Assuming your API returns some data after successful login
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -222,6 +254,18 @@ const authSlice = createSlice({
         // state.user = action.payload.user;
       })
       .addCase(updatePassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getAdminUsers.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getAdminUsers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.allUsers = action.payload.users;
+      })
+      .addCase(getAdminUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

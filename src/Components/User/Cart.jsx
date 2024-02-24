@@ -62,7 +62,7 @@ const Cart = () => {
           </div>
         </div>
       ) : (
-        <div>
+        <div className="min-h-screen">
           <div className="bg-red-500 sm:text-sm text-xs text-white font-semibold flex sm:justify-between py-4">
             <div className="flex w-full justify-between ">
               <h1 className="pl-4">Product</h1>

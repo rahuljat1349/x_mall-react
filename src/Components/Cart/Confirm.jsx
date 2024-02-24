@@ -31,10 +31,10 @@ export default function Confirm() {
     const letLoginCheck = (async () => {
       let loggedIn = await localStorage.getItem("token");
       if (loggedIn) {
-        navigate("/payment")
-      }else{
-        navigate("/login")
-        alert("Please login to confirm your order.")
+        navigate("/payment");
+      } else {
+        navigate("/login");
+        alert("Please login to confirm your order.");
       }
     })();
     const data = { subTotal, shippingCharges, tax, totalPrice };
@@ -45,7 +45,7 @@ export default function Confirm() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="py-4 md:px-6">
+        <div className="py-4 md:px-6 min-h-screen">
           <div className="py-4">
             <CheckoutStepper currentStep={1} />
           </div>

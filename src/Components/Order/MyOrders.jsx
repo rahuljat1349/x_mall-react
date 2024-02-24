@@ -55,7 +55,7 @@ export default function MyOrders() {
                 {orders &&
                   orders.map((item) => (
                     <div
-                      className=" sm:text-sm text-[8px] text-gray-700 py-4 font-semibold grid grid-cols-5 place-items-center w-full justify-around"
+                      className=" sm:text-sm text-[8px] hover:bg-gray-100 text-gray-700 py-4 font-semibold grid grid-cols-5 place-items-center w-full justify-around"
                       key={item.id}
                     >
                       <h1 className="text-[5px] lg:text-sm sm:text-[8px]">

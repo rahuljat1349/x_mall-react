@@ -5,6 +5,7 @@ const initialState = {
   list: [],
   loading: false,
   error: null,
+  allProductsList: [],
   page: {
     currentPage: 1,
     pageSize: 10,
@@ -69,11 +70,36 @@ export const fetchSingleProduct = createAsyncThunk(
     }
   }
 );
+export const getAdminProducts = createAsyncThunk(
+  "products/getAdminProducts",
+  async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/v1/admin/products`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": token,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`Failed to fetch products`);
+        console.log("error in fetch admin products");
+      }
+      const data = await response.json();
+      return data.products;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 export const productReview = createAsyncThunk(
   "auth/productReview",
-  async ({formData}) => {
-    console.log("product review function trigger");
+  async (formData) => {
     const token = localStorage.getItem("token");
     try {
       const response = await fetch("http://localhost:4000/api/v1/review", {
@@ -87,17 +113,41 @@ export const productReview = createAsyncThunk(
 
       if (!response.ok) {
         alert("Please Enter valid details");
-        throw new Error("Failed to update user");
+        throw new Error("Failed to add review");
       }
 
       const data = await response.json();
-      alert("Review added successfully.");
+      alert("Review added successfully, it will appear soon.");
       return data;
     } catch (error) {
       throw error;
     }
   }
 );
+export const addProduct = createAsyncThunk("auth/addProduct", async (formData) => {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await fetch("http://localhost:4000/api/v1/admin/product/new", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": token,
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      alert("Please Enter valid details");
+      throw new Error("Failed to add Product");
+    }
+
+    const data = await response.json();
+    alert("Product added successfully.");
+    return data;
+  } catch (error) {
+    throw error;
+  }
+});
 
 const productsSlice = createSlice({
   name: "products",
@@ -140,6 +190,19 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+      .addCase(getAdminProducts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getAdminProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.allProductsList = action.payload;
+      })
+      .addCase(getAdminProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
       .addCase(productReview.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -150,6 +213,18 @@ const productsSlice = createSlice({
         console.log(action.payload);
       })
       .addCase(productReview.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(addProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(addProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
