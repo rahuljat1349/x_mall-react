@@ -9,7 +9,7 @@ import Sidebar from "./Sidebar";
 export default function ProcessOrder() {
   const id = useParams().id;
   const { user, error } = useSelector((state) => state.user || {});
-  const { singleOrder , loading} = useSelector((state) => state.orders || []);
+  const { singleOrder, loading } = useSelector((state) => state.orders || []);
   const [status, setStatus] = useState({ status: "" });
   //
   const address = `${singleOrder.order?.shippingInfo.address},${singleOrder?.order?.shippingInfo.city},${singleOrder?.order?.shippingInfo.state},${singleOrder?.order?.shippingInfo.pinCode},${singleOrder?.order?.shippingInfo.country}`;
@@ -44,7 +44,7 @@ export default function ProcessOrder() {
         <div className="flex sm:flex-row flex-col">
           {" "}
           <Sidebar color={""} />
-          <div className="flex md:flex-row w-full justify-between flex-col">
+          <div className="flex md:flex-row min-h-screen w-full justify-between flex-col">
             <div
               className={`${
                 singleOrder.order?.orderStatus === "Delivered" &&

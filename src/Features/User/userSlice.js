@@ -3,7 +3,7 @@ const initialState = {
   user: null,
   token: "",
   allUsers: [],
-  singleUser:{},
+  singleUser: {},
   loading: false,
   error: null,
 };
@@ -28,7 +28,6 @@ export const registerUser = createAsyncThunk(
 
       const data = await response.json();
       localStorage.setItem("token", data.authToken);
- 
 
       return data;
     } catch (error) {
@@ -56,7 +55,6 @@ export const loginUser = createAsyncThunk(
       }
 
       const data = await response.json();
-      
 
       //   console.log(data.authToken);
       localStorage.setItem("token", data.authToken);
@@ -152,7 +150,7 @@ export const getUserInfo = createAsyncThunk(
 
       const data = await response.json();
 
-      return data; 
+      return data;
     } catch (error) {
       throw error;
     }
@@ -183,7 +181,7 @@ export const getAdminUsers = createAsyncThunk(
 
       const data = await response.json();
 
-      return data; 
+      return data;
     } catch (error) {
       throw error;
     }
@@ -201,16 +199,82 @@ export const getSingleUser = createAsyncThunk(
     }
 
     try {
-      const response = await fetch(`http://localhost:4000/api/v1/admin/users${id}`, {
-        method: "GET",
+      const response = await fetch(
+        `http://localhost:4000/api/v1/admin/users/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": token,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to Load user info");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+// delete user [admin]
+export const deleteUser = createAsyncThunk("auth/deleteUser", async (id) => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw new Error("No token available");
+  }
+
+  try {
+    const response = await fetch(
+      `http://localhost:4000/api/v1/admin/users/${id}`,
+      {
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           "auth-token": token,
         },
-      });
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to Load user info");
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+});
+// update user [admin]
+export const updateUser = createAsyncThunk(
+  "auth/updateUser",
+  async ({ id, formData }) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      throw new Error("No token available");
+    }
+console.log(formData);
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/v1/admin/users/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": token,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (!response.ok) {
-        throw new Error("Failed to Load user info");
+        throw new Error("Failed to Update user info");
       }
 
       const data = await response.json();
@@ -221,8 +285,6 @@ export const getSingleUser = createAsyncThunk(
     }
   }
 );
-
-
 
 const authSlice = createSlice({
   name: "auth",
@@ -286,7 +348,6 @@ const authSlice = createSlice({
       })
       .addCase(updatePassword.fulfilled, (state, action) => {
         state.loading = false;
-        // state.user = action.payload.user;
       })
       .addCase(updatePassword.rejected, (state, action) => {
         state.loading = false;
@@ -301,6 +362,40 @@ const authSlice = createSlice({
         state.allUsers = action.payload.users;
       })
       .addCase(getAdminUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(deleteUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getSingleUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getSingleUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.singleUser = action.payload;
+      })
+      .addCase(getSingleUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

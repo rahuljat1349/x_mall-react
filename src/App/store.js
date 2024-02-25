@@ -3,6 +3,7 @@ import cartReducer from "../Features/Cart/cartSlice";
 import productsReducer from "../Features/Products/productSlice";
 import userSlice from "../Features/User/userSlice";
 import orderSlice from "../Features/Orders/orderSlice";
+import ReviewSlice from "../Features/Reviews/ReviewSlice";
 
 //
 //
@@ -14,6 +15,7 @@ const store = configureStore({
     products: productsReducer,
     user: userSlice,
     orders: orderSlice,
+    reviews:ReviewSlice
   },
 });
 

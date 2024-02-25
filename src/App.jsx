@@ -27,6 +27,9 @@ import ProductList from "./Components/Admin/ProductList";
 import OrdersList from "./Components/Admin/OrdersList";
 import AddProduct from "./Components/Admin/AddProduct";
 import ProcessOrder from "./Components/Admin/ProcessOrder";
+import UsersLIst from "./Components/Admin/UsersLIst";
+import UpdateUser from "./Components/Admin/UpdateUser";
+import ReviewsList from "./Components/Admin/ReviewsList";
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
 
@@ -75,9 +78,12 @@ function App() {
           )}
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/admin/productslist" element={<ProductList />} />
+          <Route path="/admin/products" element={<ProductList />} />
           <Route path="/admin/orders" element={<OrdersList />} />
+          <Route path="/admin/reviews" element={<ReviewsList />} />
+          <Route path="/admin/users" element={<UsersLIst />} />
           <Route path="/admin/order/:id" element={<ProcessOrder />} />
+          <Route path="/admin/user/:id" element={<UpdateUser />} />
           <Route path="/admin/add" element={<AddProduct />} />
           <Route path="/orders" element={<MyOrders />} />
           <Route path="/orders/order/:id" element={<OrderDetails />} />

@@ -22,7 +22,7 @@ export default function Sidebar({ color }) {
           <span> Dashboard</span>
         </Link>
         <Link
-          to={"/admin/productslist"}
+          to={"/admin/products"}
           className={`hover:scale-110 hover:text-red-400 ${
             color == "products" ? "text-red-400" : "text-gray-500"
           } w-full duration-200  flex sm:flex-row flex-col sm:justify-start sm:px-4 justify-center items-center hover:cursor-pointer`}

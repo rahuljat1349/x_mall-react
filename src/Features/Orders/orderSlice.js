@@ -145,7 +145,6 @@ export const updateOrder = createAsyncThunk(
   "products/updateOrder",
   async ({ id, status }) => {
     const token = localStorage.getItem("token");
-    console.log(status);
     if (!token) {
       throw new Error("No token available");
     }
@@ -174,6 +173,11 @@ export const updateOrder = createAsyncThunk(
     }
   }
 );
+
+
+
+
+
 
 const orderSlice = createSlice({
   name: "orders",

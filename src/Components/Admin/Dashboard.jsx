@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import { Line, Doughnut } from "react-chartjs-2";
@@ -84,19 +84,28 @@ export default function Dashboard() {
             </div>
             {/* round boxes */}
             <div className="flex sm:text-lg items-center p-2 justify-evenly w-full">
-              <div className="text-white rounded-full bg-red-500 sm:w-32 lg:w-40 w-20 sm:h-32 lg:h-40 h-20 flex justify-center items-center flex-col">
+              <Link
+                to={"/admin/products"}
+                className="text-white rounded-full bg-red-500 sm:w-32 lg:w-40 w-20 sm:h-32 lg:h-40 h-20 flex justify-center items-center flex-col"
+              >
                 <span>Products</span>{" "}
                 <span>{allProductsList && allProductsList.length}</span>
-              </div>
-              <div className="text-white rounded-full bg-violet-500 sm:w-32 lg:w-40 w-20 sm:h-32 lg:h-40 h-20 flex justify-center items-center flex-col">
+              </Link>
+              <Link
+                to={"/admin/users"}
+                className="text-white rounded-full bg-violet-500 sm:w-32 lg:w-40 w-20 sm:h-32 lg:h-40 h-20 flex justify-center items-center flex-col"
+              >
                 <span>Users</span>
                 <span>{allUsers && allUsers.length}</span>
-              </div>
-              <div className="text-white rounded-full bg-yellow-500 sm:w-32 lg:w-40 w-20 sm:h-32 lg:h-40 h-20 flex justify-center items-center flex-col">
+              </Link>
+              <Link
+                to={"/admin/orders"}
+                className="text-white rounded-full bg-yellow-500 sm:w-32 lg:w-40 w-20 sm:h-32 lg:h-40 h-20 flex justify-center items-center flex-col"
+              >
                 <span>Orders</span>
                 {allOrders.orders && allOrders.orders.length}
                 <span></span>
-              </div>
+              </Link>
             </div>
             {/*line chart */}
             <div className="flex justify-center p-4 w-full">
