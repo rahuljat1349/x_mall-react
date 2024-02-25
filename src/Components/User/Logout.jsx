@@ -14,7 +14,7 @@ export default function AlertDialogModal() {
   const [open, setOpen] = React.useState(true);
   return (
     <React.Fragment>
-      <div className="h-screen bg-gray-600"></div>{" "}
+      <div className="h-[100vh]  bg-gray-800"></div>{" "}
       <Modal open={open} onClose={() => navigate("/")}>
         <ModalDialog variant="outlined" role="alertdialog">
           <DialogTitle>
@@ -29,6 +29,7 @@ export default function AlertDialogModal() {
               color="danger"
               onClick={() => {
                 localStorage.removeItem("token");
+                localStorage.removeItem("cart");
                 navigate("/");
               }}
             >

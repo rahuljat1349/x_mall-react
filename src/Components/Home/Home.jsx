@@ -43,12 +43,10 @@ const Home = () => {
           </button>
         </a>
       </div>
+      <div className="h-10" id="featured-products"></div>
       <div className="flex justify-center">
         <div>
-          <h1
-            id="featured-products"
-            className="md:text-2xl py-6  text-gray-500  md:w-[20vw] font-medium mb-4 text-center border-gray-400 border-solid border-b-[1px]"
-          >
+          <h1 className="md:text-2xl py-6  text-gray-500  md:w-[20vw] font-medium mb-4 text-center border-gray-400 border-solid border-b-[1px]">
             Featured Products
           </h1>
         </div>

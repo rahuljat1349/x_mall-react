@@ -2,11 +2,12 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../Layout/Loader/Loader";
 import { getAdminProducts } from "../../Features/Products/productSlice";
+import { deleteProduct } from "../../Features/Products/productSlice";
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 
 export default function ProductList() {
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -25,8 +26,15 @@ export default function ProductList() {
   }, [user]);
   useEffect(() => {
     dispatch(getAdminProducts());
-  }, [dispatch]);
+  }, [dispatch ]);
 
+  const handleDeleteProduct = async (productId) => {
+    if (confirm("Delete this product?")) {
+     await dispatch(deleteProduct(productId));
+     dispatch(getAdminProducts());
+      
+    }
+  };
   return (
     <>
       {loading ? (
@@ -77,11 +85,11 @@ export default function ProductList() {
                         <h1>{item.stock}</h1>
                         <h1>₹{item.price}</h1>
                         <div className="flex gap-4">
-                          <button>
+                          {/* <button disabled>
                             {" "}
                             <i className="bi hover:text-red-500 duration-150 font-bold cursor-pointer bi-pencil-square"></i>
-                          </button>{" "}
-                          <button>
+                          </button>{" "} */}
+                          <button onClick={() => handleDeleteProduct(item._id)}>
                             {" "}
                             <i className="bi hover:text-red-500 duration-150 font-bold cursor-pointer bi-trash3-fill"></i>
                           </button>{" "}

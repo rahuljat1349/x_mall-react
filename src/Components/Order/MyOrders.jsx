@@ -27,7 +27,7 @@ export default function MyOrders() {
       ) : (
         <div className="h-screen">
           {orders.length < 1 ? (
-            <div className="flex justify-center items-center">
+            <div className="flex h-screen justify-center items-center">
               <div className="flex flex-col gap-1 items-center">
                 <i className="bi text-[50px] text-red-400 bi-cart-x-fill"></i>
                 <h1 className="text-gray-700 font-semibold text-xl">
@@ -63,9 +63,9 @@ export default function MyOrders() {
                       </h1>
                       <h1
                         className={
-                          item.orderStatus == "Processing"
-                            ? "text-red-400"
-                            : "text-green-600"
+                          item.orderStatus == "Delivered"
+                            ? "text-green-600"
+                            : "text-red-400"
                         }
                       >
                         {item.orderStatus}

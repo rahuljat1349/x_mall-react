@@ -117,13 +117,14 @@ export const productReview = createAsyncThunk(
       }
 
       const data = await response.json();
-      alert("Review added successfully, it will appear soon.");
+      alert("Review added successfully.");
       return data;
     } catch (error) {
       throw error;
     }
   }
 );
+// add product [admin]
 export const addProduct = createAsyncThunk("auth/addProduct", async (formData) => {
   const token = localStorage.getItem("token");
   try {
@@ -148,6 +149,37 @@ export const addProduct = createAsyncThunk("auth/addProduct", async (formData) =
     throw error;
   }
 });
+
+// delete product [admin]
+export const deleteProduct = createAsyncThunk(
+  "auth/deleteProduct",
+  async (id) => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(
+       ` http://localhost:4000/api/v1/admin/product/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": token,
+          },
+       
+        }
+      );
+
+      if (!response.ok) {
+        alert("Error deleting product");
+        throw new Error("Failed to add Product");
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 const productsSlice = createSlice({
   name: "products",
@@ -225,6 +257,18 @@ const productsSlice = createSlice({
         state.error = null;
       })
       .addCase(addProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(deleteProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

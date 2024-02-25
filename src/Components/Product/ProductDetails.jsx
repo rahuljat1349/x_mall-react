@@ -49,9 +49,9 @@ export default function ProductDetails({}) {
   const handleReviewChange = (e) => {
     setProductReviews({ ...productReviews, [e.target.name]: e.target.value });
   };
-  const handleProductReviewSubmit = () => {
+  const handleProductReviewSubmit = async() => {
     console.log("submit review trigger");
-    dispatch(productReview(productReviews));
+    await dispatch(productReview(productReviews));
     setOpen(false);
     dispatch(fetchSingleProduct(id));
   };

@@ -98,8 +98,8 @@ export default function Products() {
                   <img
                     className="w-full"
                     src={
-                      product.images[0].url
-                        ? product.images[0].url
+                      product.images[0]?.url
+                        ? product.images[0]?.url
                         : "https://www.pngkey.com/png/detail/233-2332677_image-500580-placeholder-transparent.png"
                     }
                     alt="image"

@@ -5,6 +5,7 @@ const initialState = {
   orders: [],
   loading: false,
   allOrders: [],
+  singleOrder: {},
   error: null,
 };
 
@@ -14,7 +15,6 @@ export const getMyOrders = createAsyncThunk(
     const token = localStorage.getItem("token");
 
     if (!token) {
-      // Handle the case when the token is not available
       throw new Error("No token available");
     }
     try {
@@ -38,13 +38,13 @@ export const getMyOrders = createAsyncThunk(
     }
   }
 );
+
 export const getAdminOrders = createAsyncThunk(
   "products/getAdminOrders",
   async () => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      // Handle the case when the token is not available
       throw new Error("No token available");
     }
     try {
@@ -61,6 +61,109 @@ export const getAdminOrders = createAsyncThunk(
 
       if (!response.ok) {
         throw new Error("Failed to Load user info");
+      }
+
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+// delete order [admin]
+export const deleteOrder = createAsyncThunk(
+  "products/deleteOrder",
+  async (id) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      throw new Error("No token available");
+    }
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/v1/admin/order/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": token,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete order");
+      }
+
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+// get single order [admin]
+export const getSingleOrder = createAsyncThunk(
+  "products/getSingleOrder",
+  async (id) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      throw new Error("No token available");
+    }
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/v1/admin/order/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": token,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to find order");
+      }
+
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+// Update order status [admin]
+export const updateOrder = createAsyncThunk(
+  "products/updateOrder",
+  async ({ id, status }) => {
+    const token = localStorage.getItem("token");
+    console.log(status);
+    if (!token) {
+      throw new Error("No token available");
+    }
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/v1/admin/order/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": token,
+          },
+          body: JSON.stringify(status),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to update order status");
       }
 
       const data = await response.json();
@@ -107,6 +210,45 @@ const orderSlice = createSlice({
       .addCase(getAdminOrders.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(deleteOrder.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteOrder.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(deleteOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getSingleOrder.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getSingleOrder.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.singleOrder = action.payload;
+      })
+      .addCase(getSingleOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateOrder.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateOrder.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        console.log("fulfilled ");
+      })
+      .addCase(updateOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+        console.log(action.error.message);
       });
   },
 });

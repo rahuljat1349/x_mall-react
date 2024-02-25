@@ -3,6 +3,7 @@ const initialState = {
   user: null,
   token: "",
   allUsers: [],
+  singleUser:{},
   loading: false,
   error: null,
 };
@@ -27,7 +28,7 @@ export const registerUser = createAsyncThunk(
 
       const data = await response.json();
       localStorage.setItem("token", data.authToken);
-      alert("Registered Successfully.");
+ 
 
       return data;
     } catch (error) {
@@ -55,7 +56,7 @@ export const loginUser = createAsyncThunk(
       }
 
       const data = await response.json();
-      alert("Logged in Successfully");
+      
 
       //   console.log(data.authToken);
       localStorage.setItem("token", data.authToken);
@@ -151,19 +152,19 @@ export const getUserInfo = createAsyncThunk(
 
       const data = await response.json();
 
-      return data; // Assuming your API returns some data after successful login
+      return data; 
     } catch (error) {
       throw error;
     }
   }
 );
+// get all users [admin]
 export const getAdminUsers = createAsyncThunk(
   "auth/getAdminUsers",
   async (_, thunkAPI) => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      // Handle the case when the token is not available
       throw new Error("No token available");
     }
 
@@ -182,12 +183,46 @@ export const getAdminUsers = createAsyncThunk(
 
       const data = await response.json();
 
-      return data; // Assuming your API returns some data after successful login
+      return data; 
     } catch (error) {
       throw error;
     }
   }
 );
+
+// get single user [admin]
+export const getSingleUser = createAsyncThunk(
+  "auth/getSingleUser",
+  async (id) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      throw new Error("No token available");
+    }
+
+    try {
+      const response = await fetch(`http://localhost:4000/api/v1/admin/users${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to Load user info");
+      }
+
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+
 
 const authSlice = createSlice({
   name: "auth",

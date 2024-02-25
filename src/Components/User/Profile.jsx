@@ -61,8 +61,8 @@ export default function Profile() {
       {loading ? (
         <Loader />
       ) : (
-        <div className=" py-6 flex justify-center">
-          <div className="sm:w-[70%] p-2 sm:p-4 justify-start gap-8 flex flex-col h-[70vh] w-[60%] md:h-[90vh] sm:h-[80vh] lg:w-[40%] shadow-xl rounded-3xl">
+        <div className=" py-4 flex justify-center">
+          <div className="sm:w-[70%] p-2 sm:p-4 justify-start gap-6 flex flex-col w-[60%] lg:w-[40%] shadow-xl rounded-3xl">
             <div className="flex justify-center text-gray-500 font-semibold text-2xl">
               <h1 className="border-solid border-gray-300 pb-2 text-center border-b-[1px] w-[30%]">
                 Profile
@@ -192,6 +192,14 @@ export default function Profile() {
                 </ModalDialog>
               </Modal>
             </div>
+            <Link
+              to={"/dashboard"}
+              className={`${
+                user.role !== "admin" && "hidden"
+              } bg-gray-700 text-center hover:bg-gray-800 duration-200 p-2 rounded text-white`}
+            >
+              Dashboard
+            </Link>
             <Link
               to={"/orders"}
               className="bg-red-500 text-center hover:bg-red-600 duration-200 p-2 rounded text-white"

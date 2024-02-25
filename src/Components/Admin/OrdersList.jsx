@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../Layout/Loader/Loader";
-import { getAdminOrders } from "../../Features/Orders/orderSlice";
+import { deleteOrder, getAdminOrders } from "../../Features/Orders/orderSlice";
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 
 export default function OrdersList() {
   const { user, error } = useSelector((state) => state.user || {});
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -21,6 +21,14 @@ export default function OrdersList() {
       navigate("/");
     }
   }, [user]);
+
+  const handleDeleteOrder = async (id) => {
+    if (confirm("Delete order?")) {
+      await dispatch(deleteOrder(id));
+      dispatch(getAdminOrders());
+    }
+  };
+
   useEffect(() => {
     console.log(allOrders.orders);
     dispatch(getAdminOrders());
@@ -46,8 +54,8 @@ export default function OrdersList() {
               <div className=" ">
                 <div className="bg-red-500 sm:text-sm text-xs text-white py-3 font-semibold grid grid-cols-5 place-items-center w-full justify-around">
                   <h1>Order ID</h1>
-                  <h1>Name</h1>
-                  <h1>Items</h1>
+                  <h1>Status</h1>
+                  <h1>Items Qty</h1>
                   <h1>Price</h1>
                   <h1>Actions</h1>
                 </div>
@@ -63,17 +71,23 @@ export default function OrdersList() {
                           #{item._id}
                         </h1>
 
-                        <h1 className="text-[7px] lg:text-xs sm:text-[9px]">
-                          {item.name}
+                        <h1
+                          className={`text-[7px] lg:text-xs sm:text-[9px] ${
+                            item.orderStatus === "Delivered"
+                              ? "text-green-600"
+                              : "text-red-400"
+                          } `}
+                        >
+                          {item.orderStatus}
                         </h1>
-                        <h1>{item.stock}</h1>
+                        <h1>{item.orderItems.length}</h1>
                         <h1>₹{item.totalPrice}</h1>
                         <div className="flex gap-4">
-                          <button>
+                          <Link to={`/admin/order/${item._id}`}>
                             {" "}
-                            <i className="bi hover:text-red-500 duration-150 font-bold cursor-pointer bi-pencil-square"></i>
-                          </button>{" "}
-                          <button>
+                            <i className="bi hover:text-red-500 duration-150 font-bold cursor-pointer bi-box-arrow-up-right"></i>
+                          </Link>{" "}
+                          <button onClick={() => handleDeleteOrder(item._id)}>
                             {" "}
                             <i className="bi hover:text-red-500 duration-150 font-bold cursor-pointer bi-trash3-fill"></i>
                           </button>{" "}

@@ -68,6 +68,7 @@ export default function Navbar({}) {
   useEffect(() => {
     if (user && user.role === "admin" && settings[0] !== "Dashboard") {
       setSettings(["Dashboard", ...settings]);
+      
     }
   }, [user, settings]);
   useEffect(() => {

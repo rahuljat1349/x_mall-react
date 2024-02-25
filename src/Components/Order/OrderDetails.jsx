@@ -18,9 +18,12 @@ export default function OrderDetails() {
       ) : (
         <div>
           {!state ? (
-            <div className="h-screen flex justify-center px-10 items-center text-2xl font-semibold text-red-400">
-              You can only access this page from your orders section due to
-              security concerns!.
+            <div className="h-screen text-gray-500 gap-2 flex flex-col justify-center px-10 items-center text-xl font-semibold ">
+              <i className="bi text-red-400 text-[50px] bi-exclamation-circle-fill"></i>
+              <span>
+                You can only access this page from your orders section due to
+                security concerns!.{" "}
+              </span>
             </div>
           ) : (
             <div className="h-screen px-12 py-8">
@@ -86,9 +89,9 @@ export default function OrderDetails() {
                   <div className=" p-2 gap-4 flex flex-col md:text-[17px] text-sm ">
                     <h1
                       className={
-                        state.orderStatus == "Processing"
-                          ? "text-red-500"
-                          : "text-green-600"
+                        state.orderStatus == "Delivered"
+                          ? "text-green-600"
+                          : "text-red-500"
                       }
                     >
                       {state.orderStatus}{" "}

@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../../Features/User/userSlice";
+import { getUserInfo, loginUser } from "../../Features/User/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../Layout/Loader/Loader";
 
 export default function () {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [passwordType, setPasswordType] = useState("password");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const dispatch = useDispatch();
-  const { token, error, loading } = useSelector((state) => state.user || {});
+  const {user, token, error, loading } = useSelector((state) => state.user || {});
 
   useEffect(() => {
     if (token) {
@@ -30,15 +30,10 @@ export default function () {
     });
   };
 
-  const handleSignUp = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    // console.log("User:", user.authToken);
-
-    // if (user) {
-    // localStorage.setItem()
-    // }
-    // Dispatch the action to register the user
-    dispatch(loginUser(formData));
+    await dispatch(loginUser(formData));
+    dispatch(getUserInfo());
   };
 
   return (
@@ -102,7 +97,7 @@ export default function () {
               </div>
 
               <button
-                onClick={handleSignUp}
+                onClick={handleSignIn}
                 className="w-[80%] p-2 bg-red-400 text-white hover:bg-red-500 duration-300 outline-none rounded-md"
               >
                 LogIn
