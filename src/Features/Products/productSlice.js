@@ -117,7 +117,6 @@ export const productReview = createAsyncThunk(
       }
 
       const data = await response.json();
-      alert("Review added successfully.");
       return data;
     } catch (error) {
       throw error;

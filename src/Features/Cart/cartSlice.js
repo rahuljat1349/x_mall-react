@@ -28,6 +28,7 @@ export const addToCart = createAsyncThunk(
       }
 
       const data = await response.json();
+      
       return { product: data.product, quantity };
     } catch (error) {
       throw error;

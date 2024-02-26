@@ -10,7 +10,7 @@ export default function AddProduct() {
   const [loading, setLoading] = useState(false);
 
   const [name, setName] = useState("");
-  const [price, serPrice] = useState("");
+  const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [stock, setStock] = useState("");
   const [category, setCategory] = useState("");
@@ -45,11 +45,11 @@ export default function AddProduct() {
     setLoading(true);
 
     const myForm = new FormData();
-    myForm.set("name", name);
-    myForm.set("price", price);
-    myForm.set("description", description);
-    myForm.set("category", category);
-    myForm.set("stock", stock);
+    myForm.append("name", name);
+    myForm.append("price", price);
+    myForm.append("description", description);
+    myForm.append("category", category);
+    myForm.append("stock", stock);
 
     images.forEach((image) => {
       myForm.append(`images`, image);
@@ -89,7 +89,7 @@ export default function AddProduct() {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  createProductSubmitHandler();
+                  createProductSubmitHandler(e);
                 }}
                 className="shadow-lg bg-white w-full rounded-xl p-8 gap-4 my-4 flex flex-col justify-center items-center "
               >
