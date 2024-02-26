@@ -30,7 +30,6 @@ export default function Shipping() {
     e.preventDefault();
     // Save shipping details to local storage
     localStorage.setItem("shippingDetails", JSON.stringify(orderDetails));
-    console.log("Order Details:", orderDetails);
     if (localStorage.getItem("token")) {
       navigate("/confirm");
     } else {

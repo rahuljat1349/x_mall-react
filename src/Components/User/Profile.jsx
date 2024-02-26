@@ -195,7 +195,7 @@ export default function Profile() {
             <Link
               to={"/dashboard"}
               className={`${
-                user.role !== "admin" && "hidden"
+                user && user.role !== "admin" && "hidden"
               } bg-gray-700 text-center hover:bg-gray-800 duration-200 p-2 rounded text-white`}
             >
               Dashboard

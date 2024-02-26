@@ -27,16 +27,13 @@ export default function ReviewsList() {
   const handleSearchReviews = async (e) => {
     e.preventDefault();
     await dispatch(getReviews(productId));
-   await setReviews(Reviews);
+    await setReviews(Reviews);
   };
-useEffect(() => {
-  setReviews(Reviews);
-}, [reviews, productId]);
 
   const handleDeleteReview = async (productId, id) => {
-    await dispatch(deleteReviews({productId:productId,id:id}));
+    await dispatch(deleteReviews({ productId: productId, id: id }));
     await dispatch(getReviews(productId));
-   await setReviews(Reviews);
+    await setReviews(Reviews);
   };
   return (
     <>
@@ -44,14 +41,18 @@ useEffect(() => {
         <Loader />
       ) : (
         <div className="flex sm:flex-row flex-col">
-          <Sidebar color={"products"} />
+          <Sidebar color={"reviews"} />
           <div className="w-full min-h-screen">
             <div className="flex justify-center items-center w-full200 my-4">
               <div>
-                <div className="flex w-full flex-col items-center gap-4">
+                <div className="flex w-full border-solid border-gray-300 border-[1px] p-2 rounded-sm flex-col text-center items-center gap-4">
+                  <h1 className="text-gray-500 font-semibold bg-slate-200 p-2 rounded-md w-full">
+                    Search Reviews
+                  </h1>
                   <div className="relative w-full items-center justify-center flex">
                     <i className="bi sm:text-lg cursor-pointer bi-star-fill text-gray-400 z-10 absolute left-[4%] md:text-2xl"></i>
                     <input
+                      autoFocus
                       name="name"
                       onChange={(e) => setProductId(e.target.value)}
                       className="w-full border-solid duration-300  focus:border-gray-400 border-gray-200 border-2 text-gray-500 p-2 pl-12 outline-none rounded-md"
@@ -63,7 +64,7 @@ useEffect(() => {
                   <button
                     disabled={productId.length < 24}
                     onClick={handleSearchReviews}
-                    className="text-white disabled:bg-red-300 bg-red-400 w-full py-1 rounded-md hover:bg-red-600 duration-200"
+                    className="text-white disabled:bg-red-300 bg-red-500 w-full py-1 rounded-md hover:bg-red-600 duration-200"
                   >
                     Search
                   </button>
@@ -111,7 +112,11 @@ useEffect(() => {
                             {" "}
                             <i className="bi hover:text-red-500 duration-150 font-bold cursor-pointer bi-pencil-square"></i>
                           </button>{" "} */}
-                          <button onClick={() => handleDeleteReview(productId,item._id)}>
+                          <button
+                            onClick={() =>
+                              handleDeleteReview(productId, item._id)
+                            }
+                          >
                             {" "}
                             <i className="bi hover:text-red-500 duration-150 font-bold cursor-pointer bi-trash3-fill"></i>
                           </button>{" "}

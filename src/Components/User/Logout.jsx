@@ -30,6 +30,7 @@ export default function AlertDialogModal() {
               onClick={() => {
                 localStorage.removeItem("token");
                 localStorage.removeItem("cart");
+                localStorage.removeItem("shippingDetails");
                 navigate("/");
               }}
             >

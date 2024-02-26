@@ -31,51 +31,27 @@ import UsersLIst from "./Components/Admin/UsersLIst";
 import UpdateUser from "./Components/Admin/UpdateUser";
 import ReviewsList from "./Components/Admin/ReviewsList";
 function App() {
-  const [stripeApiKey, setStripeApiKey] = useState("");
+  // const [stripeApiKey, setStripeApiKey] = useState("");
 
-  const getStripeApiKey = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:4000/api/v1/stripeapikey`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": localStorage.getItem("token"),
-          },
-        }
-      );
+  
+  const stripePromise = loadStripe(
+    "pk_test_51OmbTCSAfvlVDoiIudw7sPpMU7Ql4kx9JxA4c6igLUHz2rrTGozjhBgzIjQ23w3RMrX6PsAulOuo6BQB2KoYMZgw00pjmy4T5q"
+  );
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch api key");
-      }
-
-      const data = await response.json();
-      setStripeApiKey(data.stripeApiKey);
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  useEffect(() => {
-    getStripeApiKey();
-  }, []);
-
+ 
   return (
     <>
       <Router>
         <Navbar />
         <Routes>
-          {stripeApiKey && (
-            <Route
-              path="/payment"
-              element={
-                <Elements stripe={loadStripe(stripeApiKey && stripeApiKey)}>
-                  <Payment stripeApiKey={stripeApiKey} />
-                </Elements>
-              }
-            />
-          )}
+          <Route
+            path="/payment"
+            element={
+              <Elements stripe={stripePromise}>
+                <Payment />
+              </Elements>
+            }
+          />
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admin/products" element={<ProductList />} />
@@ -98,8 +74,8 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<SignUp />} />
           <Route exact path="/logout" element={<Logout />} />
-          {/* <Route exact path="/about" element={<AboutUs />} /> */}
-          {/* <Route exact path="/contact" element={<ContactUs />} /> */}
+          <Route exact path="/about" element={<AboutUs />} />
+          <Route exact path="/contact" element={<ContactUs />} />
           <Route path="product/:id" element={<ProductDetails />} />
           <Route path="products/product/:id" element={<ProductDetails />} />
           <Route

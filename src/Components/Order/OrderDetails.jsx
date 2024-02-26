@@ -8,7 +8,6 @@ export default function OrderDetails() {
 
   let { state } = useLocation();
   useEffect(() => {
-    console.log(state);
   }, []);
 
   return (

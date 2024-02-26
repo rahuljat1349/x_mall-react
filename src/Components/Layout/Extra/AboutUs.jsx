@@ -2,10 +2,10 @@ import React from "react";
 
 const AboutUs = () => {
   return (
-    <div className="about-us-container text-red-500 p-4 sm:px-20">
+    <div className="about-us-container min-h-screen text-gray-800 p-4 sm:px-20">
       <h2 className="text-3xl font-bold mb-4">
-        Welcome to <span className="sigle-day-regular">PinkMall</span>: Where
-        Style Meets Comfort!
+        Welcome to <span className="sigle-day-regular">xMall</span>: Where Style
+        Meets Comfort!
       </h2>
       <p className="text-gray-700 leading-6">
         At PinkMall, we believe in more than just providing fashion; we're on a

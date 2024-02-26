@@ -21,63 +21,82 @@ const Payment = ({ stripeApiKey }) => {
   const [loading, setLoading] = useState(false);
   const payBtn = useRef(null);
 
-  const paymentData = {
-    amount: Math.round(orderInfo && orderInfo.totalPrice),
-    stripeApiKey: stripeApiKey,
-  };
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    payBtn.current.disabled = true;
+const paymentData = {
+  amount: Math.round(orderInfo && orderInfo.totalPrice),
+  name: "Customer Name",
+  address: {
+    line1: "Customer Address Line 1",
+    city: "Customer City",
+    state: "Customer State",
+    postal_code: 303805,
+  },
+  stripeApiKey: stripeApiKey,
+};
 
-    try {
-      setLoading(true);
 
-      const data = await fetch("http://localhost:4000/api/v1/payment/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-          Authorization: `Bearer ${stripeApiKey}`,
-        },
-        body: JSON.stringify(paymentData),
-      });
 
-      const json = await data.json();
-      const client_secret = json.client_secret;
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  payBtn.current.disabled = true;
 
-      if (!stripe || !elements) {
-        return;
-      }
+  try {
+    setLoading(true);
 
-      const result = await stripe.confirmCardPayment(client_secret, {
-        payment_method: {
-          card: elements.getElement(CardElement),
-        },
-        billing_details: {
-          // Your billing details here
-        },
-      });
+    const data = await fetch("http://localhost:4000/api/v1/payment/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify(paymentData),
+    });
 
-      if (result.error) {
-        // Handle and display the error message to the user
-        console.error(result.error.message);
-      } else {
-        if (result.paymentIntent.status === "succeeded") {
-          // Payment succeeded, navigate to the success page
-          navigate("/success");
-        } else {
-          // Payment failed, handle the scenario appropriately
-          alert("There is some issue while processing payment.");
-        }
-      }
-    } catch (error) {
-      // Handle and display the error message to the user
-      console.error("Error confirming payment:", error.message);
-    } finally {
-      setLoading(false);
-      payBtn.current.disabled = false;
+    const json = await data.json();
+    const client_secret = json.client_secret;
+
+    if (!stripe || !elements) {
+      return;
     }
-  };
+
+    const result = await stripe.confirmCardPayment(client_secret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: "Customer Name",
+          address: {
+            line1: "Customer Address Line 1",
+            city: "Customer City",
+            state: "Customer State",
+            postal_code: 303805,
+          },
+        },
+      },
+    });
+
+    if (result.error) {
+      // Handle and display the error message to the user
+      console.error(result.error.message);
+      alert("There is some issue while processing payment.");
+    } else {
+      if (result.paymentIntent.status === "succeeded") {
+        // Payment succeeded, navigate to the success page
+        navigate("/success");
+      } else {
+        // Payment failed, handle the scenario appropriately
+        alert("There is some issue while processing payment.");
+      }
+    }
+  } catch (error) {
+    // Handle and display the error message to the user
+    console.error("Error confirming payment:", error.message);
+    alert("There is some issue while processing payment.");
+  } finally {
+    setLoading(false);
+    payBtn.current.disabled = false;
+  }
+};
+
+
 
   useEffect(() => {
     // console.log(shippingDetails);
