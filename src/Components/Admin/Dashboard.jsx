@@ -13,13 +13,11 @@ Chart.register(CategoryScale);
 export default function Dashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const { allOrders } = useSelector((state) => state.orders || []);
   const { allProductsList } = useSelector((state) => state.products || {});
   const { user, loading, allUsers, error } = useSelector(
     (state) => state.user || {}
   );
-
   let outOfStock = 0;
   allProductsList &&
     allProductsList.map((item) => {
