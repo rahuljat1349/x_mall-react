@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar";
 import { addProduct } from "../../Features/Products/productSlice";
 
 export default function AddProduct() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user || {});
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -19,6 +19,7 @@ export default function AddProduct() {
   const [productDetails, setProductDetails] = useState({
     name: "",
     description: "",
+    details: "",
     price: "",
     category: "",
     images: [],
@@ -78,18 +79,16 @@ export default function AddProduct() {
         })
       );
 
-       const updatedProductDetails = {
-         ...productDetails,
-         images: uploadedImages,
-       };
+      const updatedProductDetails = {
+        ...productDetails,
+        images: uploadedImages,
+      };
 
-       // Dispatch the action directly with the updated product details
-       dispatch(addProduct(updatedProductDetails));
+      // Dispatch the action directly with the updated product details
+      dispatch(addProduct(updatedProductDetails));
 
-       setImagePreviews([]);
-       console.log("Updated Product Details:", updatedProductDetails);
-
-      
+      setImagePreviews([]);
+      console.log("Updated Product Details:", updatedProductDetails);
     } catch (error) {
       console.error("Error Adding Product:", error);
     } finally {
@@ -155,6 +154,19 @@ export default function AddProduct() {
                     required
                   ></textarea>
                 </div>
+                {/* Details */}
+                <div className="relative w-full items-center justify-center flex">
+                  <i className="bi sm:text-lg cursor-pointer bi-card-text z-10 absolute left-[4%] md:text-2xl"></i>
+                  <textarea
+                    rows={8}
+                    name="details"
+                    // value={productDetails.description}
+                    onChange={handleProductDetailsChange}
+                    className="w-full border-solid  duration-300 focus:border-gray-400 border-gray-200 border-2 text-gray-500 p-2 pl-12 outline-none rounded-md"
+                    placeholder="Product Details"
+                    required
+                  ></textarea>
+                </div>
 
                 {/* Category */}
                 <div className="relative w-full items-center justify-center flex">
@@ -168,8 +180,13 @@ export default function AddProduct() {
                   >
                     <option value="">Select Category</option>
                     <option value="Electronics">Electronics</option>
-                    <option value="Fashion">Fashion</option>
-                    <option value="Mobiles">Mobiles</option>
+                    <option value="Clothing">Fashion</option>
+                    <option value="Home">Mobiles</option>
+                    <option value="Books">Books</option>
+                    <option value="Toys">Toys</option>
+                    <option value="Health">Health</option>
+                    <option value="Jewelry">Jewelry</option>
+                    <option value="Grocery">Grocery</option>
                     <option value="Watches">Watches</option>
                   </select>
                 </div>

@@ -26,13 +26,12 @@ export default function ProductList() {
   }, [user]);
   useEffect(() => {
     dispatch(getAdminProducts());
-  }, [dispatch ]);
+  }, [dispatch]);
 
   const handleDeleteProduct = async (productId) => {
     if (confirm("Delete this product?")) {
-     await dispatch(deleteProduct(productId));
-     dispatch(getAdminProducts());
-      
+      await dispatch(deleteProduct(productId));
+      dispatch(getAdminProducts());
     }
   };
   return (
@@ -44,14 +43,14 @@ export default function ProductList() {
           <Sidebar color={"products"} />
           <div className="w-full min-h-screen">
             {allProductsList.length < 1 ? (
-              <div className="flex justify-center items-center">
+              <div className="flex min-h-screen justify-center items-center">
                 <div className="flex flex-col gap-1 items-center">
                   <i className="bi text-[50px] text-red-400 bi-cart-x-fill"></i>
                   <h1 className="text-gray-700 font-semibold text-xl">
                     No products found.
                   </h1>
                   <Link
-                    to={"/products/create"}
+                    to={"/admin/add"}
                     className="p-2 mt-2 rounded-lg bg-gray-600 text-white hover:bg-gray-700 duration-200"
                   >
                     Add Product
@@ -82,7 +81,9 @@ export default function ProductList() {
                         <h1 className="text-[7px] lg:text-xs sm:text-[9px]">
                           {item.name}
                         </h1>
-                        <h1 className={item.stock<1&&"text-red-500"}>{item.stock}</h1>
+                        <h1 className={item.stock < 1 && "text-red-500"}>
+                          {item.stock}
+                        </h1>
                         <h1>₹{item.price}</h1>
                         <div className="flex gap-4">
                           {/* <button disabled>

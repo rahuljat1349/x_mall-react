@@ -26,7 +26,7 @@ export const fetchProducts = createAsyncThunk(
       if (keyword) {
         url.searchParams.append("key", keyword);
       }
-      if (category && category !== "ALL") {
+      if (category && category !== "All") {
         url.searchParams.append("category", category);
       }
       if (price[0] !== 0 || price[1] !== 25) {

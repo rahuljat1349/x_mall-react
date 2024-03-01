@@ -249,6 +249,11 @@ export default function ProductDetails({}) {
           </div>
         </div>
       )}
+      <hr />
+      <div className=" w-full text-gray-500 md:px-32 p-4 bg-slate-100">
+        <h1 className="font-semibold py-2"> Product Details</h1>
+        <p te>{product.details}</p>
+      </div>
       <div className="flex justify-center">
         <h1 className="md:text-xl p-2 md:w-[20vw] text-gray-800 font-medium mb-4 text-center border-gray-500 border-solid border-b-[1px]">
           REVIEWS

@@ -8,7 +8,24 @@ import Pagination from "@mui/material/Pagination";
 import { Link, useParams } from "react-router-dom";
 import { red } from "@mui/material/colors";
 import Loader from "../Layout/Loader/Loader";
-let categories = ["ALL", "Electronics", "Fashion", "Mobiles", "Watches"];
+const productCategories = [
+  "All",
+  "Electronics",
+  "Clothing",
+
+  "Home",
+  "Books",
+
+  "Toys",
+
+  "Health",
+  "Jewelry",
+  "Watches",
+
+  "Grocery",
+
+  ,
+];
 export default function Products() {
   const dispatch = useDispatch();
 
@@ -48,8 +65,8 @@ export default function Products() {
           </h1>
         </div>
       </div>
-      <div className="flex sm:flex-row relative flex-col -6 items-center sm:items-start justify-center">
-        <div className="px-4 sm:w-44 p-6 rounded-r-md left-0 sm:absolute">
+      <div className="flex sm:min-h-[100vh] sm:flex-row relative flex-col -6 items-center sm:items-start justify-center">
+        <div className="px-4  sm:w-44 p-6 rounded-r-md left-0 sm:absolute">
           <div>
             <h1 className=" font-semibold text-sm text-gray-700">
               Price (in k)
@@ -66,8 +83,8 @@ export default function Products() {
             <h1 className=" font-semibold py-1 px-2 text-gray-600">
               Categories
             </h1>
-            <ul className="px-4 flex flex-row sm:flex-col gap-2">
-              {categories.map((category, i) => (
+            <ul className="px-4 flex flex-wrap flex-row sm:flex-col gap-2">
+              {productCategories.map((category, i) => (
                 <li
                   className={`text-sm hover:text-red-500 ${
                     category === selectedCategory ? "text-red-500" : ""
@@ -113,7 +130,7 @@ export default function Products() {
                         color: red[400],
                       }}
                       name="half-rating-read"
-                      value={product.rating}
+                      value={product.ratings}
                       precision={0.5}
                       readOnly
                     />{" "}

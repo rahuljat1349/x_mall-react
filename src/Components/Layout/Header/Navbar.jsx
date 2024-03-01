@@ -68,7 +68,6 @@ export default function Navbar({}) {
   useEffect(() => {
     if (user && user.role === "admin" && settings[0] !== "Dashboard") {
       setSettings(["Dashboard", ...settings]);
-      
     }
   }, [user, settings]);
   useEffect(() => {
@@ -87,7 +86,7 @@ export default function Navbar({}) {
           }}
           className="sm:hidden"
         >
-          <i className={`bi text-gray-500 bi-${menu ? "x-lg" : "list"}`}></i>
+          <i className={`bi text-gray-400 bi-${menu ? "x-lg" : "list"}`}></i>
         </div>
 
         <div className="text-lg items-center md:text-2xl">
@@ -104,7 +103,7 @@ export default function Navbar({}) {
               {" "}
               <li
                 className={`${
-                  location.pathname === "/" ? "text-white" : "text-gray-500"
+                  location.pathname === "/" ? "text-white" : "text-gray-400"
                 }`}
               >
                 Home
@@ -116,7 +115,7 @@ export default function Navbar({}) {
                 className={`${
                   location.pathname === "/products"
                     ? "text-white"
-                    : "text-gray-500"
+                    : "text-gray-400"
                 }`}
               >
                 Products
@@ -127,7 +126,7 @@ export default function Navbar({}) {
                 className={`${
                   location.pathname === "/about"
                     ? "text-white"
-                    : "text-gray-500"
+                    : "text-gray-400"
                 }`}
               >
                 About Us
@@ -138,7 +137,7 @@ export default function Navbar({}) {
                 className={`${
                   location.pathname === "/contact"
                     ? "text-white"
-                    : "text-gray-500"
+                    : "text-gray-400"
                 }`}
               >
                 Contact Us
@@ -150,14 +149,14 @@ export default function Navbar({}) {
           <Link to={"/search"}>
             <i
               className={`bi bi-search ${
-                location.pathname === "/search" ? "text-white" : "text-gray-500"
+                location.pathname === "/search" ? "text-white" : "text-gray-400"
               }`}
             ></i>
           </Link>
           <Link to={"/cart"}>
             <i
               className={`bi bi-cart3 ${
-                location.pathname === "/cart" ? "text-white" : "text-gray-500"
+                location.pathname === "/cart" ? "text-white" : "text-gray-400"
               }`}
             ></i>
           </Link>
@@ -174,7 +173,7 @@ export default function Navbar({}) {
             {" "}
             <li
               className={`${
-                location.pathname === "/" ? "text-white" : "text-gray-500"
+                location.pathname === "/" ? "text-white" : "text-gray-400"
               }`}
             >
               Home
@@ -186,7 +185,7 @@ export default function Navbar({}) {
               className={`${
                 location.pathname === "/products"
                   ? "text-white"
-                  : "text-gray-500"
+                  : "text-gray-400"
               }`}
             >
               Products
@@ -195,7 +194,7 @@ export default function Navbar({}) {
           <Link to={"/about"}>
             <li
               className={`${
-                location.pathname === "/about" ? "text-white" : "text-gray-500"
+                location.pathname === "/about" ? "text-white" : "text-gray-400"
               }`}
             >
               About Us
@@ -206,7 +205,7 @@ export default function Navbar({}) {
               className={`${
                 location.pathname === "/contact"
                   ? "text-white"
-                  : "text-gray-500"
+                  : "text-gray-400"
               }`}
             >
               Contact Us
