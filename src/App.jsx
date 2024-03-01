@@ -19,7 +19,7 @@ import Shipping from "./Components/Cart/Shipping";
 import Confirm from "./Components/Cart/Confirm";
 
 import { useEffect, useState } from "react";
-import Payment from "./Components/Cart/payment";
+import Payment from "./Components/Cart/Payment";
 import MyOrders from "./Components/Order/MyOrders";
 import OrderDetails from "./Components/Order/OrderDetails";
 import Dashboard from "./Components/Admin/Dashboard";

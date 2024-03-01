@@ -3,39 +3,52 @@ import { useSelector, useDispatch } from "react-redux";
 import Loader from "../Layout/Loader/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
+import { addProduct } from "../../Features/Products/productSlice";
 
 export default function AddProduct() {
+  const dispatch = useDispatch()
   const { user } = useSelector((state) => state.user || {});
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    if (user && user.role !== "admin") {
+      navigate("/");
+    }
+  }, [user]);
 
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [stock, setStock] = useState("");
-  const [category, setCategory] = useState("");
-  const [images, setImages] = useState([]);
+  const [productDetails, setProductDetails] = useState({
+    name: "",
+    description: "",
+    price: "",
+    category: "",
+    images: [],
+  });
+  const [imagesBox, setImagesBox] = useState([]);
+  const handleProductDetailsChange = (e) => {
+    e.preventDefault();
+    setProductDetails({ ...productDetails, [e.target.name]: e.target.value });
+  };
 
   const [imagePreviews, setImagePreviews] = useState([]);
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
-      navigate("login");
+      navigate("/login");
       alert("Please login to Add product.");
     }
   }, [navigate]);
   const createProductImageChange = (e) => {
     const files = Array.from(e.target.files);
-    setImages([]);
     setImagePreviews([]);
+    setImagesBox([]);
     files.forEach((file) => {
       const reader = new FileReader();
-      reader.onload = ()=>{
+      reader.onload = () => {
         if (reader.readyState === 2) {
-          setImagePreviews((old)=>[...old,reader.result])
-          setImages((old)=>[...old,reader.result])
+          setImagePreviews((old) => [...old, reader.result]);
+          setImagesBox((old) => [...old, file]); // Store the actual file object
         }
-      }
+      };
       reader.readAsDataURL(file);
     });
   };
@@ -44,32 +57,39 @@ export default function AddProduct() {
     e.preventDefault();
     setLoading(true);
 
-    const myForm = new FormData();
-    myForm.append("name", name);
-    myForm.append("price", price);
-    myForm.append("description", description);
-    myForm.append("category", category);
-    myForm.append("stock", stock);
-
-    images.forEach((image) => {
-      myForm.append(`images`, image);
-    });
-
     try {
-      const response = await fetch(
-        "http://localhost:4000/api/v1/admin/product/new",
-        {
-          method: "POST",
-          headers: {
-            "auth-token": localStorage.getItem("token"),
-            "Content-Type": "multipart/form-data",
-          },
-          body: myForm,
-        }
+      let uploadedImages = await Promise.all(
+        imagesBox.map(async (file) => {
+          const myForm = new FormData();
+          myForm.append("file", file);
+          myForm.append("upload_preset", "xmall-react");
+          myForm.append("cloud_name", "dgcvhlyg9");
+
+          const result = await fetch(
+            "https://api.cloudinary.com/v1_1/dgcvhlyg9/image/upload",
+            {
+              method: "POST",
+              body: myForm,
+            }
+          );
+
+          const json = await result.json();
+          return { url: json.url, public_id: json.public_id };
+        })
       );
 
-      const data = await response.json();
-      console.log("Add Product Response:", data);
+       const updatedProductDetails = {
+         ...productDetails,
+         images: uploadedImages,
+       };
+
+       // Dispatch the action directly with the updated product details
+       dispatch(addProduct(updatedProductDetails));
+
+       setImagePreviews([]);
+       console.log("Updated Product Details:", updatedProductDetails);
+
+      
     } catch (error) {
       console.error("Error Adding Product:", error);
     } finally {
@@ -100,7 +120,8 @@ export default function AddProduct() {
                   <i className="bi sm:text-lg cursor-pointer bi-box z-10 absolute left-[4%] md:text-2xl"></i>
                   <input
                     name="name"
-                    onChange={(e) => setName(e.target.value)}
+                    // value={productDetails.name}
+                    onChange={handleProductDetailsChange}
                     className="w-full border-solid duration-300  focus:border-gray-400 border-gray-200 border-2 text-gray-500 p-2 pl-12 outline-none rounded-md"
                     placeholder="Product Name"
                     type="text"
@@ -113,7 +134,8 @@ export default function AddProduct() {
                   <i className="bi sm:text-lg cursor-pointer bi-currency-rupee z-10 absolute left-[4%] md:text-2xl"></i>
                   <input
                     name="price"
-                    onChange={(e) => setPrice(e.target.value)}
+                    // value={productDetails.price}
+                    onChange={handleProductDetailsChange}
                     className="w-full border-solid  duration-300 focus:border-gray-400 border-gray-200 border-2 text-gray-500 p-2 pl-12 outline-none rounded-md"
                     placeholder="Price"
                     type="number"
@@ -126,7 +148,8 @@ export default function AddProduct() {
                   <i className="bi sm:text-lg cursor-pointer bi-card-text z-10 absolute left-[4%] md:text-2xl"></i>
                   <textarea
                     name="description"
-                    onChange={(e) => setDescription(e.target.value)}
+                    // value={productDetails.description}
+                    onChange={handleProductDetailsChange}
                     className="w-full border-solid  duration-300 focus:border-gray-400 border-gray-200 border-2 text-gray-500 p-2 pl-12 outline-none rounded-md"
                     placeholder="Description"
                     required
@@ -138,7 +161,8 @@ export default function AddProduct() {
                   <i className="bi sm:text-lg cursor-pointer bi-tags z-10 absolute left-[4%] md:text-2xl"></i>
                   <select
                     name="category"
-                    onChange={(e) => setCategory(e.target.value)}
+                    // value={productDetails.category}
+                    onChange={handleProductDetailsChange}
                     className="w-full border-solid  duration-300 focus:border-gray-400 border-gray-200 border-2 text-gray-500 p-2 pl-12 outline-none rounded-md"
                     required
                   >
@@ -155,7 +179,8 @@ export default function AddProduct() {
                   <i className="bi sm:text-lg cursor-pointer bi-database z-10 absolute left-[4%] md:text-2xl"></i>
                   <input
                     name="stock"
-                    onChange={(e) => setStock(e.target.value)}
+                    // value={productDetails.stock}
+                    onChange={handleProductDetailsChange}
                     className="w-full border-solid  duration-300 focus:border-gray-400 border-gray-200 border-2 text-gray-500 p-2 pl-12 outline-none rounded-md"
                     placeholder="Stock"
                     type="number"
@@ -170,6 +195,7 @@ export default function AddProduct() {
                     Choose Files
                     <input
                       type="file"
+                      // value={productDetails.images}
                       name="images"
                       onChange={createProductImageChange}
                       multiple
