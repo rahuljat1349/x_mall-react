@@ -1,102 +1,60 @@
-// Payment.js
 import React, { useEffect, useRef, useState } from "react";
-import {
-  CardElement,
-  useStripe,
-  useElements,
-  CardNumberElement,
-} from "@stripe/react-stripe-js";
 import CheckoutStepper from "./Stepper";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const Payment = ({ stripeApiKey }) => {
+const Payment = () => {
   const navigate = useNavigate();
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
   const shippingDetails = JSON.parse(localStorage.getItem("shippingDetails"));
   const { user } = useSelector((state) => state.user || {});
 
-  const stripe = useStripe();
-  const elements = useElements();
   const [loading, setLoading] = useState(false);
   const payBtn = useRef(null);
 
-const paymentData = {
-  amount: Math.round(orderInfo && orderInfo.totalPrice),
-  name: "Customer Name",
-  address: {
-    line1: "Customer Address Line 1",
-    city: "Customer City",
-    state: "Customer State",
-    postal_code: 303805,
-  },
-  stripeApiKey: stripeApiKey,
-};
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    payBtn.current.disabled = true;
 
+    try {
+      setLoading(true);
 
+      // Construct your payment data here
+      const paymentData = {
+        amount: 50000, // amount in the smallest currency unit
+        currency: "INR",
+        receipt: "order_rcptid_11",
+      };
 
-const handleSubmit = async (event) => {
-  event.preventDefault();
-  payBtn.current.disabled = true;
-
-  try {
-    setLoading(true);
-
-    const data = await fetch("http://localhost:4000/api/v1/payment/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify(paymentData),
-    });
-
-    const json = await data.json();
-    const client_secret = json.client_secret;
-
-    if (!stripe || !elements) {
-      return;
-    }
-
-    const result = await stripe.confirmCardPayment(client_secret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-        billing_details: {
-          name: "Customer Name",
-          address: {
-            line1: "Customer Address Line 1",
-            city: "Customer City",
-            state: "Customer State",
-            postal_code: 303805,
-          },
+      const response = await fetch("http://localhst:4000/api/v1/payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
         },
-      },
-    });
+        body: JSON.stringify(paymentData),
+      });
 
-    if (result.error) {
-      // Handle and display the error message to the user
-      console.error(result.error.message);
-      alert("There is some issue while processing payment.");
-    } else {
-      if (result.paymentIntent.status === "succeeded") {
-        // Payment succeeded, navigate to the success page
+      const result = await response.json();
+
+      // Handle the response result as needed
+      if (result.success) {
+        // Payment successful
+        alert("Payment successful!");
+        // Redirect or perform any additional actions
         navigate("/success");
       } else {
-        // Payment failed, handle the scenario appropriately
-        alert("There is some issue while processing payment.");
+        // Payment failed
+        alert(`Payment failed: ${result.message}`);
       }
+    } catch (error) {
+      // Handle and display the error message to the user
+      console.error("Error confirming payment:", error.message);
+      alert("There is some issue while processing payment.");
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    // Handle and display the error message to the user
-    console.error("Error confirming payment:", error.message);
-    alert("There is some issue while processing payment.");
-  } finally {
-    setLoading(false);
-    payBtn.current.disabled = false;
-  }
-};
-
-
+  };
 
   useEffect(() => {
     // console.log(shippingDetails);
@@ -109,31 +67,10 @@ const handleSubmit = async (event) => {
       </div>
       <div className="py-12 px-8 h-[80vh]">
         <form onSubmit={handleSubmit} className="mx-auto max-w-md">
-          <label className="block text-sm font-medium text-gray-700">
-            Card details
-            {/* <CardNumberElement></CardNumberElement> */}
-            <CardElement
-              className="mt-1 p-2 border border-gray-300 rounded-md"
-              options={{
-                style: {
-                  base: {
-                    fontSize: "16px",
-                    color: "#000",
-                    "::placeholder": {
-                      color: "#a0aec0",
-                    },
-                  },
-                  invalid: {
-                    color: "#9e2146",
-                  },
-                },
-              }}
-            />
-          </label>
           <button
             ref={payBtn}
             type="submit"
-            disabled={!stripe || loading}
+            disabled={loading}
             className="mt-4 disabled:bg-red-300 w-full py-2 bg-red-500 text-white rounded-md"
           >
             {loading
