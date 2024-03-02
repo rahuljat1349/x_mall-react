@@ -47,7 +47,7 @@ export default function AddProduct() {
       reader.onload = () => {
         if (reader.readyState === 2) {
           setImagePreviews((old) => [...old, reader.result]);
-          setImagesBox((old) => [...old, file]); // Store the actual file object
+          setImagesBox((old) => [...old, file]); // Store file
         }
       };
       reader.readAsDataURL(file);
@@ -84,11 +84,10 @@ export default function AddProduct() {
         images: uploadedImages,
       };
 
-      // Dispatch the action directly with the updated product details
+      // Dispatch the action
       dispatch(addProduct(updatedProductDetails));
 
       setImagePreviews([]);
-      console.log("Updated Product Details:", updatedProductDetails);
     } catch (error) {
       console.error("Error Adding Product:", error);
     } finally {
@@ -156,9 +155,9 @@ export default function AddProduct() {
                 </div>
                 {/* Details */}
                 <div className="relative w-full items-center justify-center flex">
-                  <i className="bi sm:text-lg cursor-pointer bi-card-text z-10 absolute left-[4%] md:text-2xl"></i>
+                  <i className="bi sm:text-lg cursor-pointer bi-text-paragraph z-10 absolute left-[4%] md:text-2xl"></i>
                   <textarea
-                    rows={8}
+                    rows={5}
                     name="details"
                     // value={productDetails.description}
                     onChange={handleProductDetailsChange}
