@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import CheckoutStepper from "./Stepper";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
+import { json, useNavigate } from "react-router-dom";
+import axios from "axios";
 const Payment = () => {
   const navigate = useNavigate();
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
@@ -11,50 +11,94 @@ const Payment = () => {
 
   const [loading, setLoading] = useState(false);
   const payBtn = useRef(null);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    payBtn.current.disabled = true;
-
-    try {
-      setLoading(true);
-
-      // Construct your payment data here
-      const paymentData = {
-        amount: 50000, // amount in the smallest currency unit
-        currency: "INR",
-        receipt: "order_rcptid_11",
-      };
-
-      const response = await fetch("http://localhst:4000/api/v1/payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-        },
-        body: JSON.stringify(paymentData),
-      });
-
-      const result = await response.json();
-
-      // Handle the response result as needed
-      if (result.success) {
-        // Payment successful
-        alert("Payment successful!");
-        // Redirect or perform any additional actions
-        navigate("/success");
-      } else {
-        // Payment failed
-        alert(`Payment failed: ${result.message}`);
-      }
-    } catch (error) {
-      // Handle and display the error message to the user
-      console.error("Error confirming payment:", error.message);
-      alert("There is some issue while processing payment.");
-    } finally {
-      setLoading(false);
-    }
+  const paymentInfo = {
+    amount: orderInfo && orderInfo.totalPrice*100,
+    currency: "INR",
   };
+
+  function loadScript(src) {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  }
+  async function displayRazorpay(e) {
+    e.preventDefault();
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+
+    if (!res) {
+      alert("Razorpay SDK failed to load. Are you online?");
+      return;
+    }
+
+    // creating a new order
+    const result = await fetch("http://localhost:4000/api/v1/payment", {
+      method: "POST",
+      headers: {
+        "content-type":"application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify(paymentInfo)
+    });
+   
+    const data = await result.json();
+    if (!data) {
+      alert("Server error. Are you online?");
+      return;
+    }
+
+    // Getting the order details back
+    const { amount, id: order_id, currency } = data;
+    console.log(data);
+
+    const options = {
+      key: "rzp_test_E5P57e4DK2Cu1X",
+      amount: amount * 100,
+      currency: currency,
+      name: "xMall",
+      description: "Test Transaction",
+      image: {},
+      order_id: order_id,
+      handler: async function (response) {
+        const data = {
+          orderCreationId: order_id,
+          razorpayPaymentId: response.razorpay_payment_id,
+          razorpayOrderId: response.razorpay_order_id,
+          razorpaySignature: response.razorpay_signature,
+        };
+
+        const result = await axios.post(
+          "http://localhost:4000/payment/success",
+          data
+        );
+
+        alert(result);
+      },
+      prefill: {
+        name: "Soumya Dey",
+        email: "SoumyaDey@example.com",
+        contact: "9999999999",
+      },
+      notes: {
+        address: "Soumya Dey Corporate Office",
+      },
+      theme: {
+        color: "#EF4444",
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  }
 
   useEffect(() => {
     // console.log(shippingDetails);
@@ -66,7 +110,7 @@ const Payment = () => {
         <CheckoutStepper currentStep={2} />
       </div>
       <div className="py-12 px-8 h-[80vh]">
-        <form onSubmit={handleSubmit} className="mx-auto max-w-md">
+        <form onSubmit={displayRazorpay} className="mx-auto max-w-md">
           <button
             ref={payBtn}
             type="submit"

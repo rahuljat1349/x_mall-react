@@ -30,6 +30,7 @@ import ProcessOrder from "./Components/Admin/ProcessOrder";
 import UsersLIst from "./Components/Admin/UsersLIst";
 import UpdateUser from "./Components/Admin/UpdateUser";
 import ReviewsList from "./Components/Admin/ReviewsList";
+import Success from "./Components/Cart/Success";
 function App() {
   // const [stripeApiKey, setStripeApiKey] = useState("");
 
@@ -66,6 +67,7 @@ function App() {
           <Route exact path="/cart" element={<Cart />} />
           <Route exact path="/cart" element={<Cart />} />
           <Route exact path="/confirm" element={<Confirm />} />
+          <Route exact path="/success" element={<Success />} />
           <Route exact path="/profile" element={<Profile />} />
 
           <Route path="/products" element={<Products />} />
