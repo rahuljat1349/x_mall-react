@@ -1,10 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import CheckoutStepper from "./Stepper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { json, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { createOrder } from "../../Features/Orders/orderSlice";
 const Payment = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
+  const cart = localStorage.getItem("cart");
+  const [cartItems, setCartItems] = useState(cart ? JSON.parse(cart) : []);
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
   const shippingDetails = JSON.parse(localStorage.getItem("shippingDetails"));
   const { user } = useSelector((state) => state.user || {});
@@ -12,7 +16,7 @@ const Payment = () => {
   const [loading, setLoading] = useState(false);
   const payBtn = useRef(null);
   const paymentInfo = {
-    amount: orderInfo && orderInfo.totalPrice*100,
+    amount: orderInfo && orderInfo.totalPrice * 100,
     currency: "INR",
   };
 
@@ -44,12 +48,12 @@ const Payment = () => {
     const result = await fetch("http://localhost:4000/api/v1/payment", {
       method: "POST",
       headers: {
-        "content-type":"application/json",
+        "content-type": "application/json",
         "auth-token": localStorage.getItem("token"),
       },
-      body: JSON.stringify(paymentInfo)
+      body: JSON.stringify(paymentInfo),
     });
-   
+
     const data = await result.json();
     if (!data) {
       alert("Server error. Are you online?");
@@ -76,20 +80,61 @@ const Payment = () => {
           razorpaySignature: response.razorpay_signature,
         };
 
-        const result = await axios.post(
-          "http://localhost:4000/payment/success",
-          data
+        const result = await fetch(
+          "http://localhost:4000/api/v1/payment/confirm",
+          {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              "auth-token": localStorage.getItem("token"),
+            },
+            body: JSON.stringify(data),
+          }
         );
-
-        alert(result);
+        const status = await result.json();
+        if (status.success) {
+          const orderDetails = {
+            itemPrice: orderInfo.subTotal,
+            taxPrice: orderInfo.tax,
+            shippingPrice: orderInfo.shippingCharges,
+            totalPrice: orderInfo.totalPrice,
+            orderItems: 
+              cartItems.map((item) => {
+                return {
+                  product: item.id,
+                  name: item.name,
+                  price: item.price,
+                  image: item.imageUrl,
+                  quantity: item.quantity,
+                };
+              }),
+            
+            shippingInfo: {
+              address: shippingDetails.address,
+              city: shippingDetails.city,
+              state: shippingDetails.state,
+              country: shippingDetails.country,
+              pinCode: shippingDetails.pinCode,
+              phoneNo: shippingDetails.phone,
+            },
+            paymentInfo: {
+              id: data.razorpayPaymentId,
+              status: "succeed",
+            },
+          };
+          dispatch(createOrder(orderDetails))
+          navigate("/success");
+        } else {
+          alert("Error verifying payment");
+        }
       },
       prefill: {
-        name: "Soumya Dey",
-        email: "SoumyaDey@example.com",
+        name: "John Doe",
+        email: "email@example.com",
         contact: "9999999999",
       },
       notes: {
-        address: "Soumya Dey Corporate Office",
+        address: "(address here)",
       },
       theme: {
         color: "#EF4444",
@@ -102,6 +147,8 @@ const Payment = () => {
 
   useEffect(() => {
     // console.log(shippingDetails);
+    // console.log(orderInfo);
+    // console.log(cartItems);
   }, []);
 
   return (

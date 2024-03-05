@@ -82,7 +82,7 @@ const Home = () => {
                         color: red[400],
                       }}
                       name="half-rating-read"
-                      value={product.rating}
+                      value={product.ratings}
                       precision={0.5}
                       readOnly
                     />{" "}

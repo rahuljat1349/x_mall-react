@@ -7,8 +7,7 @@ export default function OrderDetails() {
   const { user, loading, error } = useSelector((state) => state.user || {});
 
   let { state } = useLocation();
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -110,7 +109,7 @@ export default function OrderDetails() {
                         >
                           <div className="flex w-[50%] gap-[5%] items-center">
                             <div className="md:w-20 w-16">
-                              <img src={item.imageUrl} alt="product" />
+                              <img src={item.image} alt="product" />
                             </div>
 
                             <div className="flex items-start">

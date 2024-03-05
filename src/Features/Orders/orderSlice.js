@@ -173,11 +173,38 @@ export const updateOrder = createAsyncThunk(
     }
   }
 );
+// Create an order
+export const createOrder = createAsyncThunk(
+  "products/createOrder",
+  async (orderDetails) => {
+    // console.log(orderDetails);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("No token available");
+    }
+    try {
+      const response = await fetch(`http://localhost:4000/api/v1/order/new`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+        body: JSON.stringify(orderDetails),
+      });
 
+      if (!response.ok) {
+        throw new Error("Failed to create order");
+      }
 
+      const data = await response.json();
+      console.log(data);
 
-
-
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 const orderSlice = createSlice({
   name: "orders",
@@ -247,9 +274,21 @@ const orderSlice = createSlice({
       .addCase(updateOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        console.log("fulfilled ");
       })
       .addCase(updateOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+        console.log(action.error.message);
+      })
+      .addCase(createOrder.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createOrder.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(createOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
         console.log(action.error.message);
