@@ -12,14 +12,14 @@ import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import Typography from "@mui/joy/Typography";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchSingleProduct } from "../../Features/Products/productSlice";
 import { productReview } from "../../Features/Products/productSlice";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 import { addToCart } from "../../Features/Cart/cartSlice";
-
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/autoplay";
@@ -34,7 +34,9 @@ export default function ProductDetails({}) {
   const { selectedProduct: product, loading } = useSelector(
     (state) => state.products
   );
-  const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
+  const [itemExists, setItemExists] = useState(false);
+  const [open, setOpen] = useState(false);
   const [productReviews, setProductReviews] = useState({
     productId: id,
     comment: "",
@@ -43,8 +45,13 @@ export default function ProductDetails({}) {
   const [cartValue, setCartValue] = useState(1);
   const dispatch = useDispatch();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
+    if (itemExists) {
+      navigate("/cart");
+      return;
+    }
     dispatch(addToCart({ id, quantity: cartValue }));
+    await setItemExists(true);
   };
   const handleReviewChange = (e) => {
     setProductReviews({ ...productReviews, [e.target.name]: e.target.value });
@@ -55,6 +62,19 @@ export default function ProductDetails({}) {
     setOpen(false);
     dispatch(fetchSingleProduct(id));
   };
+
+  useEffect(() => {
+    const existingItems = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existingIndex = existingItems.findIndex(
+      (cartItem) => cartItem.id === id
+    );
+    if (existingIndex !== -1) {
+      setItemExists(true);
+    } else {
+      setItemExists(false);
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(fetchSingleProduct(id));
@@ -169,8 +189,8 @@ export default function ProductDetails({}) {
                   disabled={product.stock < 1}
                   className="text-white text-[11px] sm:text-xs py-1 disabled:bg-red-300 disabled:border-0 disabled:text-white px-2 bg-red-500 rounded-full flex items-center justify-center hover:bg-white hover:text-red-500 border-red-500 border-solid border-2 duration-200"
                 >
-                  Add to cart
-                  <Add />
+                  {itemExists ? "Go to cart" : "Add to cart"}
+                  {itemExists ? <KeyboardArrowRightIcon /> : <Add />}
                 </button>
               </div>
               <hr />
