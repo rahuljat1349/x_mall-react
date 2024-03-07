@@ -68,7 +68,7 @@ const cartSlice = createSlice({
 
         if (existingIndex !== -1) {
           // If the item already exists, update the quantity
-          existingItems[existingIndex].quantity += quantity;
+          existingItems[existingIndex] = item;
         } else {
           // If the item is not in local storage, add it
           existingItems.push(item);
