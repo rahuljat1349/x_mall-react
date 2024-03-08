@@ -15,7 +15,6 @@ const initialState = {
   selectedProduct: {},
 };
 const apiUrl = import.meta.env.VITE_API_URL;
-console.log(apiUrl);
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async ({ keyword, price = [0, 25], category, page }) => {
