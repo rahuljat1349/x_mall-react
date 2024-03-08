@@ -11,9 +11,11 @@ import Loader from "../Layout/Loader/Loader";
 const productCategories = [
   "All",
   "Electronics",
-  "Clothing",
+ 
+  "Fashion",
+  "Mobiles",
 
-  "Home",
+ 
   "Books",
 
   "Toys",
