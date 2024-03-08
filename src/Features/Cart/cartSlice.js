@@ -8,20 +8,18 @@ const initialState = {
   error: null,
 };
 
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async ({ id, quantity }) => {
     try {
-      const response = await fetch(
-        `http://localhost:4000/api/v1/product/${id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${apiUrl}/api/v1/product/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Failed to fetch product details");

@@ -7,13 +7,14 @@ const initialState = {
   loading: false,
   error: null,
 };
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (formData) => {
     console.log(formData);
     try {
-      const response = await fetch("http://localhost:4000/api/v1/register", {
+      const response = await fetch(`${apiUrl}/api/v1/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +42,7 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (formData) => {
     try {
-      const response = await fetch("http://localhost:4000/api/v1/login", {
+      const response = await fetch(`${apiUrl}/api/v1/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,7 +72,7 @@ export const updateProfile = createAsyncThunk(
   async (formData) => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://localhost:4000/api/v1/me/update", {
+      const response = await fetch(`${apiUrl}/api/v1/me/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -100,7 +101,7 @@ export const updatePassword = createAsyncThunk(
     const token = localStorage.getItem("token");
     try {
       const response = await fetch(
-        "http://localhost:4000/api/v1/password/update",
+        `${apiUrl}/api/v1/password/update`,
         {
           method: "PUT",
           headers: {
@@ -136,7 +137,7 @@ export const getUserInfo = createAsyncThunk(
     }
 
     try {
-      const response = await fetch("http://localhost:4000/api/v1/me", {
+      const response = await fetch(`${apiUrl}/api/v1/me`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -167,7 +168,7 @@ export const getAdminUsers = createAsyncThunk(
     }
 
     try {
-      const response = await fetch("http://localhost:4000/api/v1/admin/users", {
+      const response = await fetch(`${apiUrl}/api/v1/admin/users`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -200,7 +201,7 @@ export const getSingleUser = createAsyncThunk(
 
     try {
       const response = await fetch(
-        `http://localhost:4000/api/v1/admin/users/${id}`,
+        `${apiUrl}/api/v1/admin/users/${id}`,
         {
           method: "GET",
           headers: {
@@ -229,7 +230,7 @@ export const deleteUser = createAsyncThunk("auth/deleteUser", async (id) => {
 
   try {
     const response = await fetch(
-      `http://localhost:4000/api/v1/admin/users/${id}`,
+      `${apiUrl}/api/v1/admin/users/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -262,7 +263,7 @@ export const updateUser = createAsyncThunk(
 console.log(formData);
     try {
       const response = await fetch(
-        `http://localhost:4000/api/v1/admin/users/${id}`,
+        `${apiUrl}/api/v1/admin/users/${id}`,
         {
           method: "PUT",
           headers: {

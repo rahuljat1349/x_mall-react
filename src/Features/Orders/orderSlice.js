@@ -8,6 +8,8 @@ const initialState = {
   singleOrder: {},
   error: null,
 };
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
 export const getMyOrders = createAsyncThunk(
   "products/getMyOrders",
@@ -18,7 +20,7 @@ export const getMyOrders = createAsyncThunk(
       throw new Error("No token available");
     }
     try {
-      const response = await fetch("http://localhost:4000/api/v1/orders/me", {
+      const response = await fetch(`${apiUrl}/api/v1/orders/me`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +51,7 @@ export const getAdminOrders = createAsyncThunk(
     }
     try {
       const response = await fetch(
-        "http://localhost:4000/api/v1/admin/orders",
+        `${apiUrl}/api/v1/admin/orders`,
         {
           method: "GET",
           headers: {
@@ -83,7 +85,7 @@ export const deleteOrder = createAsyncThunk(
     }
     try {
       const response = await fetch(
-        `http://localhost:4000/api/v1/admin/order/${id}`,
+        `${apiUrl}/api/v1/admin/order/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -117,7 +119,7 @@ export const getSingleOrder = createAsyncThunk(
     }
     try {
       const response = await fetch(
-        `http://localhost:4000/api/v1/admin/order/${id}`,
+        `${apiUrl}/api/v1/admin/order/${id}`,
         {
           method: "GET",
           headers: {
@@ -150,7 +152,7 @@ export const updateOrder = createAsyncThunk(
     }
     try {
       const response = await fetch(
-        `http://localhost:4000/api/v1/admin/order/${id}`,
+        `${apiUrl}/api/v1/admin/order/${id}`,
         {
           method: "PUT",
           headers: {
@@ -183,7 +185,7 @@ export const createOrder = createAsyncThunk(
       throw new Error("No token available");
     }
     try {
-      const response = await fetch(`http://localhost:4000/api/v1/order/new`, {
+      const response = await fetch(`${apiUrl}/api/v1/order/new`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

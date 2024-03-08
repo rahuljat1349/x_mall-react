@@ -12,6 +12,7 @@ const Payment = () => {
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
   const shippingDetails = JSON.parse(localStorage.getItem("shippingDetails"));
   const { user } = useSelector((state) => state.user || {});
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const [loading, setLoading] = useState(false);
   const payBtn = useRef(null);
@@ -45,7 +46,7 @@ const Payment = () => {
     }
 
     // creating a new order
-    const result = await fetch("http://localhost:4000/api/v1/payment", {
+    const result = await fetch(`${apiUrl}/api/v1/payment`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -81,7 +82,7 @@ const Payment = () => {
         };
 
         const result = await fetch(
-          "http://localhost:4000/api/v1/payment/confirm",
+          `${apiUrl}/api/v1/payment/confirm`,
           {
             method: "POST",
             headers: {

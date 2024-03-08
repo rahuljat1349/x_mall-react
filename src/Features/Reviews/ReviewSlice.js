@@ -6,6 +6,8 @@ const initialState = {
   error: null,
 };
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 // Get  Reviews
 export const getReviews = createAsyncThunk(
   "products/getReviews",
@@ -16,7 +18,7 @@ export const getReviews = createAsyncThunk(
     }
     try {
       const response = await fetch(
-        `http://localhost:4000/api/v1/reviews?id=${id}`,
+        `${apiUrl}/api/v1/reviews?id=${id}`,
         {
           method: "GET",
           headers: {

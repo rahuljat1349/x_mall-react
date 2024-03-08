@@ -14,7 +14,8 @@ const initialState = {
   },
   selectedProduct: {},
 };
-
+const apiUrl = import.meta.env.VITE_API_URL;
+console.log(apiUrl);
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async ({ keyword, price = [0, 25], category, page }) => {
@@ -22,7 +23,7 @@ export const fetchProducts = createAsyncThunk(
     // console.log("Price:", price);
     // console.log("Category:", category);
     try {
-      const url = new URL("http://localhost:4000/api/v1/products");
+      const url = new URL(`${apiUrl}/api/v1/products`);
       if (keyword) {
         url.searchParams.append("key", keyword);
       }
@@ -57,9 +58,7 @@ export const fetchSingleProduct = createAsyncThunk(
   "products/fetchSingleProduct",
   async (productId) => {
     try {
-      const response = await fetch(
-        `http://localhost:4000/api/v1/product/${productId}`
-      );
+      const response = await fetch(`${apiUrl}/api/v1/product/${productId}`);
       if (!response.ok) {
         throw new Error(`Failed to fetch product with ID: ${productId}`);
       }
@@ -75,16 +74,13 @@ export const getAdminProducts = createAsyncThunk(
   async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch(
-        `http://localhost:4000/api/v1/admin/products`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": token,
-          },
-        }
-      );
+      const response = await fetch(`${apiUrl}/api/v1/admin/products`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+      });
       if (!response.ok) {
         throw new Error(`Failed to fetch products`);
         console.log("error in fetch admin products");
@@ -102,7 +98,7 @@ export const productReview = createAsyncThunk(
   async (formData) => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://localhost:4000/api/v1/review", {
+      const response = await fetch(`${apiUrl}/api/v1/review`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -124,30 +120,33 @@ export const productReview = createAsyncThunk(
   }
 );
 // add product [admin]
-export const addProduct = createAsyncThunk("auth/addProduct", async (formData) => {
-  const token = localStorage.getItem("token");
-  try {
-    const response = await fetch("http://localhost:4000/api/v1/admin/product/new", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": token,
-      },
-      body: JSON.stringify(formData),
-    });
+export const addProduct = createAsyncThunk(
+  "auth/addProduct",
+  async (formData) => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(`${apiUrl}/api/v1/admin/product/new`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (!response.ok) {
-      alert("Please Enter valid details");
-      throw new Error("Failed to add Product");
+      if (!response.ok) {
+        alert("Please Enter valid details");
+        throw new Error("Failed to add Product");
+      }
+
+      const data = await response.json();
+      alert("Product added successfully.");
+      return data;
+    } catch (error) {
+      throw error;
     }
-
-    const data = await response.json();
-    alert("Product added successfully.");
-    return data;
-  } catch (error) {
-    throw error;
   }
-});
+);
 
 // delete product [admin]
 export const deleteProduct = createAsyncThunk(
@@ -155,17 +154,13 @@ export const deleteProduct = createAsyncThunk(
   async (id) => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch(
-       ` http://localhost:4000/api/v1/admin/product/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": token,
-          },
-       
-        }
-      );
+      const response = await fetch(`${apiUrl}/api/v1/admin/product/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+      });
 
       if (!response.ok) {
         alert("Error deleting product");
